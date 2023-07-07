@@ -1,0 +1,9 @@
+{
+    "connector": {...},
+    "formatters": [...],
+    "parsers": [...],
+    "hints": {
+        "detect-css-reflows/layout": "error"
+    },
+    ...
+}
