@@ -30,7 +30,7 @@ export default function RootLayout({
 
   return (
     <Box
-      sx={{ display: "flex", flexDirection: "column", backgroundColor: "#fff" }}
+      sx={{ display: "flex", flexDirection: "column", backgroundColor: "#fff", p:1 }}
     >
       <Box
         sx={{
@@ -135,7 +135,7 @@ export default function RootLayout({
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            width: "100vw",
+            width: '100%',
             p: 1,
           }}
         >
@@ -153,7 +153,7 @@ export default function RootLayout({
             height: "200px",
             backgroundImage: "url('pexels.png')",
             borderRadius: "30px",
-            
+            margin:1,
             backdropFilter: 'blur(10px)'
         
           }}
@@ -175,19 +175,17 @@ export default function RootLayout({
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            width: "100vw",
+            width: "100",
             p: 1,
           }}
         >
           <Typography sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}>
-            Upcoming Events
+          All Tickets
           </Typography>
-          <Typography sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}>
-            03/10
-          </Typography>
+       
         </Box>
         <Box >
-        <Box sx={{minHeight: "6rem", width: "100%", marginY: 2, backgroundColor: '#EEECF9', borderRadius: "20px", display: "flex", flexDirection: "row"}}>
+        <Box sx={{minHeight: "6rem", backgroundColor: '#EEECF9', borderRadius: "20px", display: "flex", flexDirection: "row", margin:1}}>
                   <img src="https://picsum.photos/200" alt="image"              
                       width={0}
                     height={0}

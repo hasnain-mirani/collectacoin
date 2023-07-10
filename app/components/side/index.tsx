@@ -10,7 +10,8 @@ import { GrClose } from "react-icons/gr";
 import { Home } from "@mui/icons-material";
 import { BsPersonSquare, BsFillBucketFill } from "react-icons/bs";
 import { IoMdStats } from "react-icons/io";
-import router from "next/router";
+// import router from "next/router";
+import { useRouter } from 'next/navigation'
 import {useAppSelector} from '../../../store/index'
 const StyledBadge = styled(Badge)<BadgeProps>(() => ({
   '& .MuiBadge-badge': {
@@ -21,13 +22,14 @@ const StyledBadge = styled(Badge)<BadgeProps>(() => ({
   },
 }));
 function Index() {
+  const router = useRouter()
   const newval=useAppSelector((state)=>state.userReducer.value)
   const [open, setOpen] = useState<boolean>(false);
   return (
     <>
       <IconButton
         onClick={() => setOpen(true)}
-        sx={{ backgroundColor: "#EEECF9 !important", borderRadius: "10px" }}
+        sx={{ borderRadius: "10px" }}
       >
         <AiOutlineMenu color="#523FAD" />
       </IconButton>
@@ -93,10 +95,10 @@ function Index() {
                   },
                 }}
               >
-                <IconButton onClick={() => router.push("/dashboard/home")}>
+                <IconButton onClick={() => router.push("/userdashboard")}>
                   <Home />
-                </IconButton>
                 <Typography sx={{ cursor: "pointer" }}>Home</Typography>
+                </IconButton>
               </Box>
 
               <Box
@@ -108,7 +110,7 @@ function Index() {
                   },
                 }}
               >
-                <IconButton onClick={() => router.push("/dashboard/myschedule")} >
+                <IconButton onClick={() => router.push("/myschedule")} >
                 <StyledBadge badgeContent={newval} color="secondary">
                   <IoMdStats />
                   </StyledBadge>
@@ -125,10 +127,10 @@ function Index() {
                   },
                 }}
               >
-                <IconButton>
+                <IconButton onClick={() => router.push("/myticket")}>
                   <BsPersonSquare />
-                </IconButton>
                 <Typography sx={{ cursor: "pointer" }}>My Ticket</Typography>
+                </IconButton>
               </Box>
               <Box
                 sx={{
@@ -141,8 +143,8 @@ function Index() {
               >
                 <IconButton>
                   <BsFillBucketFill />
-                </IconButton>
                 <Typography sx={{ cursor: "pointer" }}>Panels</Typography>
+                </IconButton>
               </Box>
             </Box>
           </Box>

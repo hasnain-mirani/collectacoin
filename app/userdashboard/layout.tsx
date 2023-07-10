@@ -30,7 +30,7 @@ export default function RootLayout({
 
   return (
     <Box
-      sx={{ display: "flex", flexDirection: "column", backgroundColor: "#fff" }}
+      sx={{ display: "flex", flexDirection: "column", backgroundColor: "#fff",p:1}}
     >
       <Box
         sx={{
@@ -44,7 +44,7 @@ export default function RootLayout({
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
+           
             alignItems: "center",
             width: "100vw",
             padding: 1,
@@ -56,15 +56,15 @@ export default function RootLayout({
               color: "#523FAD",
               fontSize: "26px",
               fontWeight: 600,
-              marginX: 2,
+              marginX: 8,
             }}
           >
             DASHBOARD
           </Typography>
-          <NotificationsIcon sx={{ color: "#523FAD" }} />
+        
         </Box>
       </Box>
-      <Box sx={{ paddingX: 1 }}>
+      <Box sx={{p:1, marginLeft:1}}>
         <Typography sx={{ color: "#000", fontSize: " 30px", fontWeight: 600 }}>
           Hey, User!
         </Typography>
@@ -73,9 +73,10 @@ export default function RootLayout({
           this week.
         </Typography>
       </Box>
-      <Box sx={{ display: "flex", paddingX: 1, gap: 2 }}>
+      <Box sx={{ display: "flex", gap: 2, marginX:2 }}>
         <Box
           sx={{
+            
             display: "flex",
             gap: 1,
             flexDirection: "column",
@@ -136,7 +137,7 @@ export default function RootLayout({
             display: "flex",
             justifyContent: "space-between",
             width: "100vw",
-            p: 1,
+            p: 2,
           }}
         >
           <Typography sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}>
@@ -174,8 +175,8 @@ export default function RootLayout({
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            width: "100vw",
-            p: 1,
+           
+            p: 2,
           }}
         >
           <Typography sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}>
@@ -185,7 +186,7 @@ export default function RootLayout({
             03/10
           </Typography>
         </Box>
-        <Box >
+        <Box  sx={{marginX:1}}>
         {/* Photo Ops Schedule */}
           <Box sx={{display:'flex', justifyContent:'space-between',p:1, alignItems:'center'}}>  
             <Box sx={{ display:'flex',alignItems:'center', flexDirection:'column'}}> 
