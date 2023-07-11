@@ -95,7 +95,7 @@ function Index() {
                   },
                 }}
               >
-                <IconButton onClick={() => router.push("/userdashboard")}>
+                <IconButton onClick={() => router.push("/dashboard")}>
                   <Home />
                 <Typography sx={{ cursor: "pointer" }}>Home</Typography>
                 </IconButton>
