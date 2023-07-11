@@ -44,7 +44,7 @@ export default function RootLayout({
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
+         
             alignItems: "center",
             width: "100vw",
             padding: 1,
@@ -56,12 +56,12 @@ export default function RootLayout({
               color: "#523FAD",
               fontSize: "26px",
               fontWeight: 600,
-              marginX: 2,
+              marginX: 10,
             }}
           >
             My Ticket
           </Typography>
-          <NotificationsIcon sx={{ color: "#523FAD" }} />
+         
         </Box>
       </Box>
       <Box sx={{ paddingX: 1 }}>
@@ -142,9 +142,7 @@ export default function RootLayout({
           <Typography sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}>
             Today Ticket
           </Typography>
-          <Typography sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}>
-            03/10
-          </Typography>
+            
         </Box>
         <Box
           sx={{
