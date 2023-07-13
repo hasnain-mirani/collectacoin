@@ -1,18 +1,15 @@
 "use client";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { Box, InputBase, Button, Typography } from "@mui/material";
-import { BsFilter, BsBookmark } from "react-icons/bs";
-import { CiSearch } from "react-icons/ci";
+import { Box, Button, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-
 import { useState, useEffect, useContext } from "react";
 import { ContextValues } from "@/app/Context/context";
-import Side from "../components/side";
+import Side from "@/app/components/side";
 import { CalendarMonth } from "@mui/icons-material";
 
 
-export default function Dashboard (){
+export default function Dashboard ({params}:any){
   const [activePage, setActivePage] = useState<string>("home");
   const { searchVal, setSearchVal } = useContext(ContextValues);
   const pathname = usePathname();
@@ -61,7 +58,7 @@ export default function Dashboard (){
     </Box>
     <Box sx={{p:1, marginLeft:1}}>
       <Typography sx={{ color: "#000", fontSize: " 30px", fontWeight: 600 }}>
-        Hey, User!
+        Hey, {params.id}
       </Typography>
       <Typography sx={{ color: "#595959", fontSize: "18px", width: "80vw" }}>
         Don’t forget to visit your nearest events that you have subscribe at

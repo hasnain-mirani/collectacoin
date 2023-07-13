@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { act } from "react-dom/test-utils";
-import UserService from "../services/UserService";
+import UserService from "@/state/userSlice";
 import { HYDRATE } from "next-redux-wrapper";
 
 type initialStateType = {
