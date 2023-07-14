@@ -7,6 +7,9 @@ import UpoloadData from '../components/uploddata'
 import  Editdetail from '../components/editdetail'
 import { useState } from "react";
 import { Dashboard } from "@mui/icons-material";
+import { toast } from "react-hot-toast";
+import axios from "axios";
+import router from "next/router";
 
 const page = () => {
     interface Details {
@@ -22,6 +25,7 @@ const [autographData, setAutographData] = useState<any>(null);
         email: ''})
         const [isEditing, setIsEditing] = useState(false);
      
+       
   return (
     <Box
       className="container"
@@ -67,7 +71,7 @@ const [autographData, setAutographData] = useState<any>(null);
             <Typography variant="h5" sx={{ fontWeight: "bold" }}>
               Programing/Schedule
             </Typography>
-           < UpoloadData onSave={setProgramingData} />
+           < UpoloadData  />
           </Box>
 
             <Box sx={{display:'flex', flexDirection:'column', gap:1}}>

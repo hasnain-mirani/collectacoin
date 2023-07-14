@@ -1,5 +1,6 @@
 'use client'
 import { Box, IconButton, Typography, } from "@mui/material";
+import LogoutIcon from '@mui/icons-material/Logout';
 import Badge, { BadgeProps } from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import React, { useState } from "react";
@@ -72,8 +73,8 @@ function Index() {
                   alignItems: "center",
                 }}
               >
-                <Typography variant="h6">First Name Last Name</Typography>
-                <Typography variant="body1">email@email.com</Typography>
+                <Typography variant="h6">{} {}</Typography>
+                <Typography variant="body1">{}</Typography>
               </Box>
             </Box>
 
@@ -151,9 +152,9 @@ function Index() {
           <Box>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <IconButton>
-                <AiFillSetting />
+                <LogoutIcon />
               </IconButton>
-              <Typography>Settings</Typography>
+              <Typography>LogOut</Typography>
             </Box>
           </Box>
         </Box>

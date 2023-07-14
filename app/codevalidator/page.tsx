@@ -2,12 +2,12 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from "next/navigation";
-import {verificationCode} from '@/app/api/user/signup/route'
+// import {verificationCode} from '@/app/api/user/signup/route'
 function EmailVerificationPage() {
   const router = useRouter();
   const [verificationCod, setVerificationCode] = useState('');
   const [error, setError] = useState('');
-console.log(verificationCode)
+// console.log(verificationCode)
   const handleVerificationSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 

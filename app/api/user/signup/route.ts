@@ -23,7 +23,7 @@ async function sendVerificationEmail(email: string, verificationCode: string) {
       from: "mirani@gmail.com",
       to:email,
       subject: "Email Verification",
-      text: `Your verification code is: ${verificationCode}`,
+      text: `Your verificatio n code is: ${verificationCode}`,
     };
 
     // Send the email
