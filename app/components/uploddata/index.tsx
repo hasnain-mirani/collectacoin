@@ -2,9 +2,17 @@ import AddIcon from '@mui/icons-material/Add';
 import { setProgramingData, setAutographData } from '@/state/seprateSlice';
 import { Box, Button, IconButton, InputBase, Modal, Typography } from '@mui/material';
 import React, { useState,createContext, useContext, } from 'react';
-import Upload from '../uploaddropzone'
+// import Upload from '../uploaddropzone'
  import { addFormEntry } from '@/state/addSlice';
 import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import router from 'next/router';
+import { Group, Text, useMantineTheme, rem } from '@mantine/core';
+import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+import { Upload, UploadFile } from '@mui/icons-material';
+import { Icon } from '@mui/material';
+
+// import events from '@/modals/adminmodal';
 const inputStyle={
 
     outline:'none',
@@ -29,11 +37,12 @@ type FormValues = {
     Address:'',
     Hallno:'',
     Date:'',
-    Time:''
+    Time:'',
+    Pic:'',
 };
 
 
-const EntryForm:React.FC<any> = ({section}) => {
+const EntryForm:React.FC<any> = (props: Partial<DropzoneProps>,{section}) => {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -45,7 +54,8 @@ const EntryForm:React.FC<any> = ({section}) => {
     Address:'',
     Hallno:'',
     Date:'',
-    Time:''
+    Time:'',
+    Pic:''
   });
   const [entries, setEntries] = useState<string[]>([]);
  
@@ -59,23 +69,33 @@ const EntryForm:React.FC<any> = ({section}) => {
   };
   
 
-  const handleSubmit = (event: React.FormEvent) => {
+  // const handleSubmit = (event: React.FormEvent) => {
 
-    event.preventDefault();
-    if (section === 'programing') {
-      dispatch(setProgramingData(formValues));
-    } else if (section === 'autograph') {
-      dispatch(setAutographData(formValues));
-    }
-    dispatch(addFormEntry(formValues));
+  //   event.preventDefault();
+  //   if (section === 'programing') {
+  //     dispatch(setProgramingData(formValues));
+  //   } else if (section === 'autograph') {
+  //     dispatch(setAutographData(formValues));
+  //   }
+  //   dispatch(addFormEntry(formValues));
     
-    const newEntry:any = formatEntry(formValues);
-    setEntries((prevEntries) => [...prevEntries, newEntry]);
-    resetForm();
-  };
+  //   const newEntry:any = formatEntry(formValues);
+  //   setEntries((prevEntries) => [...prevEntries, newEntry]);
+  //   resetForm();
+  // };
 
  
- 
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      
+        const response = await axios.post("/api/admin/eventscreate", formValues);
+        console.log("events created!!", response.data);
+        router.push("/userdashboard");
+    } catch (error:any) {
+        console.log("posting issue!!!", error.message);
+    }
+  }
 
   const formatEntry = ({ FirstName, LastName }: FormValues) => {
     return `${FirstName} ${LastName}`;
@@ -87,7 +107,8 @@ const EntryForm:React.FC<any> = ({section}) => {
     Address:'',
     Hallno:'',
     Date:'',
-    Time:''});
+    Time:'',
+  Pic:''});
   };
 
   return (
@@ -139,9 +160,41 @@ const EntryForm:React.FC<any> = ({section}) => {
                 <Typography sx={{ margin:1}}>
                     Upload Image
                 </Typography>
-            <Upload/>
+            {/* <Upload /> */}
+            <Box>
+            <Dropzone
+      onDrop={(files) => console.log('accepted files', formValues.Pic)}
+      onReject={(files) => console.log('rejected files', files)}
+      maxSize={1 * 1024 ** 2}
+      accept='image/*'
+      {...props}
+    >
+      <Group position="center" spacing="xl" style={{ minHeight: rem(100), pointerEvents: 'none' }}>
+        <Dropzone.Accept>
+          <Upload />
+        </Dropzone.Accept>
+        <Dropzone.Reject>
+          <Icon
+            // size="3.2rem"
+            // stroke={1.5}
+            // // color={theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6]}
+          />
+        </Dropzone.Reject>
+        <Dropzone.Idle>
+          <UploadFile  />
+        </Dropzone.Idle>
+
+        <div>
+          <Text size="xl" inline>
+            Drag images here or click to select files
+          </Text>
+         
+        </div>
+      </Group>
+    </Dropzone>
+            </Box>
              </Box>
-              <Button type="submit">Add formValues</Button>
+              <Button type="submit" onClick={handleSubmit}>Add formValues</Button>
               </form>
       
      </Box>
