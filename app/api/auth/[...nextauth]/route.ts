@@ -23,7 +23,7 @@ const handler = NextAuth({
       },
       async authorize(credentials, req) {
         try{
-          const res = await axios.post(SERVER_BASE_URL+"/auth/login", {      
+          const res = await axios.post(SERVER_BASE_URL+"/user/signin", {      
             email: credentials?.email,
             password: credentials?.password
       })
@@ -55,12 +55,12 @@ const handler = NextAuth({
   ],
   callbacks: {
 
-    // async jwt({ token, user, trigger, session }) {
-    //   if (trigger === "update") {
-    //     return { ...token, ...session.user };
-    //   }
-    //   return { ...token, ...user };
-    // },
+     async jwt({ token, user, trigger, session }) {
+       if (trigger === "update") {
+         return { ...token, ...session.user };
+       }
+       return { ...token, ...user };
+     },
     async  jwt({
       token,
       user,

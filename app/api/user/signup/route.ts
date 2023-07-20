@@ -37,7 +37,7 @@ async function sendVerificationEmail(email: string, verificationCode: string) {
 export async function POST(request: NextRequest) {
   try {
     const req = await request.json();
-    const { firstName, lastName, email, password , agreed} = req;
+    const { firstName, lastName, email, password , agreed,role,verified } = req;
 console.log(req)
     // already Registered
     const user = await User.findOne({ email });
@@ -59,6 +59,7 @@ console.log(req)
       email,
       password: hashPassword,
       agreed,
+      role,
       verificationCode, // Add the verification code to the user object
       verified: false,
     });

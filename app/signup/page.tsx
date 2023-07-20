@@ -71,7 +71,7 @@ const userid =params.id
   async function handleSubmit() {
     try {
       let response = await axios.post('api/user/signup', user);
-      router.push('/codevalidator')
+      router.push('/signin')
       toast.success("Successfully Signed Up");
     } catch (err: any) {
       toast.error('err in connection  ');

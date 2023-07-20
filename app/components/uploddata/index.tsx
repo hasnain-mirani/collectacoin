@@ -166,7 +166,7 @@ const EntryForm:React.FC<any> = (props: Partial<DropzoneProps>,{section}) => {
       onDrop={(files) => console.log('accepted files', formValues.Pic)}
       onReject={(files) => console.log('rejected files', files)}
       maxSize={1 * 1024 ** 2}
-      accept='image/*'
+      // accept='image/*'
       {...props}
     >
       <Group position="center" spacing="xl" style={{ minHeight: rem(100), pointerEvents: 'none' }}>

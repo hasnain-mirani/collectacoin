@@ -10,6 +10,8 @@ import { Box, Button, FormControl, InputBase, Typography } from "@mui/material";
 import React from "react";
 import { BsFacebook } from "react-icons/bs";
 import { AiFillGoogleCircle } from "react-icons/ai";
+import axios from 'axios';
+import toast from "react-hot-toast";
 
 type FormValuesType = {
   email: string;
@@ -18,13 +20,23 @@ type FormValuesType = {
 };
 
 const Page = () => {
+  const onlogin= async()=>{
+try {
+ const response= await axios.post("/api/user/signin", formValues);
+ console.log("signin successfull", response.data)
+ toast.success("Successfully Signed in");
+ router.push('/userdashboard')
+} catch (error:any) {
+//  console.log('login failed', error.message)
+ toast.error('inviled password ',error.message);
+}
+  }
   const [formValues, setFormValues] = useState<FormValuesType>({ email: '', password: '', agreed: true });
   const { data: session, status } = useSession()
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<string>('')
   const router = useRouter();
   async function handleValuesChange(e: React.ChangeEvent<HTMLInputElement>) {
-
     let name = e.target.name;
     let value = e.target.value;
     console.log(name);
@@ -32,11 +44,11 @@ const Page = () => {
     setFormValues(pre=> ({...pre, [name]: value}));
   }
   async function handleGoogleSignIn(){
-     signIn("google", {redirect: true, callbackUrl: "/dashboard"});
+     signIn("google", {redirect: true, callbackUrl: "/userdashboard"});
 
   }
   async function handleFacebookSignIn(){
-   signIn("facebook", {redirect:  true, callbackUrl: "/dashboard"});
+   signIn("facebook2", {redirect:  true, callbackUrl: "/userdashboard"});
     
   }
   console.log(handleFacebookSignIn)
@@ -205,7 +217,7 @@ const Page = () => {
               width: "16rem",
             }}
             type="submit"
-            onClick={()=> handleCredentialSignIn()}
+            onClick={onlogin}
           >
             Sign In
           </Button>

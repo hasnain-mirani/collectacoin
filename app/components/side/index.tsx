@@ -1,5 +1,7 @@
 'use client'
 import { Box, IconButton, Typography, } from "@mui/material";
+import axios from "axios";
+import toast from "react-hot-toast";
 import LogoutIcon from '@mui/icons-material/Logout';
 import Badge, { BadgeProps } from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
@@ -25,6 +27,16 @@ const StyledBadge = styled(Badge)<BadgeProps>(() => ({
 function Index() {
   const router = useRouter()
   const newval=useAppSelector((state)=>state.userReducer.value)
+  const logout=async()=>{
+    try {
+      const response= await axios.get("/api/user/logout")
+      router.push('/signin')
+      toast.success("Successfully logout");
+    } catch (error:any) {
+      console.log(error.message);
+        toast.error('err in connection  ');
+    }
+  }
   const [open, setOpen] = useState<boolean>(false);
   return (
     <>
@@ -151,10 +163,10 @@ function Index() {
           </Box>
           <Box>
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <IconButton>
+              <IconButton onClick={logout}>
                 <LogoutIcon />
-              </IconButton>
               <Typography>LogOut</Typography>
+              </IconButton>
             </Box>
           </Box>
         </Box>

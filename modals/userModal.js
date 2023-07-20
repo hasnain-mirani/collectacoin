@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
   agreed:{
     type:Boolean,
     required: [true, "please check the box"],
+  },
+  role:{
+    type:String,
+    
   }
 });
 
