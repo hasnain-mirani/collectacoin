@@ -14,8 +14,27 @@
                         label:'Username:',
                         type:'text',
                         placeholder:'place your name'
-                    }
-                }
+                    },
+                },
+                async authorize(Credentials){
+
+                    try{
+                        const res = await axios.post(SERVER_BASE_URL+"/user/signin", {      
+                          email: credentials?.email,
+                          password: credentials?.password
+                    })
+                        let user = res.data;
+                        if (user) {
+                          return user;
+                        } else {
+                          return null;
+              
+                        }
+                      }catch(err:any){
+                        throw new Error(err)
+                      }
+              
+                    },
               })
         ]
     }
