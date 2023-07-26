@@ -20,6 +20,10 @@ type FormValuesType = {
 };
 
 const Page = () => {
+const onSignup=()=>{
+  router.push('/signup')
+}
+  
   const onlogin= async()=>{
 try {
  const response= await axios.post("/api/user/signin", formValues);
@@ -27,8 +31,8 @@ try {
  localStorage.setItem('token', token);
  localStorage.setItem('name', firstName);
  localStorage.setItem('email', email);
-console.log(response)
- console.log("signin successfull", response.data)
+// console.log(response)
+//  console.log("signin successfull", response.data)
  toast.success("Successfully Signed in");
  router.push('/userdashboard')
 } catch (error:any) {
@@ -166,6 +170,22 @@ console.log(response)
             onClick={onlogin}
           >
             Sign In
+          </Button>
+        </Box> 
+        <Box sx={{display: "flex", flexDirection: "row", justifyContent: "center", marginTop: 2}}>
+          <Button
+            sx={{
+              backgroundColor: "#2B3856 !important",
+              color: "#FFFFFF",
+              borderRadius: "10px",
+              paddingY: 1,
+              fontSize: "lg",
+              width: "16rem",
+            }}
+            type="submit"
+            onClick={onSignup}
+          >
+            Sign Up
           </Button>
         </Box>
         <Box   sx={{display: "flex", flexDirection: "row", justifyContent: "center"}}>

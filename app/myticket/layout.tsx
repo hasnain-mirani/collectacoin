@@ -51,22 +51,17 @@ export default function RootLayout({
   const [products, setProducts] = useState<any>([]);
   const getDetail= async()=>{
     const res= await axios.get('api/user/userdata')
-    console.log(res.data)
+    // console.log(res.data)
     setData(res.data.data)
+    setUserEmail(res.data.data.email)
+    console.log(userEmail)
+
    }
    useEffect(() => {
-     
      getDetail()   
-     .then(() => {
-      // Once the user data is fetched, store the email in state
-      setUserEmail(data.email);
-      console.log(data.email)
-    })
-    .catch((error) => {
-      console.error("Error fetching user data:", error);
-    });
    }, [])
    useEffect(() => {
+    if (userEmail !== "") {
      api
       .get("orders", {
         // Add a filter to get only the orders with a specific email
@@ -77,7 +72,7 @@ export default function RootLayout({
       .then((response) => {
         // Filter the orders based on the user's email
         const filteredOrders = response.data.filter(
-          (order: Order) => order.billing.email === userEmail
+          (order: Order) => order.billing.email ===userEmail
         );
 
         setOrders(filteredOrders);
@@ -85,8 +80,8 @@ export default function RootLayout({
       })
       .catch((error) => {
         console.error("Error fetching orders:", error);
-      });
-   }, []);
+      });}
+   }, [userEmail]);
  
   const [activePage, setActivePage] = useState<string>("home");
  

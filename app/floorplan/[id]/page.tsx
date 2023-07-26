@@ -8,29 +8,23 @@ import { useRouter } from "next/navigation";
 
 const VendorData = () => {
   const router = useRouter();
-  const [Name, setName] = useState<string>("");
-  const [Profile, setProfile] = useState<string>("");
-  const [Desc, setDesc] = useState<string>("");
-  const [Pic, setPic] = useState<string>("");
-  const [Social, setSocial] = useState<string>("");
-  const [Website, setWebsite] = useState<string>("");
-  const [Hallno, setHallNo] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [EventName , setEventName] = useState<string>("");
+  const [Venue, setVenue] = useState<string>("");
+  const [File, setFile] = useState<string>("");
 
   const getVendors = async (id: number) => {
     try {
-      const response = await axios.get("/api/fetchVendor");
-      const { allVendors } = response.data;
+      const response = await axios.get("/api/fetchPlan");
+      const { allPlans } = response.data;
 
-      setDesc(allVendors[Number(id)].Description || "");
-      setProfile(allVendors[Number(id)].Profile || "");
-      setPic(allVendors[Number(id)].Pic || "");
-      setHallNo(allVendors[Number(id)].Hallno || "");
-      setName(allVendors[Number(id)].Name || "");
-      setSocial(allVendors[Number(id)].Social || "");
-      setWebsite(allVendors[Number(id)].Website || "");
-      console.log(allVendors[Number(id)].Social);
+      setTitle(allPlans[Number(id)].Title || "");
+      setEventName(allPlans[Number(id)].EventName || "");
+      setFile(allPlans[Number(id)].File || "");
+      setVenue(allPlans[Number(id)].Venue|| "");;
+      
     } catch (error) {
-      console.log(`Vendor ${id} not found`);
+      console.log(`Plan ${id} not found`);
     }
   };
 
@@ -42,16 +36,15 @@ const VendorData = () => {
     <Box sx={{ padding: 2, backgroundColor: "#fff" , height: 843 }}>
       <Box sx={{ padding: 1 }}>
         <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
-          {Name}
+          {EventName}
         </Typography>
       </Box>
       <Box sx={{ height: "14rem" }}>
-        <Image
-          src={"/" + Pic}
-          alt="image"
+        <iframe
+          src={File}
+          title="PDF Viewer"
           width={0}
           height={0}
-          sizes="100vw"
           style={{ width: "100%", height: "100%", borderRadius: "15px" }}
         />
       </Box>
@@ -73,11 +66,8 @@ const VendorData = () => {
               fontSize: 20,
             }}
           >
-            {Profile}
+            {title}
           </Typography>
-        </Box>
-        <Box sx={{ marginTop: 1 }}>
-          <Typography>{Desc}</Typography>
         </Box>
       </Box>
       <Box
@@ -89,26 +79,6 @@ const VendorData = () => {
           gap: 2,
         }}
       >
-        <Button
-          href={"/" + Social}
-          sx={{
-            backgroundColor: "#523FAD !important",
-            color: "#fff",
-            borderRadius: "8px",
-          }}
-        >
-          Social
-        </Button>
-        <Button
-          href={Website}
-          sx={{
-            backgroundColor: "#523FAD !important",
-            color: "#fff",
-            borderRadius: "8px",
-          }}
-        >
-          Website
-        </Button>
       </Box>
       <Box></Box>
     </Box>

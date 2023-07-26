@@ -84,57 +84,113 @@ export default function Dashboard (){
         this week.
       </Typography>
     </Box>
-    <Box sx={{ display: "flex", gap: 2, marginX:2 }}>
+    <Box sx={{overflowX: "scroll" , width: "100%"}} >
+      <Box sx={{ display: "flex", maxWidth: "500px", margin: "0 auto" }}>
       <Box
         sx={{
-          
           display: "flex",
-          gap: 1,
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "150px",
-          height: "120px",
-          borderRadius: "30px",
-          background: "#EEECF9",
+          flexDirection: "row",
+          gap: 2,
+          marginLeft: 2,
+          marginY: 2,
+          position: "relative",
+          borderRadius: "25px",
         }}
       >
-        <img src="allevent.png" alt="" />
-        <Typography sx={{ color: "#523FAD" }}>All Events</Typography>
+        <Box
+          sx={{
+            display: "flex",
+            gap: 1,
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100px",
+            height: "120px",
+            borderRadius: "30px",
+            background: "#EEECF9",
+          }}
+        >
+          <img
+            src="allevent.png"
+            alt=""
+            onClick={() => {
+              router.push("/dashboard/events");
+            }}
+          />
+          <Typography sx={{ color: "#523FAD" }}>All Events</Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            gap: 1,
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100px",
+            height: "120px",
+            borderRadius: "30px",
+            background: "#EEECF9",
+          }}
+        >
+          <img
+            src="autograph.png"
+            alt=""
+            onClick={() => {
+              router.push("/dashboard/autographs");
+            }}
+          />
+          <Typography sx={{ color: "#523FAD" }}>Autograph</Typography>
+        </Box>{" "}
+        <Box
+          sx={{
+            display: "flex",
+            gap: 1,
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100px",
+            height: "120px",
+            borderRadius: "30px",
+            background: "#EEECF9",
+          }}
+        >
+          <img
+            src="camera.png"
+            alt=""
+            onClick={() => {
+              router.push("/dashboard/PhotoOPS");
+            }}
+          />
+          <Typography sx={{ color: "#523FAD" }}>Photo OPS</Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            gap: 1,
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100px",
+            height: "120px",
+            borderRadius: "30px",
+            background: "#EEECF9",
+    
+          }}
+        >
+          <img
+            src="Programming.png"
+            height={60}
+            width={60}
+            alt=""
+            onClick={() => {
+              router.push("/dashboard/Programming");
+            }}
+          />
+          <Typography sx={{ color: "#523FAD" }}>Programing</Typography>
+        </Box>
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          gap: 1,
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "150px",
-          height: "120px",
-          borderRadius: "30px",
-          background: "#EEECF9",
-        }}
-      >
-        <img src="autograph.png" alt="" />
-        <Typography sx={{ color: "#523FAD" }}>Autograph</Typography>
-      </Box>{" "}
-      <Box
-        sx={{
-          display: "flex",
-          gap: 1,
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "150px",
-          height: "120px",
-          borderRadius: "30px",
-          background: "#EEECF9",
-        }}
-      >
-        <img src="camera.png" alt="" />
-        <Typography sx={{ color: "#523FAD" }}>Photo OPS</Typography>
       </Box>
-    </Box>
+      </Box>
     <Box
       sx={{
         paddingX: 1,

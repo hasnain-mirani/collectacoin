@@ -2,6 +2,7 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import * as Yup from 'yup';
 import { SERVER_BASE_URL } from '@/constants';
 import toast from 'react-hot-toast';
 
@@ -26,6 +27,14 @@ import { useRouter } from 'next/navigation';
 
 const Page = ({ params }: any) => {
   const router = useRouter();
+  const validationSchema = Yup.object().shape({
+    password: Yup.string()
+      .required('Password is required')
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character'
+      ),
+  });
 
   return (
     <Box
@@ -47,6 +56,7 @@ const Page = ({ params }: any) => {
           password: '',
           agreed: false,
         }}
+        validationSchema={validationSchema}
         validate={(values) => {
           const errors: Partial<FormValuesType> = {};
           if (!values.firstName) {
@@ -126,7 +136,7 @@ const Page = ({ params }: any) => {
                     required
                     placeholder="First Name"
                   />
-                  <ErrorMessage name="firstName" component="div"   />
+                <p style={{color:'#FF0000'}}><ErrorMessage  name="firstName" component="div"   /></p>  
                 </Box>
                 <Box>
                   <Typography sx={{ color: '#523FAD', p: 0.5 }}>Last Name</Typography>
@@ -161,27 +171,28 @@ const Page = ({ params }: any) => {
                     required
                     placeholder="example@emai.com"
                   />
-                  <ErrorMessage name="email" component="div"   />
+                  <p style={{color:'#FF0000'}}><ErrorMessage name="email" component="div"/></p>
+                  
                 </Box>
                 <Box>
-                  <Typography sx={{ color: '#523FAD', p: 0.5 }}>Password</Typography>
-                  <Field
-                    as={InputBase}
-                    type="password"
-                    sx={{
-                      backgroundColor: '#EEECF9',
-                      borderRadius: '15px',
-                      width: '20rem',
-                      paddingLeft: 4,
-                      paddingY: 0.5,
-                      marginTop: 1,
-                    }}
-                    name="password"
-                    required
-                    placeholder="*******"
-                  />
-                  <ErrorMessage name="password" component="div"   />
-                </Box>
+        <Typography sx={{ color: '#523FAD', p: 0.5 }}>Password</Typography>
+        <Field
+          as={InputBase}
+          type="password"
+          sx={{
+            backgroundColor: '#EEECF9',
+            borderRadius: '15px',
+            width: '20rem',
+            paddingLeft: 4,
+            paddingY: 0.5,
+            marginTop: 1,
+          }}
+          name="password"
+          required
+          placeholder="*******"
+        />
+        <p style={{color:'#FF0000'}}><ErrorMessage name="password" component="div" /></p>
+      </Box>
               </Box>
 
               <Box sx={{ display: 'flex', width: '17rem', fontSize: '13px' }}>
@@ -206,7 +217,7 @@ const Page = ({ params }: any) => {
                     </a>
                     .
                   </Typography>
-                  <ErrorMessage name="agreed" component="div"   />
+                <p style={{color:'#FF0000'}}>  <ErrorMessage name="agreed" component="div"   /></p>
                 </Box>
               </Box>
               <Box

@@ -1,4 +1,4 @@
-'use client'
+ 'use client'
 
 import { Box, InputBase,Button,} from "@mui/material"
 import {BsFilter, BsBookmark} from "react-icons/bs";

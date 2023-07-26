@@ -1,39 +1,201 @@
-"use client"
-import { Box, Typography, Button } from "@mui/material";
-import Image from "next/image";
+"use client";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { Box, Button, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { useState, useEffect, useContext } from "react";
+import { ContextValues } from "@/app/Context/context";
+import Side from "@/app/components/side";
+import { CalendarMonth } from "@mui/icons-material";
 
-const EventData = () => {
-    return (
-       <Box sx={{margin: 2}}>
-         <Box sx={{height: "14rem"}}>
-         <Image src="https://picsum.photos/200" alt="image"              
-                      width={0}
-                    height={0}
-                    sizes="100vw"
-                    style={{ width: "100%", height: "100%", borderRadius: "15px" }} />
-         </Box>
-         <Box sx={{backgroundColor: "#EEECF9", paddingY: 1,paddingX: 2, borderRadius: "8px", marginTop: 2}}>
-             <Box>
-                 <Typography sx={{color: "#523FAD", textDecoration: "underline", fontWeight: "bold", fontSize: 20}}> Item Subject</Typography>
-             </Box>
-             <Box sx={{marginTop: 1}}>
-                 <Typography>
-                 Lorem Ipsum is simply dummy text of the printing and typesetting
-industry. Lorem Ipsum has been the industrys standard dummy text
-ever since the 1500s, when an unknown printer took a galley of type
-and scrambled it to make a type specimen book. It has survived not 
-only five centuries, but also the leap into electronic typesetting, 
-remaining essentially unchanged. It was popularised in the 1960s 
-with the release of Letraset sheets containing Lorem Ipsum
-passages, and more recently with desktop publishing software like
-Aldus PageMaker including versions of Lorem Ipsum.
-                 </Typography>
-             </Box>
-         </Box>
-         <Box sx={{display: "flex", flexDirection: "row", justifyContent: "flex-end", marginY: 1}}>
-            <Button sx={{backgroundColor: "#523FAD !important", color: "#fff", borderRadius: "8px"}}>Add to Schedule</Button>
-         </Box>
-       </Box>
-    )
+
+export default function Dashboard ({params}:any){
+  const [activePage, setActivePage] = useState<string>("home");
+  const { searchVal, setSearchVal } = useContext(ContextValues);
+  const pathname = usePathname();
+  const router = useRouter();
+  console.log(pathname);
+  useEffect(() => {
+    let paths = pathname.split("/");
+
+    setActivePage(paths[2]);
+  }, [pathname]);
+   return (
+    <Box
+    sx={{ display: "flex", flexDirection: "column", backgroundColor: "#fff",p:1}}
+  >
+
+
+    <Box sx={{p:1, marginLeft:1}}>
+      <Typography sx={{ color: "#000", fontSize: " 30px", fontWeight: 600 }}>
+        Hey, {params.id}
+      </Typography>
+      <Typography sx={{ color: "#595959", fontSize: "18px", width: "80vw" }}>
+        Don’t forget to visit your nearest events that you have subscribe at
+        this week.
+      </Typography>
+    </Box>
+    <Box sx={{ display: "flex", gap: 2, marginX:2 }}>
+      <Box
+        sx={{
+          
+          display: "flex",
+          gap: 1,
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "150px",
+          height: "120px",
+          borderRadius: "30px",
+          background: "#EEECF9",
+        }}
+      >
+        <img src="allevent.png" alt="" />
+        <Typography sx={{ color: "#523FAD" }}>All Events</Typography>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 1,
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "150px",
+          height: "120px",
+          borderRadius: "30px",
+          background: "#EEECF9",
+        }}
+      >
+        <img src="autograph.png" alt="" />
+        <Typography sx={{ color: "#523FAD" }}>Autograph</Typography>
+      </Box>{" "}
+      <Box
+        sx={{
+          display: "flex",
+          gap: 1,
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "150px",
+          height: "120px",
+          borderRadius: "30px",
+          background: "#EEECF9",
+        }}
+      >
+        <img src="camera.png" alt="" />
+        <Typography sx={{ color: "#523FAD" }}>Photo OPS</Typography>
+      </Box>
+    </Box>
+    <Box
+      sx={{
+        paddingX: 1,
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100vw",
+          p: 2,
+        }}
+      >
+        <Typography sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}>
+          Upcoming Events
+        </Typography>
+        <Typography sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}>
+          03/10
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          width: "350px",
+          height: "250px",
+          backgroundImage: "url('pexels.png')",
+          borderRadius: "30px",
+          
+          backdropFilter: 'blur(10px)'
+      
+        }}
+      >
+       <Box sx={{marginY:20,marginX:2,
+        display:'flex',
+          flexDirection:'column',
+          justifyContent:'center',
+          alignItems:'flex-start'}}>
+       <Box sx={{display:'flex'}}> 
+          <CalendarMonth sx={{ color: "#fff"}}/>
+          <Typography sx={{ color: "#fff", fontSize: "16px", fontWeight: 500 }}>March 09, 2023</Typography>
+          </Box>
+        <Box sx={{ color: "#fff", fontSize: "22px", fontWeight: 500 }}>Programming event</Box>
+        </Box> 
+      </Box>
+    </Box>
+    <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+         
+          p: 2,
+        }}
+      >
+        <Typography sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}>
+          Upcoming Events
+        </Typography>
+        <Typography sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}>
+          03/10
+        </Typography>
+      </Box>
+      <Box  sx={{marginX:1}}>
+      {/* Photo Ops Schedule */}
+        <Box sx={{display:'flex', justifyContent:'space-between',p:1, alignItems:'center'}}>  
+          <Box sx={{ display:'flex',alignItems:'center', flexDirection:'column'}}> 
+            <Typography sx={{color: "#523FAD", fontSize: "20px", fontWeight: 600 }}>27</Typography>
+            <Typography sx={{ color: "#000", fontSize: "20px", fontWeight: 600 }}>JUN</Typography>
+          </Box>
+          <Box>
+        <Typography sx={{ fontSize: "20px", fontWeight: 600 }}>Photo Ops Schedule</Typography>
+            <Typography sx={{ color: "#595959", fontSize: "14px", fontWeight: 500 }}>70 going 13 interested</Typography>
+        </Box>
+        <Box>
+          <Button variant="outlined" sx={{border: '2px solid #523FAD',borderRadius:'30px  '}}> <Typography sx={{ color: "#523FAD", fontSize: "20px", fontWeight: 600 }}>Going</Typography></Button>
+        </Box>
+        </Box>
+        {/* Photo Ops Schedule */}
+        <Box sx={{display:'flex', justifyContent:'space-between',p:1, alignItems:'center'}}>  
+          <Box sx={{ display:'flex',alignItems:'center', flexDirection:'column'}}> 
+            <Typography sx={{ color: "#523FAD", fontSize: "20px", fontWeight: 600 }}>27</Typography>
+            <Typography sx={{ color: "#000", fontSize: "20px", fontWeight: 600 }}>JUN</Typography>
+          </Box>
+          <Box>
+        <Typography sx={{  fontSize: "20px", fontWeight: 600 }}>Program Schedule</Typography>
+            <Typography sx={{ color: "#595959", fontSize: "14px", fontWeight: 500 }}>70 going 13 interested</Typography>
+        </Box>
+        <Box>
+          <Button variant="contained" sx={{background:'#523FAD',borderRadius:'30px  '}}> <Typography sx={{ color: "#523FAD", fontSize: "20px", fontWeight: 600 }}>Going</Typography></Button>
+        </Box>
+        </Box>
+        {/* Autograph Schedule */}
+        <Box sx={{display:'flex', justifyContent:'space-between',p:1, alignItems:'center'}}>  
+          <Box sx={{ display:'flex',alignItems:'center', flexDirection:'column'}}> 
+            <Typography sx={{ color: "#523FAD", fontSize: "20px", fontWeight: 600 }}>27</Typography>
+            <Typography sx={{ color: "#000", fontSize: "20px", fontWeight: 600 }}>JUN</Typography>
+          </Box>
+          <Box>
+        <Typography sx={{fontSize: "20px", fontWeight: 600 }}>Autograph Schedule</Typography>
+            <Typography sx={{ color: "#595959", fontSize: "14px", fontWeight: 500 }}>70 going 13 interested</Typography>
+        </Box>
+        <Box>
+          <Button variant="outlined" sx={{border: '2px solid #523FAD',borderRadius:'30px  '}}> <Typography sx={{ color: "#523FAD", fontSize: "20px", fontWeight: 600 }}>Going</Typography></Button>
+        </Box>
+        </Box>
+      </Box>
+    <Box
+      sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
+    ></Box>
+  </Box>
+
+   )
 }
-export default EventData;
