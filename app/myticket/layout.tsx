@@ -40,9 +40,7 @@ export default function RootLayout({
   const { searchVal, setSearchVal } = useContext(ContextValues);
   const pathname = usePathname();
   const router = useRouter();
-  const [orders, setOrders] = useState<any>({
-    id:''
-  });
+  const [orders, setOrders] = useState<any>([]);
   const [data, setData] = useState({
     _id:'',
     firstName:'',
@@ -62,6 +60,7 @@ export default function RootLayout({
      .then(() => {
       // Once the user data is fetched, store the email in state
       setUserEmail(data.email);
+      console.log(data.email)
     })
     .catch((error) => {
       console.error("Error fetching user data:", error);
@@ -82,7 +81,7 @@ export default function RootLayout({
         );
 
         setOrders(filteredOrders);
-        console.log(orders)
+        console.log(filteredOrders)
       })
       .catch((error) => {
         console.error("Error fetching orders:", error);
@@ -100,21 +99,7 @@ export default function RootLayout({
   return (
     <Box
       sx={{ display: "flex", flexDirection: "column", backgroundColor: "#fff", p:1 }}>
-       <div>
-      {products.map((product: any) => (
-        
-        <div key={product.id}>
-          <h2>Name:{product.billing.first_name}</h2> 
-          <h2>Id:{orders.id}</h2>
-          <h2>Status:{product.status}</h2>
-          <h2>Total:{product.billing.email}</h2>
-            <br />
-          
-          
-        </div>
-      ))}
-      
-    </div>
+     
       <Box
         sx={{
           display: "flex",
@@ -146,6 +131,7 @@ export default function RootLayout({
           </Typography>
          
         </Box>
+        
       </Box>
       <Box sx={{ paddingX: 1 }}>
         <Typography sx={{ color: "#000", fontSize: " 30px", fontWeight: 600 }}>
@@ -156,6 +142,17 @@ export default function RootLayout({
           this week.
         </Typography>
       </Box>
+      <div>
+             {/* Display the filtered orders */}
+      {orders.map((order:any) => (
+        <div key={order.id}>
+          {/* ... Display order details ... */}
+          <h1> {order.id}</h1>
+          <h1> {order.billing.first_name}</h1>
+          <h1> {order.status}</h1>
+        </div>
+      ))}
+    </div>
       <Box sx={{ display: "flex", paddingX: 1, gap: 2 }}>
         <Box
           sx={{

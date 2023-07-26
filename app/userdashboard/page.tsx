@@ -10,6 +10,7 @@ import { useState, useEffect, useContext } from "react";
 import { ContextValues } from "@/app/Context/context";
 import Side from "../components/side";
 import { CalendarMonth } from "@mui/icons-material";
+import axios from "axios";
 
 
 export default function Dashboard (){
@@ -17,12 +18,27 @@ export default function Dashboard (){
   const { searchVal, setSearchVal } = useContext(ContextValues);
   const pathname = usePathname();
   const router = useRouter();
-  console.log(pathname);
+  const [data, setData] = useState({
+    _id:'',
+    firstName:'',
+    lastName:'',
+    email:''
+  })
+  // console.log(pathname);
   useEffect(() => {
     let paths = pathname.split("/");
 
     setActivePage(paths[2]);
   }, [pathname]);
+  const getDetail= async()=>{
+    const res= await axios.get('api/user/userdata')
+   //  console.log(res.data)
+    setData(res.data.data)
+   }
+   useEffect(() => {
+     
+     getDetail()
+   }, [])
    return (
     <Box
     sx={{ display: "flex", flexDirection: "column", backgroundColor: "#fff",p:1}}
@@ -61,7 +77,7 @@ export default function Dashboard (){
     </Box>
     <Box sx={{p:1, marginLeft:1}}>
       <Typography sx={{ color: "#000", fontSize: " 30px", fontWeight: 600 }}>
-        Hey, User!
+        Hey, {data.firstName}
       </Typography>
       <Typography sx={{ color: "#595959", fontSize: "18px", width: "80vw" }}>
         Don’t forget to visit your nearest events that you have subscribe at

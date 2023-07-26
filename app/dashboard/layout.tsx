@@ -21,7 +21,7 @@ export default function RootLayout({
 
 
   const [activePage, setActivePage] = useState<string>('home')
-  console.log(pathname);
+  // console.log(pathname);
   useEffect(()=> {
     let paths = pathname.split("/");
   
