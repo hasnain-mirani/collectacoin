@@ -30,7 +30,7 @@ const tokenData={
     email:email.email
 }
 // create token
-const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {expiresIn: '1d'})
+const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {expiresIn: '1h'})
 const response =NextResponse.json({
     message:'log in successful',
     success:true

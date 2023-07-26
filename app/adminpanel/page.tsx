@@ -92,6 +92,7 @@ const [autographData, setAutographData] = useState<any>(null);
           >
           <Typography variant="h5" sx={{ fontWeight: "bold" }}>
           Autograph Schedule
+          
             </Typography>
             <UpoloadData onSave={setAutographData}/>
           </Box>

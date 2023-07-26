@@ -1,27 +1,96 @@
 "use client";
+import Cookies from 'js-cookie';
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Box, InputBase, Button, Typography, IconButton } from "@mui/material";
 import { BsFilter, BsBookmark } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-
+import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api";
+// import { fetchOrders } from '@/worker/woocommerce';
 import { useState, useEffect, useContext } from "react";
 import { ContextValues } from "@/app/Context/context";
 import Side from "../components/side";
 import { CalendarMonth } from "@mui/icons-material";
-
+import jwtDecode from "jwt-decode";
+import axios from 'axios';
+const api = new WooCommerceRestApi({
+  url: "https://tickets.collectacon.nl/stg_43cc2",
+  consumerKey: "ck_49fe13f9ae81669bca995c6a28883b940f471322",
+  consumerSecret: "cs_c6fb3d55f2b37512df94022b1344c4dd71219c22",
+  version: "wc/v3",
+});
+interface Order {
+  billing: {
+    email: string;
+    // Other properties related to billing
+  };
+  // Other properties of the order
+}
+interface DecodedToken {
+  email: string;
+  // Other properties of the token
+}
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+
   const { searchVal, setSearchVal } = useContext(ContextValues);
   const pathname = usePathname();
   const router = useRouter();
+  const [orders, setOrders] = useState<any>({
+    id:''
+  });
+  const [data, setData] = useState({
+    _id:'',
+    firstName:'',
+    lastName:'',
+    email:''
+  })
+  const [userEmail, setUserEmail] = useState<string>("");
+  const [products, setProducts] = useState<any>([]);
+  const getDetail= async()=>{
+    const res= await axios.get('api/user/userdata')
+    console.log(res.data)
+    setData(res.data.data)
+   }
+   useEffect(() => {
+     
+     getDetail()   
+     .then(() => {
+      // Once the user data is fetched, store the email in state
+      setUserEmail(data.email);
+    })
+    .catch((error) => {
+      console.error("Error fetching user data:", error);
+    });
+   }, [])
+   useEffect(() => {
+     api
+      .get("orders", {
+        // Add a filter to get only the orders with a specific email
+        search: userEmail,
+        // You can adjust the filter based on the API response structure.
+        // If 'email' is nested, provide the correct path, e.g., 'billing.email'
+      })
+      .then((response) => {
+        // Filter the orders based on the user's email
+        const filteredOrders = response.data.filter(
+          (order: Order) => order.billing.email === userEmail
+        );
 
+        setOrders(filteredOrders);
+        console.log(orders)
+      })
+      .catch((error) => {
+        console.error("Error fetching orders:", error);
+      });
+   }, []);
+ 
   const [activePage, setActivePage] = useState<string>("home");
-  console.log(pathname);
+ 
   useEffect(() => {
     let paths = pathname.split("/");
 
@@ -30,8 +99,22 @@ export default function RootLayout({
 
   return (
     <Box
-      sx={{ display: "flex", flexDirection: "column", backgroundColor: "#fff", p:1 }}
-    >
+      sx={{ display: "flex", flexDirection: "column", backgroundColor: "#fff", p:1 }}>
+       <div>
+      {products.map((product: any) => (
+        
+        <div key={product.id}>
+          <h2>Name:{product.billing.first_name}</h2> 
+          <h2>Id:{orders.id}</h2>
+          <h2>Status:{product.status}</h2>
+          <h2>Total:{product.billing.email}</h2>
+            <br />
+          
+          
+        </div>
+      ))}
+      
+    </div>
       <Box
         sx={{
           display: "flex",
@@ -66,7 +149,7 @@ export default function RootLayout({
       </Box>
       <Box sx={{ paddingX: 1 }}>
         <Typography sx={{ color: "#000", fontSize: " 30px", fontWeight: 600 }}>
-          Hey, User!
+          Hey, {data.firstName}
         </Typography>
         <Typography sx={{ color: "#595959", fontSize: "18px", width: "80vw" }}>
           Don’t forget to visit your nearest events that you have subscribe at
