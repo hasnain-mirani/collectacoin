@@ -43,7 +43,7 @@ export default function BasicModal() {
   const formEntries = useSelector((state: RootState) => state.form);
 
   const [details, setDetails] = useState<FormValues>({
-    FirstName: '',
+    FirstName: "",
     LastName: '',
     Address: '',
     Hallno: '',
@@ -83,7 +83,7 @@ export default function BasicModal() {
 
   const resetForm = () => {
     setDetails({
-      FirstName: '',
+      FirstName: "",
       LastName: '',
       Address: '',
       Hallno: '',

@@ -19,14 +19,14 @@ const page = () => {
     email: string;
     // Add more details fields as needed
   }
-  const [programingData, setProgramingData] = useState<any>(null);
-  const [autographData, setAutographData] = useState<any>(null);
+  // const [programingData, setProgramingData] = useState<any>(null);
+  // const [autographData, setAutographData] = useState<any>(null);
 
-  const [details, setDetails] = useState<Details>({
-    name: "",
-    email: "",
-  });
-  const [isEditing, setIsEditing] = useState(false);
+  // const [details, setDetails] = useState<Details>({
+  //   name: "",
+  //   email: "",
+  // });
+  // const [isEditing, setIsEditing] = useState(false);
 
   return (
     <Box className="container" sx={{ display: "flex", flexDirection: "row" }}>
@@ -94,7 +94,7 @@ const page = () => {
               <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                 Autograph Schedule
               </Typography>
-              <UploadAutograph onSave={setAutographData} />
+              <UploadAutograph  />
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
               <Editdetail />

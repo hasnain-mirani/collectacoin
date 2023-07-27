@@ -7,7 +7,7 @@ import { useState, useEffect, useContext } from "react";
 import { ContextValues } from "@/app/Context/context";
 import Side from "@/app/components/side";
 import { CalendarMonth } from "@mui/icons-material";
-
+import Image from "next/image";
 
 export default function Dashboard ({params}:any){
   const [activePage, setActivePage] = useState<string>("home");
@@ -80,7 +80,7 @@ export default function Dashboard ({params}:any){
           background: "#EEECF9",
         }}
       >
-        <img src="allevent.png" alt="" />
+        <Image src="allevent.png" alt="" />
         <Typography sx={{ color: "#523FAD" }}>All Events</Typography>
       </Box>
       <Box
@@ -96,7 +96,7 @@ export default function Dashboard ({params}:any){
           background: "#EEECF9",
         }}
       >
-        <img src="autograph.png" alt="" />
+        <Image src="autograph.png" alt="" />
         <Typography sx={{ color: "#523FAD" }}>Autograph</Typography>
       </Box>{" "}
       <Box
@@ -112,7 +112,7 @@ export default function Dashboard ({params}:any){
           background: "#EEECF9",
         }}
       >
-        <img src="camera.png" alt="" />
+        <Image src="camera.png" alt="" />
         <Typography sx={{ color: "#523FAD" }}>Photo OPS</Typography>
       </Box>
     </Box>

@@ -4,8 +4,6 @@ import User from "@/modals/userModal";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import nodemailer from "nodemailer";
-import crypto from "crypto";
-export const verificationCode:any = crypto.randomBytes(3).toString("hex");
 connect();
 async function sendVerificationEmail(email: string, verificationCode: string) {
   try {
@@ -47,7 +45,7 @@ console.log(req)
         { status: 400 }
       );
     }
-    verificationCode
+
     // beCrypt Password!!
     const salt = await bcryptjs.genSalt(10);
     const hashPassword = await bcryptjs.hash(password, salt);
@@ -59,11 +57,11 @@ console.log(req)
       email,
       password: hashPassword,
       agreed,
-      verificationCode, // Add the verification code to the user object
+     // Add the verification code to the user object
       verified: false,
     });
     const saveUser = await newUser.save();
-    sendVerificationEmail(email, verificationCode);
+
     
     return NextResponse.json(
       {

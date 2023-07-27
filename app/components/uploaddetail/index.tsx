@@ -31,6 +31,7 @@ const inputStyle={
 }
 
 export default function BasicModal(): void {
+  const [open, setOpen] = React.useState(false);
   const [formValues, setFormValues] = React.useState<any>({
     FirstName:'',
     LastName:'',
@@ -73,7 +74,6 @@ export default function BasicModal(): void {
   
   
 
-  const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 

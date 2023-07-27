@@ -10,6 +10,7 @@ import { ContextValues } from "@/app/Context/context";
 import Side from "../components/side";
 import { ArrowBack, CalendarMonth, Search } from "@mui/icons-material";
 import Items from '@/app/components/Items'
+import Image from "next/image";
 
 export default function RootLayout({
   children,
@@ -82,7 +83,7 @@ export default function RootLayout({
 
         <Box >
         <Box sx={{minHeight: "6rem", marginY: 2, backgroundColor: '#EEECF9', borderRadius: "20px", display: "flex", flexDirection: "row",margin:1}}>
-                  <img src="https://picsum.photos/200" alt="image"              
+                  <Image src="https://picsum.photos/200" alt="image"              
                       width={0}
                     height={0}
                     sizes="100vw"

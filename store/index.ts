@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userSlice from "@/state/userSlice";
 import modeSlice from "@/state/modeSlice";
 import formReducer from "@/state/addSlice";
 import addSliceReducer from '@/state/seprateSlice'
@@ -7,7 +6,7 @@ import { TypedUseSelectorHook, useSelector } from "react-redux";
 import userReducer from './../state/counterSlice'
 export const store = configureStore({
   reducer: {
-      userSlice, modeSlice,
+       modeSlice,
      userReducer,
      form: formReducer,
      add: addSliceReducer,

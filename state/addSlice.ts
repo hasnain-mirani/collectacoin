@@ -30,7 +30,7 @@ const formSlice = createSlice({
     },
     updateFormEntry: (
       state,
-      action: PayloadAction<{ index: number; updatedEntry: FormValues }>
+      action: PayloadAction<{ index: number; updatedEntry: any }>
     ) => {
       const { index, updatedEntry } = action.payload;
       state[index] = updatedEntry;

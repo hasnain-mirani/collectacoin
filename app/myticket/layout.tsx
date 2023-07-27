@@ -12,7 +12,7 @@ import { useState, useEffect, useContext } from "react";
 import { ContextValues } from "@/app/Context/context";
 import Side from "../components/side";
 import { CalendarMonth } from "@mui/icons-material";
-import jwtDecode from "jwt-decode";
+import Image from 'next/image';
 import axios from 'axios';
 const api = new WooCommerceRestApi({
   url: "https://tickets.collectacon.nl/stg_43cc2",
@@ -49,18 +49,20 @@ export default function RootLayout({
   })
   const [userEmail, setUserEmail] = useState<string>("");
   const [products, setProducts] = useState<any>([]);
-  const getDetail= async()=>{
-    const res= await axios.get('api/user/userdata')
-    // console.log(res.data)
-    setData(res.data.data)
-    setUserEmail(res.data.data.email)
-    console.log(userEmail)
-
-   }
+  useEffect(() => {
+    const getDetail= async()=>{
+      const res= await axios.get('api/user/userdata')
+      // console.log(res.data)
+      setData(res.data.data)
+      setUserEmail(res.data.data.email)
+      console.log(userEmail)
+     }
+     getDetail() 
+  }, [])
+  
+  
    useEffect(() => {
-     getDetail()   
-   }, [])
-   useEffect(() => {
+  
     if (userEmail !== "") {
      api
       .get("orders", {
@@ -81,6 +83,8 @@ export default function RootLayout({
       .catch((error) => {
         console.error("Error fetching orders:", error);
       });}
+     
+
    }, [userEmail]);
  
   const [activePage, setActivePage] = useState<string>("home");
@@ -162,7 +166,7 @@ export default function RootLayout({
             background: "#EEECF9",
           }}
         >
-          <img src="allevent.png" alt="" />
+          <Image src="allevent.png" alt="" />
           <Typography sx={{ color: "#523FAD" }}>All Events</Typography>
         </Box>
         <Box
@@ -178,7 +182,7 @@ export default function RootLayout({
             background: "#EEECF9",
           }}
         >
-          <img src="autograph.png" alt="" />
+          <Image src="autograph.png" alt="" />
           <Typography sx={{ color: "#523FAD" }}>Autograph</Typography>
         </Box>{" "}
         <Box
@@ -194,7 +198,7 @@ export default function RootLayout({
             background: "#EEECF9",
           }}
         >
-          <img src="camera.png" alt="" />
+          <Image src="camera.png" alt="" />
           <Typography sx={{ color: "#523FAD" }}>Photo OPS</Typography>
         </Box>
       </Box>
@@ -259,7 +263,7 @@ export default function RootLayout({
         </Box>
         <Box >
         <Box sx={{minHeight: "6rem", backgroundColor: '#EEECF9', borderRadius: "20px", display: "flex", flexDirection: "row", margin:1}}>
-                  <img src="https://picsum.photos/200" alt="image"              
+                  <Image src="https://picsum.photos/200" alt="image"              
                       width={0}
                     height={0}
                     sizes="100vw"

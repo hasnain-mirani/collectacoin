@@ -5,7 +5,7 @@ import { BsFilter, BsBookmark } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-
+import Image from "next/image";
 import { useState, useEffect, useContext } from "react";
 import { ContextValues } from "@/app/Context/context";
 import Side from "../components/side";
@@ -110,7 +110,7 @@ export default function Dashboard (){
             background: "#EEECF9",
           }}
         >
-          <img
+          <Image
             src="allevent.png"
             alt=""
             onClick={() => {
@@ -132,7 +132,7 @@ export default function Dashboard (){
             background: "#EEECF9",
           }}
         >
-          <img
+          <Image
             src="autograph.png"
             alt=""
             onClick={() => {
@@ -154,7 +154,7 @@ export default function Dashboard (){
             background: "#EEECF9",
           }}
         >
-          <img
+          <Image
             src="camera.png"
             alt=""
             onClick={() => {
@@ -177,7 +177,7 @@ export default function Dashboard (){
     
           }}
         >
-          <img
+          <Image
             src="Programming.png"
             height={60}
             width={60}

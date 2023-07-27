@@ -21,9 +21,6 @@ export default function Home() {
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false)
   const [subscription, setSubscription] = useState<any>(null)
   const [registration, setRegistration] = useState<any>(null)
-  const userState = useAppSelector((state)=> state.userSlice);
-  console.log(userState)
-
   const subscribeButtonOnClick = async (event:any) => {
     event.preventDefault()
     const sub = await registration.pushManager.subscribe({

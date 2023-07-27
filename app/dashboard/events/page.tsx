@@ -1,20 +1,33 @@
 "use client";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Box, InputBase, Button, Typography } from "@mui/material";
-import { BsFilter, BsBookmark } from "react-icons/bs";
-import { CiSearch } from "react-icons/ci";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-
 import { useState, useEffect, useContext } from "react";
 import { ContextValues } from "@/app/Context/context";
 import Side from "@/app/components/side";
 import { CalendarMonth } from "@mui/icons-material";
 import Image from "next/image";
+import axios from "axios";
 
 export default function Dashboard() {
   const [activePage, setActivePage] = useState<string>("home");
   const { searchVal, setSearchVal } = useContext(ContextValues);
+  const [data, setData] = useState({
+    _id:'',
+    firstName:'',
+    lastName:'',
+    email:''
+  })
+  const getDetail= async()=>{
+   const res= await axios.get('api/user/userdata')
+  //  console.log(res.data)
+   setData(res.data.data)
+  }
+  useEffect(() => {
+    
+    getDetail()
+  }, [])
   const pathname = usePathname();
   const router = useRouter();
   // console.log(pathname);
@@ -37,7 +50,7 @@ export default function Dashboard() {
       
       <Box sx={{ p: 1, marginLeft: 1 }}>
         <Typography sx={{ color: "#000", fontSize: " 30px", fontWeight: 600 }}>
-          Hey, User!
+          Hey, {data.firstName}
         </Typography>
         <Typography sx={{ color: "#595959", fontSize: "18px", width: "80vw" }}>
           Don’t forget to visit your nearest events that you have subscribe at
@@ -70,7 +83,7 @@ export default function Dashboard() {
             background: "#EEECF9",
           }}
         >
-          <img
+          <Image
             src="allevent.png"
             alt=""
             onClick={() => {
@@ -92,7 +105,7 @@ export default function Dashboard() {
             background: "#EEECF9",
           }}
         >
-          <img
+          <Image
             src="autograph.png"
             alt=""
             onClick={() => {
@@ -114,7 +127,7 @@ export default function Dashboard() {
             background: "#EEECF9",
           }}
         >
-          <img
+          <Image
             src="camera.png"
             alt=""
             onClick={() => {
@@ -137,7 +150,7 @@ export default function Dashboard() {
     
           }}
         >
-          <img
+          <Image
             src="Programming.png"
             height={60}
             width={60}

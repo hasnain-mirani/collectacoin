@@ -4,36 +4,36 @@ import User from "@/modals/userModal";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import nodemailer from "nodemailer";
-import crypto from "crypto";
-export const verificationCode:any = crypto.randomBytes(3).toString("hex");
+// import crypto from "crypto";
+// export const verificationCode:any = crypto.randomBytes(3).toString("hex");
 connect();
-async function sendVerificationEmail(email: string, verificationCode: string) {
-  try {
-    // Create a transporter object using your email service credentials
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: "hasnainmirani1122@gmail.com",
-        pass: "hgwqurgylwjqauxi",
-      },
-    });
+// async function sendVerificationEmail(email: string, verificationCode: string) {
+//   try {
+//     // Create a transporter object using your email service credentials
+//     const transporter = nodemailer.createTransport({
+//       service: "gmail",
+//       auth: {
+//         user: "hasnainmirani1122@gmail.com",
+//         pass: "hgwqurgylwjqauxi",
+//       },
+//     });
 
-    // Define the email options
-    const mailOptions = {
-      from: "mirani@gmail.com",
-      to:email,
-      subject: "Email Verification",
-      text: `Your verificatio n code is: ${verificationCode}`,
-    };
+//     // Define the email options
+//     const mailOptions = {
+//       from: "mirani@gmail.com",
+//       to:email,
+//       subject: "Email Verification",
+//       text: `Your verificatio n code is: ${verificationCode}`,
+//     };
 
-    // Send the email
-    await transporter.sendMail(mailOptions);
+//     // Send the email
+//     await transporter.sendMail(mailOptions);
 
-    console.log("Verification email sent successfully");
-  } catch (error) {
-    console.error("Error sending verification email:", error);
-  }
-}
+//     console.log("Verification email sent successfully");
+//   } catch (error) {
+//     console.error("Error sending verification email:", error);
+//   }
+// }
 export async function POST(request: NextRequest) {
   try {
     const req = await request.json();
@@ -47,7 +47,7 @@ console.log(req)
         { status: 400 }
       );
     }
-    verificationCode
+    // verificationCode
     // beCrypt Password!!
     const salt = await bcryptjs.genSalt(10);
     const hashPassword = await bcryptjs.hash(password, salt);
@@ -60,11 +60,11 @@ console.log(req)
       password: hashPassword,
       agreed,
       role,
-      verificationCode, // Add the verification code to the user object
+  // Add the verification code to the user object
       verified: false,
     });
     const saveUser = await newUser.save();
-    sendVerificationEmail(email, verificationCode);
+    // sendVerificationEmail(email, verificationCode);
     
     return NextResponse.json(
       {
