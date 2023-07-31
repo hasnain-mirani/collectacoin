@@ -1,400 +1,241 @@
 "use client";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import { Box, InputBase, Button, Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
-import { useState, useEffect, useContext } from "react";
-import { ContextValues } from "@/app/Context/context";
-import Side from "@/app/components/side";
-import { CalendarMonth } from "@mui/icons-material";
+import { Box, Typography, Button, IconButton } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
+
+import { useRouter } from "next/navigation";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-
-export default function Dashboard() {
-  const [activePage, setActivePage] = useState<string>("home");
+import { ContextValues } from "@/app/Context/context";
+import Mybutton from "../../components/Mybutton";
+import toast from "react-hot-toast";
+const EventsPage = () => {
+  const [isClicked, setIsClicked] = useState(false);
+  const handleClick = () => {
+    setIsClicked(!isClicked);
+  };
+  const dispatch = useDispatch();
   const { searchVal, setSearchVal } = useContext(ContextValues);
-  const [data, setData] = useState({
-    _id:'',
-    firstName:'',
-    lastName:'',
-    email:''
-  })
-  const getDetail= async()=>{
-   const res= await axios.get('api/user/userdata')
-  //  console.log(res.data)
-   setData(res.data.data)
-  }
-  useEffect(() => {
-    
-    getDetail()
-  }, [])
-  const pathname = usePathname();
   const router = useRouter();
-  // console.log(pathname);
+  const [events, setEvents] = useState<any>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(10);
+  const [totalPages, setTotalPages] = useState<number>(1);
   useEffect(() => {
-    let paths = pathname.split("/");
+    getData(searchVal, currentPage, limit);
+  }, [searchVal, limit, currentPage]);
+  async function getData(search: string, page: number, limit: number) {
+    let res = await axios.get("http://localhost:8000/api/events", {
+      params: {
+        search,
+        page,
+        limit,
+      },
+    });
+    console.log(res.data);
+    setEvents(res.data);
+  }
 
-    setActivePage(paths[2]);
-  }, [pathname]);
+  type AdminEvent = {
+    ItemTitle: string;
+    ItemSubject: string;
+    ItemDescription: string;
+    Hallno: string;
+    Date: string;
+    Time: string;
+    Pic: string;
+  };
+
+  const [adminEvent, setAdminEvent] = useState<AdminEvent[]>([]);
+
+  const getAdminEvents = async () => {
+    try {
+      const response = await axios.get("/api/fetchEvents");
+      const { allEvents } = await response.data;
+      setAdminEvent(allEvents);
+      toast.success("Events Found!");
+    } catch (error: any) {
+      toast.error("No Events Found!");
+    }
+  };
+  useEffect(() => {
+    getAdminEvents();
+  }, []);
+
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: "#fff",
-        p: 1,
-      }}
-    >
-    
-   
-      
-      <Box sx={{ p: 1, marginLeft: 1 }}>
-        <Typography sx={{ color: "#000", fontSize: " 30px", fontWeight: 600 }}>
-          Hey, {data.firstName}
-        </Typography>
-        <Typography sx={{ color: "#595959", fontSize: "18px", width: "80vw" }}>
-          Don’t forget to visit your nearest events that you have subscribe at
-          this week.
-        </Typography>
-      </Box>
-      <Box sx={{overflowX: "scroll" , width: "100%"}} >
-      <Box sx={{ display: "flex", maxWidth: "500px", margin: "0 auto" }}>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          gap: 2,
-          marginLeft: 2,
-          marginY: 2,
-          position: "relative",
-          borderRadius: "25px",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex", 
-            gap: 1,
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100px",
-            height: "120px",
-            borderRadius: "30px",
-            background: "#EEECF9",
-          }}
-        >
-          <Image
-            src="allevent.png"
-            alt=""
-            onClick={() => {
-              router.push("/dashboard/events");
-            }}
-          />
-          <Typography sx={{ color: "#523FAD" }}>All Events</Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            gap: 1,
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100px",
-            height: "120px",
-            borderRadius: "30px",
-            background: "#EEECF9",
-          }}
-        >
-          <Image
-            src="autograph.png"
-            alt=""
-            onClick={() => {
-              router.push("/dashboard/autographs");
-            }}
-          />
-          <Typography sx={{ color: "#523FAD" }}>Autograph</Typography>
-        </Box>{" "}
-        <Box
-          sx={{
-            display: "flex",
-            gap: 1,
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100px",
-            height: "120px",
-            borderRadius: "30px",
-            background: "#EEECF9",
-          }}
-        >
-          <Image
-            src="camera.png"
-            alt=""
-            onClick={() => {
-              router.push("/dashboard/PhotoOPS");
-            }}
-          />
-          <Typography sx={{ color: "#523FAD" }}>Photo OPS</Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            gap: 1,
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100px",
-            height: "120px",
-            borderRadius: "30px",
-            background: "#EEECF9",
-    
-          }}
-        >
-          <Image
-            src="Programming.png"
-            height={60}
-            width={60}
-            alt=""
-            onClick={() => {
-              router.push("/dashboard/Programming");
-            }}
-          />
-          <Typography sx={{ color: "#523FAD" }}>Programing</Typography>
-        </Box>
-      </Box>
-      </Box>
-      </Box>
+    <Box>
+      <Box sx={{ marginX: 2, marginY: 1 }}>
+        <Box>
+          {adminEvent.map((event, index) => (
+            
+            <Box
+              key={index}
+              sx={{
+                height: "7rem",
+                width: "100%",
+                marginY: 2,
+                backgroundColor: "#EEECF9",
+                borderRadius: "20px",
+                display: "flex",
+                flexDirection: "row",
+              }}
+            >
+              <Image
+                src={"/" + event.Pic}
+                alt="image"
+                width={0}
+                height={0}
+                sizes="100vw"
+                style={{ width: "37%", height: "100%", borderRadius: "20px" }}
+                onClick={() => router.push(`/dashboard/events/${index}`)}
+              />
+              <Box
+                sx={{
+                  width: "63%",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    marginLeft: 2,
+                    paddingY: 2,
+                  }}
+                  onClick={() => router.push(`/dashboard/events/${index}`)}
+                >
+                  <Typography sx={{ fontWeight: "bold" }}>
+                    {event.ItemTitle}
+                  </Typography>
+                  <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-start",
+                        gap: 0.5,
+                      }}
+                    >
+                      <Typography sx={{ color: "#595959", fontSize: 14 }}>
+                        Date
+                      </Typography>
+                      <Typography sx={{ color: "#523FAD", fontSize: 12 }}>
+                        {event.Date}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-start",
+                        gap: 0.5,
+                      }}
+                    >
+                      <Typography sx={{ color: "#595959", fontSize: 14 }}>
+                        Time
+                      </Typography>
+                      <Typography sx={{ color: "#523FAD", fontSize: 12 }}>
+                        {event.Time}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
 
-      <Box
-        sx={{
-          paddingX: 1,
-          alignItems: "center",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "100vw",
-            p: 2,
-          }}
-        >
-          <Typography sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}>
-            Upcoming Events
-          </Typography>
-          <Typography sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}>
-            03/10
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            width: "350px",
-            height: "250px",
-            backgroundImage: "url('pexels.png')",
-            borderRadius: "30px",
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    marginX: 1,
+                    marginY: 1,
+                  }}
+                >
+                  <Mybutton
+                    index={index}
+                    ItemTitle={event.ItemTitle}
+                    Date={event.Date}
+                    Time={event.Time}
+                    Pic={event.Pic}
+                    Hallno={event.Hallno}
+                    ItemSubject = {event.ItemSubject}
+                    ItemDescription={event.ItemDescription}
 
-            backdropFilter: "blur(10px)",
+                  />
+                </Box>
+              </Box>
+            </Box>
+          ))}
+        </Box>
+
+        {/* advertisement */}
+        <Box
+          sx={{
+            height: "10rem",
+            width: "100%",
+            position: "relative",
+            borderRadius: "25px",
+            overflow: "hidden",
           }}
         >
           <Box
             sx={{
-              marginY: 20,
-              marginX: 2,
+              position: "absolute",
+              top: 0,
+              backgroundColor: "#000000",
+              opacity: "50%",
+              overflow: "hidden",
+              width: "100%",
+              height: "100%",
+            }}
+          ></Box>
+          <Image
+            src="/advertisement.png"
+            alt="image"
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "100%", height: "100%" }}
+          />
+          <Box
+            sx={{
+              position: "absolute",
+              paddingLeft: 3,
+              paddingRight: 1,
+              paddingY: 1,
+              height: "30%",
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "flex-start",
+              top: "25%",
             }}
           >
-            <Box sx={{ display: "flex" }}>
-              <CalendarMonth sx={{ color: "#fff" }} />
-              <Typography
-                sx={{ color: "#fff", fontSize: "16px", fontWeight: 500 }}
-              >
-                March 09, 2023
-              </Typography>
-            </Box>
-            <Box sx={{ color: "#fff", fontSize: "22px", fontWeight: 500 }}>
-              Programming event
+            <Box>
+              <Box>
+                <Typography
+                  sx={{ fontWeight: "semibold", fontSize: 24, color: "#fff" }}
+                >
+                  Vendor Advertisement
+                </Typography>
+              </Box>
+              <Box>
+                <Button
+                  sx={{
+                    backgroundColor: "#523FAD !important",
+                    color: "#fff",
+                    borderRadius: "10px",
+                    marginTop: 1,
+                  }}
+                >
+                  Book Now
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Box>
+        {/* advertisement */}
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-
-          p: 2,
-        }}
-      >
-        <Typography sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}>
-          Upcoming Events
-        </Typography>
-        <Typography sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}>
-          03/10
-        </Typography>
-      </Box>
-      <Box sx={{ marginX: 1 }}>
-        {/* Photo Ops Schedule */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            p: 1,
-            alignItems: "center",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
-            }}
-          >
-            <Typography
-              sx={{ color: "#523FAD", fontSize: "20px", fontWeight: 600 }}
-            >
-              27
-            </Typography>
-            <Typography
-              sx={{ color: "#000", fontSize: "20px", fontWeight: 600 }}
-            >
-              JUN
-            </Typography>
-          </Box>
-          <Box>
-            <Typography sx={{ fontSize: "20px", fontWeight: 600 }}>
-              Photo Ops Schedule
-            </Typography>
-            <Typography
-              sx={{ color: "#595959", fontSize: "14px", fontWeight: 500 }}
-            >
-              70 going 13 interested
-            </Typography>
-          </Box>
-          <Box>
-            <Button
-              variant="outlined"
-              sx={{ border: "2px solid #523FAD", borderRadius: "30px  " }}
-            >
-              {" "}
-              <Typography
-                sx={{ color: "#523FAD", fontSize: "20px", fontWeight: 600 }}
-              >
-                Going
-              </Typography>
-            </Button>
-          </Box>
-        </Box>
-        {/* Photo Ops Schedule */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            p: 1,
-            alignItems: "center",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
-            }}
-          >
-            <Typography
-              sx={{ color: "#523FAD", fontSize: "20px", fontWeight: 600 }}
-            >
-              27
-            </Typography>
-            <Typography
-              sx={{ color: "#000", fontSize: "20px", fontWeight: 600 }}
-            >
-              JUN
-            </Typography>
-          </Box>
-          <Box>
-            <Typography sx={{ fontSize: "20px", fontWeight: 600 }}>
-              Program Schedule
-            </Typography>
-            <Typography
-              sx={{ color: "#595959", fontSize: "14px", fontWeight: 500 }}
-            >
-              70 going 13 interested
-            </Typography>
-          </Box>
-          <Box>
-            <Button
-              variant="contained"
-              sx={{ background: "#523FAD", borderRadius: "30px  " }}
-            >
-              {" "}
-              <Typography
-                sx={{ color: "#523FAD", fontSize: "20px", fontWeight: 600 }}
-              >
-                Going
-              </Typography>
-            </Button>
-          </Box>
-        </Box>
-        {/* Autograph Schedule */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            p: 1,
-            alignItems: "center",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
-            }}
-          >
-            <Typography
-              sx={{ color: "#523FAD", fontSize: "20px", fontWeight: 600 }}
-            >
-              27
-            </Typography>
-            <Typography
-              sx={{ color: "#000", fontSize: "20px", fontWeight: 600 }}
-            >
-              JUN
-            </Typography>
-          </Box>
-          <Box>
-            <Typography sx={{ fontSize: "20px", fontWeight: 600 }}>
-              Autograph Schedule
-            </Typography>
-            <Typography
-              sx={{ color: "#595959", fontSize: "14px", fontWeight: 500 }}
-            >
-              70 going 13 interested
-            </Typography>
-          </Box>
-          <Box>
-            <Button
-              variant="outlined"
-              sx={{ border: "2px solid #523FAD", borderRadius: "30px  " }}
-            >
-              {" "}
-              <Typography
-                sx={{ color: "#523FAD", fontSize: "20px", fontWeight: 600 }}
-              >
-                Going
-              </Typography>
-            </Button>
-          </Box>
-        </Box>
-      </Box>
-      <Box
-        sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
-      ></Box>
     </Box>
   );
-}
+};
+export default EventsPage;

@@ -1,42 +1,111 @@
-"use client"
+"use client";
 import { Box, Typography, Button } from "@mui/material";
 import Image from "next/image";
+import { useState , useEffect } from "react";
+import axios from 'axios';
+import Mybutton1 from "@/app/components/Mybutton1";
 
 const EventData = () => {
-    return (
-       <Box sx={{padding: 2, backgroundColor: "#fff"}}>
-        <Box sx={{padding: 1}}>
-            <Typography sx={{fontWeight: "bold", fontSize: 20}}>Autograph Item 01</Typography>
+  const [Desc, setDesc] = useState<string>("");
+  const [subject, setSubject] = useState<string>("");
+  const [Pic, setPic] = useState<string>("");
+  const [Title, setTitle] = useState<string>("");
+  const [Time, setTime] = useState<string>("");
+  const [Date, setDate] = useState<string>("");
+  const [Hallno, setHallNo] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true); // Add loading state
+
+  const getEvents = async (id: number) => {
+    try {
+      const response = await axios.get("/api/fetchAutograph");
+      const { allAutographs } = response.data;
+
+      // Fetch the event data based on the ID and set the state
+      setDesc(allAutographs[Number(id)].ItemDescription || "");
+      setSubject(allAutographs[Number(id)].ItemSubject || "");
+      setPic(allAutographs[Number(id)].Pic || "");
+      setHallNo(allAutographs[Number(id)].Hallno || "");
+      setTitle(allAutographs[Number(id)].ItemTitle || "");
+      setDate(allAutographs[Number(id)].Date || "");
+      setTime(allAutographs[Number(id)].Time || "");
+
+      setLoading(false);
+    } catch (error) {
+      console.log(`Event ${id} not found`);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const id = window.location.pathname.split("/").pop();
+    getEvents(Number(id));
+  }, []);
+  return (
+    <Box sx={{ padding: 2, backgroundColor: "#fff" , height: 705 }}>
+
+      <Box sx={{ padding: 1 }}>
+        <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
+          {Title}
+        </Typography>
+      </Box>
+      <Box sx={{ height: "14rem" }}>
+        <Image
+          src={"/" + Pic}
+          alt="image"
+          width={0}
+          height={0}
+          sizes="100vw"
+          style={{ width: "100%", height: "100%", borderRadius: "15px" }}
+        />
+      </Box>
+      <Box
+        sx={{
+          backgroundColor: "#EEECF9",
+          paddingY: 1,
+          paddingX: 2,
+          borderRadius: "8px",
+          marginTop: 2,
+        }}
+      >
+        <Box>
+          <Typography
+            sx={{
+              color: "#523FAD",
+              textDecoration: "underline",
+              fontWeight: "bold",
+              fontSize: 20,
+            }}
+          >
+            {subject}
+          </Typography>
         </Box>
-         <Box sx={{height: "14rem"}}>
-         <Image src="https://picsum.photos/200" alt="image"              
-                      width={0}
-                    height={0}
-                    sizes="100vw"
-                    style={{ width: "100%", height: "100%", borderRadius: "15px" }} />
-         </Box>
-         <Box sx={{backgroundColor: "#EEECF9", paddingY: 1,paddingX: 2, borderRadius: "8px", marginTop: 2}}>
-             <Box>
-                 <Typography sx={{color: "#523FAD", textDecoration: "underline", fontWeight: "bold", fontSize: 20}}> Item Subject</Typography>
-             </Box>
-             <Box sx={{marginTop: 1}}>
-                 <Typography>
-                 Lorem Ipsum is simply dummy text of the printing and typesetting
-industry. Lorem Ipsum has been the industrys standard dummy text
-ever since the 1500s, when an unknown printer took a galley of type
-and scrambled it to make a type specimen book. It has survived not 
-only five centuries, but also the leap into electronic typesetting, 
-remaining essentially unchanged. It was popularised in the 1960s 
-with the release of Letraset sheets containing Lorem Ipsum
-passages, and more recently with desktop publishing software like
-Aldus PageMaker including versions of Lorem Ipsum.
-                 </Typography>
-             </Box>
-         </Box>
-         <Box sx={{display: "flex", flexDirection: "row", justifyContent: "flex-end", marginY: 1}}>
-            <Button sx={{backgroundColor: "#523FAD !important", color: "#fff", borderRadius: "8px"}}>Add to Schedule</Button>
-         </Box>
-       </Box>
-    )
-}
+        <Box sx={{ marginTop: 1 }}>
+          <Typography>
+            {Desc}
+          </Typography>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-end",
+          marginY: 1,
+        }}
+      >
+         {!loading && (
+          <Mybutton1
+            ItemTitle={Title}
+            Date={Date}
+            Time={Time}
+            Pic={Pic}
+            Hallno={Hallno}
+            ItemSubject={subject}
+            ItemDescription={Desc}
+          />
+        )}
+      </Box>
+    </Box>
+  );
+};
 export default EventData;

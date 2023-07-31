@@ -36,7 +36,7 @@ const AutographPage = () => {
     setAutographs(res.data);
   }
 
-  type AUTOGRAPH = {
+  type PROGRAM= {
     ItemTitle: string;
     ItemSubject: string;
     ItemDescription: string;
@@ -46,27 +46,27 @@ const AutographPage = () => {
     Pic: string;
   };
 
-  const [autograph, setAutograph] = useState<AUTOGRAPH[]>([]);
-  const getAutographs = async () => {
+  const [programs, setPrograms] = useState<PROGRAM[]>([]);
+  const getPrograms = async () => {
     try {
-      const response = await axios.get("/api/fetchAutograph");
-      const { allAutographs } = await response.data;
-      setAutograph(allAutographs);
-      console.log("Autographs has been fetched successfully!");
+      const response = await axios.get("/api/fetchProgram");
+      const { allPrograms } = await response.data;
+      setPrograms(allPrograms);
+      console.log("Programs has been fetched successfully!");
     } catch (error: any) {
-      console.log("Autographs Not Found!");
+      console.log("Programs Not Found!");
     }
   };
 
   useEffect(() => {
-    getAutographs();
+    getPrograms();
   }, []);
 
   return (
     <Box sx={{ padding: 1.5, backgroundColor: "#fff" , height: 705 }}>
       <Box>
         <Box sx={{ margin: 0.5 }}>
-          {autograph.map((auto, index) => (
+          {programs.map((program, index) => (
             <Box>
               {/* mapped elements */}
               <Box
@@ -81,13 +81,13 @@ const AutographPage = () => {
                 }}
               >
                 <Image
-                  src={"/" + auto.Pic}
+                  src={"/" + program.Pic}
                   alt="image"
                   width={0}
                   height={0}
                   sizes="100vw"
                   style={{ width: "37%", height: "100%", borderRadius: "20px" }}
-                  onClick={() => router.push(`/dashboard/autographs/${index}`)}
+                  onClick={() => router.push(`/dashboard/Programming/${index}`)}
                 />
                 <Box
                   sx={{
@@ -108,12 +108,12 @@ const AutographPage = () => {
                   >
                     <Typography
                       sx={{ fontWeight: "bold" }}
-                      onClick={() => router.push(`/dashboard/autographs/${index}`)}
+                      onClick={() => router.push(`/dashboard/Programming/${index}`)}
                     >
-                      {auto.ItemTitle}
+                      {program.ItemTitle}
                     </Typography>
                     <Typography sx={{ color: "#595959" }}>
-                      {auto.ItemSubject}
+                      {program.ItemSubject}
                     </Typography>
                   </Box>
                   <Box
@@ -127,7 +127,7 @@ const AutographPage = () => {
                   >
                     <Typography sx={{ color: "#595959" }}>Time</Typography>
                     <Typography sx={{ color: "#523FAD", fontSize: 12 }}>
-                      {auto.Time}
+                      {program.Time}
                     </Typography>
                   </Box>
                 </Box>

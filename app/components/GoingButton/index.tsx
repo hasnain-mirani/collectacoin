@@ -7,26 +7,26 @@ import { IconButton } from "@mui/material";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { Box, Typography, Button } from "@mui/material";
 
 type props = {
-  index: number,
-  ItemTitle: string,
-  Date: string,
-  Time: string,
-  Pic: string,
-  Hallno: string,
-  ItemSubject: string,
-  ItemDescription: string,
-
-
-}
-const Index = ({index , ItemTitle , Date , Time , Pic , Hallno , ItemSubject , ItemDescription} : props) => {
-  const [isClicked, setIsClicked] = useState(false);
-  const dispatch = useDispatch();
-  const handleClick = () => {
-    setIsClicked(!isClicked);
-  };
-
+  ItemTitle: string;
+  Date: string;
+  Time: string;
+  Pic: string;
+  Hallno: string;
+  ItemSubject: string;
+  ItemDescription: string;
+};
+const Index = ({
+  ItemTitle,
+  Date,
+  Time,
+  Pic,
+  Hallno,
+  ItemSubject,
+  ItemDescription,
+}: props) => {
   // useEffect(() => {
   //   // Retrieve the state from local storage when the component mounts
   //   const storedState = localStorage.getItem("isClicked");
@@ -62,16 +62,6 @@ const Index = ({index , ItemTitle , Date , Time , Pic , Hallno , ItemSubject , I
     Pic: Pic,
   });
 
-  const fetchAdminEvent = async () => {
-    try {
-      const response = await axios.get("/api/fetchEvents");
-      const { allEvents } = await response.data;
-      setEvent(allEvents[index]);
-      console.log(allEvents[index]);
-    } catch (error: any) {
-      toast.error("No Events Found!");
-    }
-  };
   const updateMySchedule = async () => {
     try {
       await axios.post("/api/event", event);
@@ -83,28 +73,17 @@ const Index = ({index , ItemTitle , Date , Time , Pic , Hallno , ItemSubject , I
   };
 
   return (
-    <IconButton
+    <Button
       onClick={() => {
-        handleClick();
-        fetchAdminEvent();
         updateMySchedule();
-        toast.success(`Event of index ${index} is clicked`);
       }}
+      variant="outlined"
+      sx={{ border: "2px solid #523FAD", borderRadius: "30px  " }}
     >
-      {isClicked ? (
-        <BookmarkAddedSharpIcon
-          onClick={() => {
-            dispatch(increment()), setEvent({ ...event, state: 1 });
-          }}
-        />
-      ) : (
-        <BookmarkBorderOutlinedIcon
-          onClick={() => {
-            dispatch(decrement()), setEvent({ ...event, state: 0 });
-          }}
-        />
-      )}
-    </IconButton>
+      <Typography sx={{ color: "#523FAD", fontSize: "20px", fontWeight: 600 }}>
+        Going
+      </Typography>
+    </Button>
   );
 };
 

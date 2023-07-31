@@ -1,0 +1,17 @@
+import { connect } from "@/dbconfig/dbconfig";
+import createEvent from "@/modals/createEventModal";
+import { NextResponse } from "next/server";
+
+connect();
+
+export async function GET() {
+  try {
+    const allEvents = await createEvent.find().sort({Date: 1});
+    return NextResponse.json({ allEvents });
+  } catch (error: any) {
+    return NextResponse.json({
+        message: "No Events exist!",
+        status: 500
+    })
+  }
+}

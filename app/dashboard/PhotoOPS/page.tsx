@@ -36,7 +36,7 @@ const AutographPage = () => {
     setAutographs(res.data);
   }
 
-  type AUTOGRAPH = {
+  type PHOTOOPS = {
     ItemTitle: string;
     ItemSubject: string;
     ItemDescription: string;
@@ -46,27 +46,27 @@ const AutographPage = () => {
     Pic: string;
   };
 
-  const [autograph, setAutograph] = useState<AUTOGRAPH[]>([]);
-  const getAutographs = async () => {
+  const [photoOPS, setPhotoOPS] = useState<PHOTOOPS[]>([]);
+  const getPhotoOPS= async () => {
     try {
-      const response = await axios.get("/api/fetchAutograph");
-      const { allAutographs } = await response.data;
-      setAutograph(allAutographs);
-      console.log("Autographs has been fetched successfully!");
+      const response = await axios.get("/api/fetchPhotoOPS");
+      const { allPhotos } = await response.data;
+      setPhotoOPS(allPhotos);
+      console.log("PhotoOPS has been fetched successfully!");
     } catch (error: any) {
-      console.log("Autographs Not Found!");
+      console.log("PhotoOPS Not Found!");
     }
   };
 
   useEffect(() => {
-    getAutographs();
+    getPhotoOPS();
   }, []);
 
   return (
     <Box sx={{ padding: 1.5, backgroundColor: "#fff" , height: 705 }}>
       <Box>
         <Box sx={{ margin: 0.5 }}>
-          {autograph.map((auto, index) => (
+          {photoOPS.map((photo, index) => (
             <Box>
               {/* mapped elements */}
               <Box
@@ -81,13 +81,13 @@ const AutographPage = () => {
                 }}
               >
                 <Image
-                  src={"/" + auto.Pic}
+                  src={"/" + photo.Pic}
                   alt="image"
                   width={0}
                   height={0}
                   sizes="100vw"
                   style={{ width: "37%", height: "100%", borderRadius: "20px" }}
-                  onClick={() => router.push(`/dashboard/autographs/${index}`)}
+                  onClick={() => router.push(`/dashboard/PhotoOPS/${index}`)}
                 />
                 <Box
                   sx={{
@@ -108,12 +108,12 @@ const AutographPage = () => {
                   >
                     <Typography
                       sx={{ fontWeight: "bold" }}
-                      onClick={() => router.push(`/dashboard/autographs/${index}`)}
+                      onClick={() => router.push(`/dashboard/PhotoOPS/${index}`)}
                     >
-                      {auto.ItemTitle}
+                      {photo.ItemTitle}
                     </Typography>
                     <Typography sx={{ color: "#595959" }}>
-                      {auto.ItemSubject}
+                      {photo.ItemSubject}
                     </Typography>
                   </Box>
                   <Box
@@ -127,7 +127,7 @@ const AutographPage = () => {
                   >
                     <Typography sx={{ color: "#595959" }}>Time</Typography>
                     <Typography sx={{ color: "#523FAD", fontSize: 12 }}>
-                      {auto.Time}
+                      {photo.Time}
                     </Typography>
                   </Box>
                 </Box>

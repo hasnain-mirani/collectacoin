@@ -1,33 +1,33 @@
-"use client"
-import { Box, Typography } from "@mui/material";
+"use client";
+import { Box, Typography, Button } from "@mui/material";
 import Image from "next/image";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState , useEffect } from "react";
+import axios from 'axios';
 import Mybutton1 from "@/app/components/Mybutton1";
 
 const EventData = () => {
   const [Desc, setDesc] = useState<string>("");
   const [subject, setSubject] = useState<string>("");
-  const [Pic , setPic] = useState<string>("");
-  const [Title , setTitle] = useState<string>("");
-  const [Time , setTime] = useState<string>("");
-  const [Date , setDate] = useState<string>("");
-  const [Hallno , setHallNo] = useState<string>("");
+  const [Pic, setPic] = useState<string>("");
+  const [Title, setTitle] = useState<string>("");
+  const [Time, setTime] = useState<string>("");
+  const [Date, setDate] = useState<string>("");
+  const [Hallno, setHallNo] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true); // Add loading state
 
   const getEvents = async (id: number) => {
     try {
-      const response = await axios.get("/api/fetchEvents");
-      const { allEvents } = response.data;
+      const response = await axios.get("/api/fetchPhotoOPS");
+      const { allPhotos } = response.data;
 
       // Fetch the event data based on the ID and set the state
-      setDesc(allEvents[Number(id)].ItemDescription || "");
-      setSubject(allEvents[Number(id)].ItemSubject || "");
-      setPic(allEvents[Number(id)].Pic || "");
-      setHallNo(allEvents[Number(id)].Hallno || "");
-      setTitle(allEvents[Number(id)].ItemTitle || "");
-      setDate(allEvents[Number(id)].Date || "");
-      setTime(allEvents[Number(id)].Time || "");
+      setDesc(allPhotos[Number(id)].ItemDescription || "");
+      setSubject(allPhotos[Number(id)].ItemSubject || "");
+      setPic(allPhotos[Number(id)].Pic || "");
+      setHallNo(allPhotos[Number(id)].Hallno || "");
+      setTitle(allPhotos[Number(id)].ItemTitle || "");
+      setDate(allPhotos[Number(id)].Date || "");
+      setTime(allPhotos[Number(id)].Time || "");
 
       setLoading(false);
     } catch (error) {
@@ -40,15 +40,20 @@ const EventData = () => {
     const id = window.location.pathname.split("/").pop();
     getEvents(Number(id));
   }, []);
-
   return (
-    <Box sx={{ margin: 2 }}>
+    <Box sx={{ padding: 2, backgroundColor: "#fff" , height: 705 }}>
+
+      <Box sx={{ padding: 1 }}>
+        <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
+          {Title}
+        </Typography>
+      </Box>
       <Box sx={{ height: "14rem" }}>
         <Image
-          src={Pic && "/" + Pic} 
+          src={"/" + Pic}
           alt="image"
-          width={200}
-          height={200}
+          width={0}
+          height={0}
           sizes="100vw"
           style={{ width: "100%", height: "100%", borderRadius: "15px" }}
         />
@@ -63,23 +68,21 @@ const EventData = () => {
         }}
       >
         <Box>
-          {loading ? (
-            <Typography>Loading...</Typography> 
-          ) : (
-            <Typography
-              sx={{
-                color: "#523FAD",
-                textDecoration: "underline",
-                fontWeight: "bold",
-                fontSize: 20,
-              }}
-            >
-              {subject}
-            </Typography>
-          )}
+          <Typography
+            sx={{
+              color: "#523FAD",
+              textDecoration: "underline",
+              fontWeight: "bold",
+              fontSize: 20,
+            }}
+          >
+            {subject}
+          </Typography>
         </Box>
         <Box sx={{ marginTop: 1 }}>
-          <Typography>{Desc}</Typography>
+          <Typography>
+            {Desc}
+          </Typography>
         </Box>
       </Box>
       <Box
@@ -90,7 +93,7 @@ const EventData = () => {
           marginY: 1,
         }}
       >
-        {!loading && (
+         {!loading && (
           <Mybutton1
             ItemTitle={Title}
             Date={Date}
@@ -105,5 +108,4 @@ const EventData = () => {
     </Box>
   );
 };
-
 export default EventData;
