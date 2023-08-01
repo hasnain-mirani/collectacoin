@@ -1,15 +1,17 @@
 "use client";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, Link } from "@mui/material";
 import Image from "next/image";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Router, WindowSharp } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
+import path from "path";
+import fs from "fs";
 
 const VendorData = () => {
   const router = useRouter();
   const [title, setTitle] = useState<string>("");
-  const [EventName , setEventName] = useState<string>("");
+  const [EventName, setEventName] = useState<string>("");
   const [Venue, setVenue] = useState<string>("");
   const [File, setFile] = useState<string>("");
 
@@ -21,8 +23,7 @@ const VendorData = () => {
       setTitle(allPlans[Number(id)].Title || "");
       setEventName(allPlans[Number(id)].EventName || "");
       setFile(allPlans[Number(id)].File || "");
-      setVenue(allPlans[Number(id)].Venue|| "");;
-      
+      setVenue(allPlans[Number(id)].Venue || "");
     } catch (error) {
       console.log(`Plan ${id} not found`);
     }
@@ -33,20 +34,23 @@ const VendorData = () => {
     getVendors(Number(id));
   }, []);
   return (
-    <Box sx={{ padding: 2, backgroundColor: "#fff" , height: 843 }}>
+    <Box sx={{ padding: 2, backgroundColor: "#fff", height: 843 }}>
       <Box sx={{ padding: 1 }}>
         <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
           {EventName}
         </Typography>
       </Box>
-      <Box sx={{ height: "14rem" }}>
-        <iframe
+      <Box sx={{ height: "10rem" , marginTop: 5}}>
+        {/* <iframe
           src={File}
-          title="PDF Viewer"
-          width={0}
-          height={0}
-          style={{ width: "100%", height: "100%", borderRadius: "15px" }}
-        />
+          // title="PDF Viewer"
+          // width={0}
+          // height={0}
+          // 
+        /> */}
+        <Link href={"/" + File} >
+          <Typography style={{display: "flex" , justifyContent: "center" , alignItems: "center" , fontSize: "30px" }}>Download Plan?</Typography>
+        </Link>
       </Box>
       <Box
         sx={{
@@ -54,7 +58,7 @@ const VendorData = () => {
           paddingY: 1,
           paddingX: 2,
           borderRadius: "8px",
-          marginTop: 2,
+          
         }}
       >
         <Box>
@@ -78,8 +82,7 @@ const VendorData = () => {
           marginY: 1,
           gap: 2,
         }}
-      >
-      </Box>
+      ></Box>
       <Box></Box>
     </Box>
   );

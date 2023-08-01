@@ -39,22 +39,21 @@ export default function Dashboard() {
   };
 
   const [data, setData] = useState({
-    _id:'',
-    firstName:'',
-    lastName:'',
-    email:''
+    _id: "",
+    firstName: "",
+    lastName: "",
+    email: "",
   });
 
-  const getDetail= async()=>{
-    const res= await axios.get('api/user/userdata')
-   //  console.log(res.data)
-    setData(res.data.data)
-   };
+  const getDetail = async () => {
+    const res = await axios.get("api/user/userdata");
+    //  console.log(res.data)
+    setData(res.data.data);
+  };
 
-   useEffect(() => {
-     
-     getDetail()
-   }, []);
+  useEffect(() => {
+    getDetail();
+  }, []);
 
   const [events, setEvents] = useState<EVENTS[]>([]);
   const [d1, setD1] = useState<String>("");
@@ -62,7 +61,7 @@ export default function Dashboard() {
   const [p1, setP1] = useState<String>("");
   const [t1, setT1] = useState<String>("");
   const [y1, setY1] = useState<String>("");
-  const [title1 , setTitle1] = useState<String>("");
+  const [title1, setTitle1] = useState<String>("");
 
   function numberIntoMonth(monthNumber: number) {
     const monthNames = [
@@ -98,33 +97,33 @@ export default function Dashboard() {
       console.log("No Events Found!");
     }
   };
-  const [simpleEvents , setSimpleEvents] = useState<EVENTS[]>([]);
+  const [simpleEvents, setSimpleEvents] = useState<EVENTS[]>([]);
   const getAllEvents = async () => {
     try {
       const response = await axios.get("/api/fetchEvents");
-      const {allEvents} = await response.data;
+      const { allEvents } = await response.data;
       setSimpleEvents(allEvents);
       console.log("Events fetched successfully");
-
-    } catch (error : any) {
+    } catch (error: any) {
       console.log("Failed to fetch events!");
     }
-  }
+  };
 
   const handleClick = () => {
-    simpleEvents.map((event , index) => {
-      {title1 === event.ItemTitle && router.push(`/dashboard/events/${index}`)}
-    })
-    
-    }
-  
+    simpleEvents.map((event, index) => {
+      {
+        title1 === event.ItemTitle && router.push(`/dashboard/events/${index}`);
+      }
+    });
+  };
+
   useEffect(() => {
     getDescEvents();
   }, []);
 
   useEffect(() => {
     getAllEvents();
-  } , []);
+  }, []);
   return (
     <Box
       sx={{
@@ -200,7 +199,7 @@ export default function Dashboard() {
                 background: "#EEECF9",
               }}
             >
-              <img
+              <Image
                 src="/allevent.png"
                 width={60}
                 height={60}
@@ -224,7 +223,7 @@ export default function Dashboard() {
                 background: "#EEECF9",
               }}
             >
-              <img
+              <Image
                 src="/autograph.png"
                 width={60}
                 height={60}
@@ -234,7 +233,7 @@ export default function Dashboard() {
                 }}
               />
               <Typography sx={{ color: "#523FAD" }}>Autograph</Typography>
-            </Box>{" "}
+            </Box>
             <Box
               sx={{
                 display: "flex",
@@ -248,7 +247,7 @@ export default function Dashboard() {
                 background: "#EEECF9",
               }}
             >
-              <img
+              <Image
                 src="/camera.png"
                 height={60}
                 width={60}
@@ -272,7 +271,7 @@ export default function Dashboard() {
                 background: "#EEECF9",
               }}
             >
-              <img
+              <Image
                 src="/Programming.png"
                 height={60}
                 width={60}
@@ -330,7 +329,6 @@ export default function Dashboard() {
               alignItems: "flex-start",
             }}
             onClick={handleClick}
-      
           >
             <Box sx={{ display: "flex" }}>
               <CalendarMonth sx={{ color: "#fff" }} />
@@ -365,6 +363,7 @@ export default function Dashboard() {
       {events.map((eve, index) => (
         <Box sx={{ marginX: 1 }}>
           <Box
+            key={index}
             sx={{
               display: "flex",
               justifyContent: "space-between",
@@ -378,6 +377,7 @@ export default function Dashboard() {
                 alignItems: "center",
                 flexDirection: "column",
               }}
+              
             >
               <Typography
                 sx={{ color: "#523FAD", fontSize: "20px", fontWeight: 600 }}
@@ -390,7 +390,7 @@ export default function Dashboard() {
                 {numberIntoMonth(Number(eve.Date.slice(5, 7)))}
               </Typography>
             </Box>
-            <Box>
+            <Box onClick={() => router.push(`/dashboard/eventsAscUser/${index}`)}>
               <Typography sx={{ fontSize: "20px", fontWeight: 600 }}>
                 {eve.ItemTitle}
               </Typography>

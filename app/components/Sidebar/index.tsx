@@ -6,7 +6,6 @@ import { BsFillBucketFill, BsPersonSquare } from "react-icons/bs";
 import {
   Box,
   Divider,
-
   Drawer,
   List,
   ListItem,
@@ -122,60 +121,75 @@ const Sidebar = ({ drawerWidth, isNonMobile }: any) => {
           <Box width="100%">
             <Box m="1.5rem 2rem 2rem 3rem">
               <Box color={theme.palette.secondary.main}>
-                <Box >
+                <Box>
                   {/* <Typography variant='h4' fontWeight="bold">ECOMMMVISION</Typography> */}
                 </Box>
                 {!isNonMobile && (
-                  <Box sx={{display:'flex',flexDirection:'column' }}>
-                 <Box>
-                  <IconButton
-                    onClick={() => setIsSidebarOpen((prev: any) => !prev)}
-                  >
-                    <GrClose />
-                  </IconButton>
-               </Box>
-              <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <Box sx={{display:'flex', alignItems:'center', }}> 
-                <IconButton>
-                    <Home/>
-                </IconButton>
-                    <Typography>Home</Typography>
-                </Box>
-                 <Box sx={{display:'flex', alignItems:'center'}}> 
-                <IconButton>
-                    <IoMdStats/>
-                </IconButton>
-                    <Typography>My Schedule</Typography>
-                </Box> 
-                <Box sx={{display:'flex', alignItems:'center'}}> 
-                <IconButton>
-                    <BsPersonSquare/>
-                </IconButton>
-                    <Typography>My Ticket</Typography>
-                </Box> 
-                <Box sx={{display:'flex', alignItems:'center'}}> 
-                <IconButton>
-                    <BsFillBucketFill/>
-                </IconButton>
-                    <Typography>Panels</Typography>
-                </Box>
-            </Box>
-                
-                <Box>
-            <Box sx={{display:'flex', alignItems:'center', }}> 
-                <IconButton>
-                    <AiFillSetting/>
-                </IconButton>
-                    <Typography>Settings</Typography>
-                </Box>
-            </Box>
-                </Box>
+                  <Box sx={{ display: "flex", flexDirection: "column" }}>
+                    <Box>
+                      <IconButton
+                        onClick={() => setIsSidebarOpen((prev: any) => !prev)}
+                      >
+                        <GrClose />
+                      </IconButton>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <IconButton>
+                          <Home />
+                        </IconButton>
+                        <Typography>Home</Typography>
+                      </Box>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <IconButton>
+                          <IoMdStats />
+                        </IconButton>
+                        <Typography>My Schedule</Typography>
+                      </Box>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <IconButton>
+                          <BsPersonSquare />
+                        </IconButton>
+                        <Typography>My Ticket</Typography>
+                      </Box>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <IconButton>
+                          <BsFillBucketFill />
+                        </IconButton>
+                        <Typography>Panels</Typography>
+                      </Box>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <IconButton>
+                          <BsFillBucketFill />
+                        </IconButton>
+                        <Typography>Vendors</Typography>
+                      </Box>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <IconButton>
+                          <BsFillBucketFill />
+                        </IconButton>
+                        <Typography>Floorplan</Typography>
+                      </Box>
+                    </Box>
+
+                    <Box>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <IconButton>
+                          <AiFillSetting />
+                        </IconButton>
+                        <Typography>Settings</Typography>
+                      </Box>
+                    </Box>
+                  </Box>
                 )}
               </Box>
             </Box>
-           
-           
-           
           </Box>
         </Drawer>
       )}

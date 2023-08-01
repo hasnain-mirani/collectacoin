@@ -17,7 +17,7 @@ const EventData = () => {
 
   const getEvents = async (id: number) => {
     try {
-      const response = await axios.get("/api/fetchEvents");
+      const response = await axios.get("/api/fetchEventsDesc");
       const { allEvents } = response.data;
 
       // Fetch the event data based on the ID and set the state
