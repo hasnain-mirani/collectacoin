@@ -67,10 +67,9 @@ const AutographPage = () => {
       <Box>
         <Box sx={{ margin: 0.5 }}>
           {programs.map((program, index) => (
-            <Box>
+            <Box key={index}>
               {/* mapped elements */}
               <Box
-              key = {index}
                 sx={{
                   height: "7rem",
                   width: "100%",

@@ -67,10 +67,10 @@ const AutographPage = () => {
       <Box>
         <Box sx={{ margin: 0.5 }}>
           {photoOPS.map((photo, index) => (
-            <Box>
-              {/* mapped elements */}
+            <Box  key = {index}>
+             
               <Box
-              key = {index}
+              
                 sx={{
                   height: "7rem",
                   width: "100%",

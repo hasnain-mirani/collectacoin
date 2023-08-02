@@ -91,7 +91,7 @@ export default function RootLayout({
         deleteEvent(event.ItemTitle);
       }
     });
-  }, [events]);
+  }, []);
 
 
   return (

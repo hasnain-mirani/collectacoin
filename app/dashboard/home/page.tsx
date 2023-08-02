@@ -93,6 +93,7 @@ const HomePage = () => {
       >
         {events.map((event, index) => (
           <Box
+            key={index}
             sx={{
               minHeight: "14rem",
               minWidth: "16rem",
@@ -214,7 +215,7 @@ const HomePage = () => {
         </Box>
         <Box>
           {events.map((event, index) => (
-            <Box
+            <Box key={index}
               sx={{
                 minHeight: "7rem",
                 width: "100%",

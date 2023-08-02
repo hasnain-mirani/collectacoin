@@ -361,9 +361,9 @@ export default function Dashboard() {
         ></Typography>
       </Box>
       {events.map((eve, index) => (
-        <Box sx={{ marginX: 1 }}>
+        <Box sx={{ marginX: 1 }} key={index}>
           <Box
-            key={index}
+            
             sx={{
               display: "flex",
               justifyContent: "space-between",
