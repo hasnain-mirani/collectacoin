@@ -29,13 +29,12 @@ const inputStyle = {
 };
 
 type FormValues = {
-  FirstName: string;
-  LastName: string;
-  Address: string;
+  ItemTitle: string;
+  ItemSubject: string;
+  ItemDescription: string;
   Hallno: string;
   Date: string;
   Time: string;
-  // Add more fields as needed
 };
 
 export default function BasicModal() {
@@ -43,9 +42,9 @@ export default function BasicModal() {
   const formEntries = useSelector((state: RootState) => state.form);
 
   const [details, setDetails] = useState<FormValues>({
-    FirstName: "",
-    LastName: '',
-    Address: '',
+    ItemTitle: "",
+    ItemSubject: '',
+    ItemDescription: '',
     Hallno: '',
     Date: '',
     Time: '',
@@ -83,14 +82,17 @@ export default function BasicModal() {
 
   const resetForm = () => {
     setDetails({
-      FirstName: "",
-      LastName: '',
-      Address: '',
+      ItemTitle: "",
+      ItemSubject: '',
+      ItemDescription: '',
       Hallno: '',
       Date: '',
       Time: '',
     });
   };
+
+
+
 
   return (
     <div>
@@ -119,26 +121,26 @@ export default function BasicModal() {
                     <Box className="conatinercc" sx={{ display: 'flex', marginTop: 2, gap: 2 }}>
                       <Box className="left">
                         <Typography>
-                          First Name
+                          Item Title
                         </Typography>
                         <InputBase
                           onChange={handleInputChange}
-                          value={details.FirstName}
+                          value={details.ItemTitle}
                          sx={inputStyle}
                           type="text"
-                          name="FirstName"
-                          placeholder="Enter Your First Name"
+                          name="ItemTitle"
+                          placeholder="Enter Item Title"
                         />
                         <Typography>
-                          Address
+                          Item Description
                         </Typography>
                         <InputBase
                           onChange={handleInputChange}
-                          value={details.Address}
+                          value={details.ItemDescription}
                           sx={inputStyle}
                           type="text"
-                          name="Address"
-                          placeholder="Enter Your Address"
+                          name="ItemDescription"
+                          placeholder="Enter Item Description"
                         />
                         <Typography>
                           Date
@@ -156,15 +158,15 @@ export default function BasicModal() {
 
                       <Box className="right">
                         <Typography>
-                          Last Name
+                          Item Subject
                         </Typography>
                         <InputBase
                           onChange={handleInputChange}
-                          value={details.LastName}
+                          value={details.ItemSubject}
                           sx={inputStyle}
                           type="text"
-                          name="LastName"
-                          placeholder="Enter Your Last Name"
+                          name="ItemSubject"
+                          placeholder="Enter Item Subject"
                         />
                         <Typography>
                           Hall No.

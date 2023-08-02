@@ -62,16 +62,6 @@ const Index = ({index , ItemTitle , Date , Time , Pic , Hallno , ItemSubject , I
     Pic: Pic,
   });
 
-  const fetchAdminEvent = async () => {
-    try {
-      const response = await axios.get("/api/fetchEvents");
-      const { allEvents } = await response.data;
-      setEvent(allEvents[index]);
-      console.log(allEvents[index]);
-    } catch (error: any) {
-      toast.error("No Events Found!");
-    }
-  };
   const updateMySchedule = async () => {
     try {
       await axios.post("/api/event", event);
@@ -82,12 +72,30 @@ const Index = ({index , ItemTitle , Date , Time , Pic , Hallno , ItemSubject , I
     }
   };
 
+  type buttonNumberType = {
+    buttonNumber: number,
+  }
+
+  const[buttonNumber , setButtonNumber] = useState<buttonNumberType>({
+    buttonNumber: index
+  });
+
+  const buttonState = async() => {
+    try {
+      await axios.post("/api/buttonState" , buttonNumber);
+      
+    } catch (error: any) {
+      console.error("Not Saved");
+      
+    }
+  }
+
   return (
     <IconButton
       onClick={() => {
         handleClick();
-        fetchAdminEvent();
         updateMySchedule();
+        buttonState();
         toast.success(`Event of index ${index} is clicked`);
       }}
     >

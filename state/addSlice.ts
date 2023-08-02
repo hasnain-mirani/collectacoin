@@ -1,22 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface FormValues {
-  FirstName: "";
-  LastName: "";
-  Address: "";
-  Hallno: "";
-  Date: "";
-  Time: "";
-}
-type FormEntry = {
-  FirstName: string;
-  LastName: string;
-  Address: string;
+  ItemTitle: string;
+  ItemSubject: string;
+  ItemDescription: string;
   Hallno: string;
   Date: string;
   Time: string;
-  // Add more fields as needed
-};
+}
+
 
 const formSlice = createSlice({
   name: "form",

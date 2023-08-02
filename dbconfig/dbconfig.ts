@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 export async function connect() {
     try {
-        mongoose.connect('mongodb+srv://doadmin:h8DC0WgL254M61p3@db-mongodb-nyc1-08654-eea55fda.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=db-mongodb-nyc1-08654');
+        mongoose.connect('mongodb://127.0.0.1:27017');
         const connection = mongoose.connection;
         connection.on('connected', () => {
             console.log('mongoDB connection is created!!! ');
