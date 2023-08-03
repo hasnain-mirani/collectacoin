@@ -6,14 +6,12 @@ connect();
 
 export async function GET() {
   try {
-    
-
-    const allAutographs = await createEvent.find({eventType : "Autograph"});
+    const allAutographs = await createEvent.find({ eventType: "Autograph" });
     return NextResponse.json({ allAutographs });
   } catch (error: any) {
     return NextResponse.json({
-        message: "No Autographs exist!",
-        status: 500
+      message: "No Autographs exist!",
+      status: 500
     })
   }
 }
