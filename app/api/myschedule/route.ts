@@ -4,7 +4,7 @@ import event from "@/modals/eventModal";
 
 connect();
 
-export async function get() {
+export async function GET() {
   try {
     const events = await event.find();
     return NextResponse.json({ events });

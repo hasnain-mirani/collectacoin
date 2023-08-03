@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 connect();
 
-export async function get() {
+export async function GET() {
   try {
     const allEvents = await createEvent.find();
     return NextResponse.json({ allEvents });

@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 connect();
 
-export async function get() {
+export async function GET() {
   try {
     const allPhotos = await createEvent.find({ eventType: "PhotoOPS" });
     return NextResponse.json({ allPhotos });
