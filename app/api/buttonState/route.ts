@@ -23,7 +23,7 @@ export async function POST(Req: NextRequest) {
             else {
                 existingNumber.buttonState = 'BookmarkAddedSharpIcon';
                 existingNumber.state = 1;
-                existingNumber.save();
+                await existingNumber.save();
 
             }
 
@@ -35,11 +35,11 @@ export async function POST(Req: NextRequest) {
                     buttonNumber: countButton + 1,
                     buttonState: 'BookmarkBorderOutlinedIcon',
                     state: 0,
-                }).save();
+                }). save();
                 const currentButton = await buttonEvent.findOne({ buttonNumber });
                 currentButton.buttonState = 'BookmarkAddedSharpIcon';
                 currentButton.state = 1;
-                currentButton.save();
+                await currentButton.save();
 
             }
             else if (countButton < count) {
@@ -54,7 +54,7 @@ export async function POST(Req: NextRequest) {
                 const currentButton = await buttonEvent.findOne({ buttonNumber });
                 currentButton.buttonState = 'BookmarkAddedSharpIcon';
                 currentButton.state = 1;
-                currentButton.save();
+                await currentButton.save();
             }
         }
     }

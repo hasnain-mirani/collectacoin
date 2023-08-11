@@ -9,34 +9,32 @@ import toast from "react-hot-toast";
 import axios from "axios";
 
 type props = {
-  index: number,
-  ItemTitle: string,
-  Date: string,
-  Time: string,
-  Pic: string,
-  Hallno: string,
-  ItemSubject: string,
-  ItemDescription: string,
-
-
-}
-const Index = ({index , ItemTitle , Date , Time , Pic , Hallno , ItemSubject , ItemDescription} : props) => {
+  index: number;
+  ItemTitle: string;
+  Date: string;
+  Time: string;
+  Pic: string;
+  Hallno: string;
+  ItemSubject: string;
+  ItemDescription: string;
+};
+const Index = ({
+  index,
+  ItemTitle,
+  Date,
+  Time,
+  Pic,
+  Hallno,
+  ItemSubject,
+  ItemDescription,
+}: props) => {
   const [isClicked, setIsClicked] = useState(false);
+  let [getBtnState, setBtnState] = useState<number>(0);
   const dispatch = useDispatch();
   const handleClick = () => {
     setIsClicked(!isClicked);
+    setBtnState(getBtnState === 1 ? 0 : 1);
   };
-
-  // useEffect(() => {
-  //   // Retrieve the state from local storage when the component mounts
-  //   const storedState = localStorage.getItem("isClicked");
-  //   setIsClicked(storedState === "true");
-  // }, []);
-
-  // useEffect(() => {
-  //   // Store the state in local storage whenever it changes
-  //   localStorage.setItem("isClicked", JSON.stringify(isClicked));
-  // }, [isClicked]);
 
   type scheduledEvent = {
     ItemTitle: string;
@@ -73,46 +71,61 @@ const Index = ({index , ItemTitle , Date , Time , Pic , Hallno , ItemSubject , I
   };
 
   type buttonNumberType = {
-    buttonNumber: number,
-  }
+    buttonNumber: number;
+  };
 
-  const[buttonNumber , setButtonNumber] = useState<buttonNumberType>({
-    buttonNumber: index
+  const [buttonNumber, setButtonNumber] = useState<buttonNumberType>({
+    buttonNumber: index,
   });
 
-  const buttonState = async() => {
+  const buttonState = async () => {
     try {
-      await axios.post("/api/buttonState" , buttonNumber);
-      
+      await axios.post("/api/buttonState", buttonNumber);
     } catch (error: any) {
       console.error("Not Saved");
-      
     }
-  }
+  };
+
+ 
+
+  const getButtonState = async () => {
+    try {
+      const response = await axios.get("/api/fetchButtonState");
+      const { buttonStates } = await response.data;
+      setBtnState(buttonStates[index].state);
+    } catch (error: any) {
+      console.error("Error Fetching Button State");
+    }
+  };
+
+  useEffect(() => {
+    getButtonState();
+  }, []);
 
   return (
-    <IconButton
-      onClick={() => {
-        handleClick();
-        updateMySchedule();
-        buttonState();
-        toast.success(`Event of index ${index} is clicked`);
-      }}
-    >
-      {isClicked ? (
-        <BookmarkAddedSharpIcon
-          onClick={() => {
-            dispatch(increment()), setEvent({ ...event, state: 1 });
-          }}
-        />
-      ) : (
-        <BookmarkBorderOutlinedIcon
-          onClick={() => {
-            dispatch(decrement()), setEvent({ ...event, state: 0 });
-          }}
-        />
-      )}
-    </IconButton>
+      <IconButton
+        onClick={() => {
+          handleClick();
+          updateMySchedule();
+          buttonState();
+          toast.success(`Event of index ${index} is clicked`);
+        }}
+      >
+        {getBtnState === 1 ?  (
+          <BookmarkAddedSharpIcon
+            onClick={() => {
+              dispatch(increment()), setEvent({ ...event, state: 1 });
+            }}
+          />
+        ) : (
+          <BookmarkBorderOutlinedIcon
+            onClick={() => {
+              dispatch(decrement()), setEvent({ ...event, state: 0 });
+            }}
+          />
+        )}
+      </IconButton>
+
   );
 };
 

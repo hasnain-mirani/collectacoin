@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 export async function connect() {
     try {
-        await mongoose.connect('mongodb+srv://doadmin:h8DC0WgL254M61p3@db-mongodb-nyc1-08654-eea55fda.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=db-mongodb-nyc1-08654');
+        await mongoose.connect('mongodb+srv://doadmin:h8DC0WgL254M61p3@db-mongodb-nyc1-08654-eea55fda.mongo.ondigitalocean.com/admin?replicaSet=db-mongodb-nyc1-08654&tls=true&authSource=admin');
 
         const connection = mongoose.connection;
         connection.on('connected', () => {

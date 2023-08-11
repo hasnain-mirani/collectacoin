@@ -47,7 +47,6 @@ const EventsPage = () => {
   };
 
   const [adminEvent, setAdminEvent] = useState<AdminEvent[]>([]);
-
   const getAdminEvents = async () => {
     try {
       const response = await axios.get("/api/fetchEvents");
@@ -58,6 +57,7 @@ const EventsPage = () => {
       toast.error("No Events Found!");
     }
   };
+
   useEffect(() => {
     getAdminEvents();
   }, []);
@@ -67,7 +67,6 @@ const EventsPage = () => {
       <Box sx={{ marginX: 2, marginY: 1 }}>
         <Box>
           {adminEvent.map((event, index) => (
-            
             <Box
               key={index}
               sx={{
@@ -159,9 +158,8 @@ const EventsPage = () => {
                     Time={event.Time}
                     Pic={event.Pic}
                     Hallno={event.Hallno}
-                    ItemSubject = {event.ItemSubject}
+                    ItemSubject={event.ItemSubject}
                     ItemDescription={event.ItemDescription}
-
                   />
                 </Box>
               </Box>
