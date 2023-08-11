@@ -9,7 +9,10 @@ export async function GET() {
     const events = await event.find();
     return NextResponse.json({ events });
   }
-  catch (error: any) {
-    console.log(error.message);
-  }
+  catch(error : any){
+    return NextResponse.json({
+      message: "No Events Exist!",
+      status: 500,
+    });
+}
 }
