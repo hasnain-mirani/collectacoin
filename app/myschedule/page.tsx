@@ -13,7 +13,7 @@ import Items from "@/app/components/Items";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-export default function mySchedule(){
+export default function MySchedule(){
   const { searchVal, setSearchVal } = useContext(ContextValues);
   const pathname = usePathname();
   const router = useRouter();
