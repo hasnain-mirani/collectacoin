@@ -160,7 +160,7 @@ export default function MySchedule(){
             }}
           >
             <Image
-              src={event.Pic}
+              src={"/" + event.Pic}
               alt="image"
               width={0}
               height={0}
