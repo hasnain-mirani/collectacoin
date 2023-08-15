@@ -12,6 +12,7 @@ import { ArrowBack, CalendarMonth, Search } from "@mui/icons-material";
 import Items from "@/app/components/Items";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 export default function MySchedule(){
   const { searchVal, setSearchVal } = useContext(ContextValues);
@@ -158,7 +159,7 @@ export default function MySchedule(){
               margin: 1,
             }}
           >
-            <img
+            <Image
               src={event.Pic}
               alt="image"
               width={0}
