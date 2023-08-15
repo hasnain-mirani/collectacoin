@@ -34,9 +34,9 @@ export default function RootLayout(){
 
   async function getEvent() {
     try {
-      const response = await axios.get("/api/myschedule");
-      const { events } = await response.data;
-      setEvents(events);
+      const response = await axios.get("/api/trackEvents");
+      const { trackEvents } = await response.data;
+      setEvents(trackEvents);
     } catch (error: any) {
       console.log(error.message);
     }
