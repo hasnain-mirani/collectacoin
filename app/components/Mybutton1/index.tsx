@@ -99,7 +99,7 @@ const Index = ({
   };
   useEffect(() => {
     getButtonStates();
-  }, []);
+  });
 
   return (
     <Button

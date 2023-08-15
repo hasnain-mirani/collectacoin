@@ -100,7 +100,7 @@ const Index = ({
 
   useEffect(() => {
     getButtonState();
-  }, []);
+  });
 
   return (
       <IconButton

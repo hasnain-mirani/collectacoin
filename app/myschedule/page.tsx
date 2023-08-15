@@ -64,7 +64,7 @@ export default function MySchedule(){
   useEffect(() => {
     getEvents();
     
-  }, []);
+  },);
 
   // useEffect(() => {
   //   // Filter out expired events and automatically delete them

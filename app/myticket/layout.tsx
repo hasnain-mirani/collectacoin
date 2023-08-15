@@ -58,7 +58,7 @@ export default function RootLayout({
       console.log(userEmail)
      }
      getDetail() 
-  }, [])
+  })
   
   
    useEffect(() => {
