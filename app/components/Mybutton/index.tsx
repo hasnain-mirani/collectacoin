@@ -29,7 +29,7 @@ const Index = ({
   ItemDescription,
 }: props) => {
   const [isClicked, setIsClicked] = useState(false);
-  let [getBtnState, setBtnState] = useState<number>(0);
+  const [getBtnState, setBtnState] = useState<number>(0);
   const dispatch = useDispatch();
   const handleClick = () => {
     setIsClicked(!isClicked);
@@ -65,8 +65,8 @@ const Index = ({
       await axios.post("/api/event", event);
       toast.success("Posted Successfully");
     } catch (error: any) {
-      console.log(error);
       console.error("Posting failed");
+      toast.success(`${ItemTitle} and ${ItemSubject}`);
     }
   };
 
@@ -100,7 +100,7 @@ const Index = ({
 
   useEffect(() => {
     getButtonState();
-  });
+  } , []);
 
   return (
       <IconButton
@@ -114,13 +114,13 @@ const Index = ({
         {getBtnState === 1 ?  (
           <BookmarkAddedSharpIcon
             onClick={() => {
-              dispatch(increment()), setEvent({ ...event, state: 1 });
+              dispatch(increment());
             }}
           />
         ) : (
           <BookmarkBorderOutlinedIcon
             onClick={() => {
-              dispatch(decrement()), setEvent({ ...event, state: 0 });
+              dispatch(decrement());
             }}
           />
         )}
