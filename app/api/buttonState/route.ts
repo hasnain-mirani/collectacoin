@@ -3,8 +3,6 @@ import { NextRequest } from 'next/server';
 import createEvent from "@/modals/createEventModal";
 import buttonEvent from "@/modals/buttonModal";
 
-
-
 connect();
 
 export async function POST(Req: NextRequest) {
@@ -23,7 +21,7 @@ export async function POST(Req: NextRequest) {
             else {
                 existingNumber.buttonState = 'BookmarkAddedSharpIcon';
                 existingNumber.state = 1;
-                await existingNumber.save();
+                existingNumber.save();
 
             }
 
@@ -39,7 +37,7 @@ export async function POST(Req: NextRequest) {
                 const currentButton = await buttonEvent.findOne({ buttonNumber });
                 currentButton.buttonState = 'BookmarkAddedSharpIcon';
                 currentButton.state = 1;
-                await currentButton.save();
+                currentButton.save();
 
             }
             else if (countButton < count) {
@@ -54,7 +52,7 @@ export async function POST(Req: NextRequest) {
                 const currentButton = await buttonEvent.findOne({ buttonNumber });
                 currentButton.buttonState = 'BookmarkAddedSharpIcon';
                 currentButton.state = 1;
-                await currentButton.save();
+                currentButton.save();
             }
         }
     }
