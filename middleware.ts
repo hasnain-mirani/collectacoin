@@ -35,5 +35,11 @@ export const config = {
     '/floorplan',
     '/context',
     '/myticket',
+    '/api/trackEvents',
+    '/dashboard/events',
+    '/api/buttonState',
+    '/api/fetchButtonState',
+    '/api/fetchEvents',
+    '/api/fetchEventsDesc',
   ]
 }
