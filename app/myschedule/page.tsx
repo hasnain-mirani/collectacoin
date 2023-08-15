@@ -13,11 +13,7 @@ import Items from "@/app/components/Items";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout(){
   const { searchVal, setSearchVal } = useContext(ContextValues);
   const pathname = usePathname();
   const router = useRouter();
@@ -245,8 +241,6 @@ export default function RootLayout({
       <Box
         sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
       ></Box>
-
-      {children}
     </Box>
   );
 }
