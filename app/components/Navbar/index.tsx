@@ -7,7 +7,8 @@ import {Box} from "@mui/material";
 // import AccountMenu from './accountmenu';
 import { useSelector } from 'react-redux';
 // import { logout } from 'state/userSlice'
-import { useTheme, AppBar, Toolbar, IconButton, InputBase } from '@mui/material'
+import { useTheme, AppBar, Toolbar, IconButton, InputBase } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const Navbar = ({isSidebarOpen, setSidebarOpen}:any) => {
     
     // const {user} = useSelector((state:any)=> state.userState);

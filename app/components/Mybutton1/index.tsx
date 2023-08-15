@@ -8,8 +8,10 @@ import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Box, Typography, Button } from "@mui/material";
+import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 
 type props = {
+  id: number;
   ItemTitle: string;
   Date: string;
   Time: string;
@@ -19,6 +21,7 @@ type props = {
   ItemDescription: string;
 };
 const Index = ({
+  id,
   ItemTitle,
   Date,
   Time,
@@ -27,17 +30,6 @@ const Index = ({
   ItemSubject,
   ItemDescription,
 }: props) => {
-  // useEffect(() => {
-  //   // Retrieve the state from local storage when the component mounts
-  //   const storedState = localStorage.getItem("isClicked");
-  //   setIsClicked(storedState === "true");
-  // }, []);
-
-  // useEffect(() => {
-  //   // Store the state in local storage whenever it changes
-  //   localStorage.setItem("isClicked", JSON.stringify(isClicked));
-  // }, [isClicked]);
-
   type scheduledEvent = {
     ItemTitle: string;
     ItemSubject: string;
@@ -62,7 +54,6 @@ const Index = ({
     Pic: Pic,
   });
 
-
   const updateMySchedule = async () => {
     try {
       await axios.post("/api/event", event);
@@ -73,18 +64,74 @@ const Index = ({
     }
   };
 
+  const [isClicked, setIsClicked] = useState<boolean>(false);
+  const [btnState, setBtnState] = useState<number>();
+
+  const getButtonStates = async () => {
+    try {
+      const response = await axios.get("/api/fetchButtonState");
+      const { buttonStates } = await response.data;
+      setBtnState(buttonStates[Number(id)].state);
+    } catch (error: any) {
+      console.log("Unable to fetch button state");
+    }
+  };
+  const handleClick = () => {
+    setIsClicked(!isClicked);
+    btnState === 1 ? setBtnState(0) : setBtnState(1);
+  };
+
+  type buttonNumberType = {
+    buttonNumber: number;
+  };
+
+  const [buttonNumber, setButtonNumber] = useState<buttonNumberType>({
+    buttonNumber: Number(id),
+  });
+
+  const buttonState = async () => {
+    try {
+      await axios.post("/api/buttonState", buttonNumber);
+      console.log("Saved State");
+    } catch (error: any) {
+      console.error("State not saved");
+    }
+  };
+  useEffect(() => {
+    getButtonStates();
+  }, []);
+
   return (
     <Button
-      sx={{
-        backgroundColor: "#523FAD !important",
-        color: "#fff",
-        borderRadius: "8px",
-      }}
       onClick={() => {
         updateMySchedule();
+        handleClick();
+        buttonState();
       }}
     >
-      Add to Schedule
+      {btnState === 1 ? (
+        <Button
+          sx={{
+            backgroundColor: "#523FAD !important",
+            color: "#fff",
+            borderRadius: "8px",
+          }}
+        >
+          Added
+          <DoneOutlineIcon  />
+        </Button>
+       
+      ) : (
+        <Button
+          sx={{
+            backgroundColor: "#523FAD !important",
+            color: "#fff",
+            borderRadius: "8px",
+          }}
+        >
+          Add to Schedule
+        </Button>
+      )}
     </Button>
   );
 };

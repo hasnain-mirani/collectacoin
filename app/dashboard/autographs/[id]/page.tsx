@@ -1,11 +1,14 @@
 "use client";
 import { Box, Typography, Button } from "@mui/material";
 import Image from "next/image";
-import { useState , useEffect } from "react";
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Mybutton1 from "@/app/components/Mybutton1";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useRouter } from "next/navigation";
 
 const EventData = () => {
+  const [id, setId] = useState<any>();
   const [Desc, setDesc] = useState<string>("");
   const [subject, setSubject] = useState<string>("");
   const [Pic, setPic] = useState<string>("");
@@ -14,98 +17,106 @@ const EventData = () => {
   const [Date, setDate] = useState<string>("");
   const [Hallno, setHallNo] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true); // Add loading state
-
-  const getEvents = async (id: number) => {
+  const router = useRouter();
+  const getEvents = async (ID: number) => {
     try {
       const response = await axios.get("/api/fetchAutograph");
       const { allAutographs } = response.data;
 
       // Fetch the event data based on the ID and set the state
-      setDesc(allAutographs[Number(id)].ItemDescription || "");
-      setSubject(allAutographs[Number(id)].ItemSubject || "");
-      setPic(allAutographs[Number(id)].Pic || "");
-      setHallNo(allAutographs[Number(id)].Hallno || "");
-      setTitle(allAutographs[Number(id)].ItemTitle || "");
-      setDate(allAutographs[Number(id)].Date || "");
-      setTime(allAutographs[Number(id)].Time || "");
+      setDesc(allAutographs[Number(ID)].ItemDescription || "");
+      setSubject(allAutographs[Number(ID)].ItemSubject || "");
+      setPic(allAutographs[Number(ID)].Pic || "");
+      setHallNo(allAutographs[Number(ID)].Hallno || "");
+      setTitle(allAutographs[Number(ID)].ItemTitle || "");
+      setDate(allAutographs[Number(ID)].Date || "");
+      setTime(allAutographs[Number(ID)].Time || "");
 
       setLoading(false);
     } catch (error) {
-      console.log(`Event ${id} not found`);
+      console.log(`Event ${Number(ID)} not found`);
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    const id = window.location.pathname.split("/").pop();
-    getEvents(Number(id));
+    const ID = window.location.pathname.split("/").pop();
+    setId(Number(ID));
+    getEvents(Number(ID));
   }, []);
   return (
-    <Box sx={{ padding: 2, backgroundColor: "#fff" , height: 705 }}>
-
-      <Box sx={{ padding: 1 }}>
-        <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
-          {Title}
-        </Typography>
-      </Box>
-      <Box sx={{ height: "14rem" }}>
-        <Image
-          src={"/" + Pic}
-          alt="image"
-          width={0}
-          height={0}
-          sizes="100vw"
-          style={{ width: "100%", height: "100%", borderRadius: "15px" }}
-        />
-      </Box>
-      <Box
-        sx={{
-          backgroundColor: "#EEECF9",
-          paddingY: 1,
-          paddingX: 2,
-          borderRadius: "8px",
-          marginTop: 2,
+    <>
+      <ArrowBackIcon
+        sx={{marginLeft: "15px"}}
+        onClick={() => {
+          router.push("/dashboard/autographs");
         }}
-      >
-        <Box>
-          <Typography
-            sx={{
-              color: "#523FAD",
-              textDecoration: "underline",
-              fontWeight: "bold",
-              fontSize: 20,
-            }}
-          >
-            {subject}
+      />
+      <Box sx={{ padding: 2, backgroundColor: "#fff", height: 705 }}>
+        <Box sx={{ padding: 1 }}>
+          <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
+            {Title}
           </Typography>
+          A
         </Box>
-        <Box sx={{ marginTop: 1 }}>
-          <Typography>
-            {Desc}
-          </Typography>
-        </Box>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-end",
-          marginY: 1,
-        }}
-      >
-         {!loading && (
-          <Mybutton1
-            ItemTitle={Title}
-            Date={Date}
-            Time={Time}
-            Pic={Pic}
-            Hallno={Hallno}
-            ItemSubject={subject}
-            ItemDescription={Desc}
+        <Box sx={{ height: "14rem" }}>
+          <Image
+            src={"/" + Pic}
+            alt="image"
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "100%", height: "100%", borderRadius: "15px" }}
           />
-        )}
+        </Box>
+        <Box
+          sx={{
+            backgroundColor: "#EEECF9",
+            paddingY: 1,
+            paddingX: 2,
+            borderRadius: "8px",
+            marginTop: 2,
+          }}
+        >
+          <Box>
+            <Typography
+              sx={{
+                color: "#523FAD",
+                textDecoration: "underline",
+                fontWeight: "bold",
+                fontSize: 20,
+              }}
+            >
+              {subject}
+            </Typography>
+          </Box>
+          <Box sx={{ marginTop: 1 }}>
+            <Typography>{Desc}</Typography>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            marginY: 1,
+          }}
+        >
+          {!loading && (
+            <Mybutton1
+              id={id}
+              ItemTitle={Title}
+              Date={Date}
+              Time={Time}
+              Pic={Pic}
+              Hallno={Hallno}
+              ItemSubject={subject}
+              ItemDescription={Desc}
+            />
+          )}
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 export default EventData;

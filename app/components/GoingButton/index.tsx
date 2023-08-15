@@ -27,17 +27,7 @@ const Index = ({
   ItemSubject,
   ItemDescription,
 }: props) => {
-  // useEffect(() => {
-  //   // Retrieve the state from local storage when the component mounts
-  //   const storedState = localStorage.getItem("isClicked");
-  //   setIsClicked(storedState === "true");
-  // }, []);
-
-  // useEffect(() => {
-  //   // Store the state in local storage whenever it changes
-  //   localStorage.setItem("isClicked", JSON.stringify(isClicked));
-  // }, [isClicked]);
-
+ 
   type scheduledEvent = {
     ItemTitle: string;
     ItemSubject: string;
@@ -72,10 +62,25 @@ const Index = ({
     }
   };
 
+  const handleClick = () => {
+
+  }
+
+  const getButtonStates = async () => {
+    try {
+      const response = await axios.get("/api/fetchButtonState");
+      
+    } catch (error: any) {
+      console.log("Unable to fetch button states");
+      
+    }
+  }
+
   return (
     <Button
       onClick={() => {
         updateMySchedule();
+        handleClick();
       }}
       variant="outlined"
       sx={{ border: "2px solid #523FAD", borderRadius: "30px  " }}
