@@ -7,6 +7,7 @@ import { Router, WindowSharp } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import path from "path";
 import fs from "fs";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const VendorData = () => {
   const router = useRouter();
@@ -34,6 +35,13 @@ const VendorData = () => {
     getVendors(Number(id));
   }, []);
   return (
+    <>
+    <ArrowBackIcon
+      sx={{ marginLeft: "15px" }}
+      onClick={() => {
+        router.push("/floorplan");
+      }}
+    />
     <Box sx={{ padding: 2, backgroundColor: "#fff", height: 843 }}>
       <Box sx={{ padding: 1 }}>
         <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
@@ -85,6 +93,7 @@ const VendorData = () => {
       ></Box>
       <Box></Box>
     </Box>
+    </>
   );
 };
 export default VendorData;

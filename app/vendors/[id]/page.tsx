@@ -5,6 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Router, WindowSharp } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const VendorData = () => {
   const router = useRouter();
@@ -39,79 +40,88 @@ const VendorData = () => {
     getVendors(Number(id));
   }, []);
   return (
-    <Box sx={{ padding: 2, backgroundColor: "#fff" , height: 843 }}>
-      <Box sx={{ padding: 1 }}>
-        <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
-          {Name}
-        </Typography>
-      </Box>
-      <Box sx={{ height: "14rem" }}>
-        <Image
-          src={"/" + Pic}
-          alt="image"
-          width={0}
-          height={0}
-          sizes="100vw"
-          style={{ width: "100%", height: "100%", borderRadius: "15px" }}
-        />
-      </Box>
-      <Box
-        sx={{
-          backgroundColor: "#EEECF9",
-          paddingY: 1,
-          paddingX: 2,
-          borderRadius: "8px",
-          marginTop: 2,
+    <>
+      <ArrowBackIcon
+        sx={{ marginLeft: "15px" }}
+        onClick={() => {
+          router.push("/vendors");
         }}
-      >
-        <Box>
-          <Typography
-            sx={{
-              color: "#523FAD",
-              textDecoration: "underline",
-              fontWeight: "bold",
-              fontSize: 20,
-            }}
-          >
-            {Profile}
+      />
+
+      <Box sx={{ padding: 2, backgroundColor: "#fff", height: 843 }}>
+        <Box sx={{ padding: 1 }}>
+          <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
+            {Name}
           </Typography>
         </Box>
-        <Box sx={{ marginTop: 1 }}>
-          <Typography>{Desc}</Typography>
+        <Box sx={{ height: "14rem" }}>
+          <Image
+            src={"/" + Pic}
+            alt="image"
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "100%", height: "100%", borderRadius: "15px" }}
+          />
         </Box>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-end",
-          marginY: 1,
-          gap: 2,
-        }}
-      >
-        <Button
-          href={"/" + Social}
+        <Box
           sx={{
-            backgroundColor: "#523FAD !important",
-            color: "#fff",
+            backgroundColor: "#EEECF9",
+            paddingY: 1,
+            paddingX: 2,
             borderRadius: "8px",
+            marginTop: 2,
           }}
         >
-          Social
-        </Button>
-        <Button
-          href={Website}
+          <Box>
+            <Typography
+              sx={{
+                color: "#523FAD",
+                textDecoration: "underline",
+                fontWeight: "bold",
+                fontSize: 20,
+              }}
+            >
+              {Profile}
+            </Typography>
+          </Box>
+          <Box sx={{ marginTop: 1 }}>
+            <Typography>{Desc}</Typography>
+          </Box>
+        </Box>
+        <Box
           sx={{
-            backgroundColor: "#523FAD !important",
-            color: "#fff",
-            borderRadius: "8px",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            marginY: 1,
+            gap: 2,
           }}
         >
-          Website
-        </Button>
+          <Button
+            href={"/" + Social}
+            sx={{
+              backgroundColor: "#523FAD !important",
+              color: "#fff",
+              borderRadius: "8px",
+            }}
+          >
+            Social
+          </Button>
+          <Button
+            href={Website}
+            sx={{
+              backgroundColor: "#523FAD !important",
+              color: "#fff",
+              borderRadius: "8px",
+            }}
+          >
+            Website
+          </Button>
+        </Box>
+        <Box></Box>
       </Box>
-      <Box></Box>
-    </Box>
+    </>
   );
 };
 export default VendorData;
