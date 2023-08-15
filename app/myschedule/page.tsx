@@ -42,17 +42,17 @@ export default function RootLayout(){
     }
   }
 
-  async function deleteEvent(eventName : String) {
-    try {
-      getEvent();
-      await axios.delete(`/api/deleteEvent?name=${eventName}`);
-      setEvents((prevEvents) =>
-        prevEvents.filter((event) => event.ItemTitle !== event.ItemTitle)
-      );
-    } catch (error: any) {
-      toast.error("Error Deleting Event");
-    }
-  }
+  // async function deleteEvent(eventName : String) {
+  //   try {
+  //     getEvent();
+  //     await axios.delete(`/api/deleteEvent?name=${eventName}`);
+  //     setEvents((prevEvents) =>
+  //       prevEvents.filter((event) => event.ItemTitle !== event.ItemTitle)
+  //     );
+  //   } catch (error: any) {
+  //     toast.error("Error Deleting Event");
+  //   }
+  // }
 
   const [activePage, setActivePage] = useState<string>("home");
   console.log(pathname);
@@ -66,28 +66,28 @@ export default function RootLayout(){
     
   }, []);
 
-  useEffect(() => {
-    // Filter out expired events and automatically delete them
-    events.forEach((event) => {
-      const day: String = event.Date.substring(0, 2);
-      const month: String = event.Date.substring(3, 5);
-      const year: String = event.Date.substring(6, 10);
-      const endHour: String = event.Time.substring(6, 8);
-      const endMin: String = event.Time.substring(9, 11);
+  // useEffect(() => {
+  //   // Filter out expired events and automatically delete them
+  //   events.forEach((event) => {
+  //     const day: String = event.Date.substring(0, 2);
+  //     const month: String = event.Date.substring(3, 5);
+  //     const year: String = event.Date.substring(6, 10);
+  //     const endHour: String = event.Time.substring(6, 8);
+  //     const endMin: String = event.Time.substring(9, 11);
 
-      const isExpired =
-        Number(day) === new Date().getDate() &&
-        Number(month) === new Date().getMonth() + 1 &&
-        Number(year) === new Date().getFullYear() &&
-        (Number(endHour) < new Date().getHours() ||
-          (Number(endHour) === new Date().getHours() &&
-            Number(endMin) <= new Date().getMinutes()));
+  //     const isExpired =
+  //       Number(day) === new Date().getDate() &&
+  //       Number(month) === new Date().getMonth() + 1 &&
+  //       Number(year) === new Date().getFullYear() &&
+  //       (Number(endHour) < new Date().getHours() ||
+  //         (Number(endHour) === new Date().getHours() &&
+  //           Number(endMin) <= new Date().getMinutes()));
 
-      if (isExpired) {
-        deleteEvent(event.ItemTitle);
-      }
-    });
-  }, [events]);
+  //     if (isExpired) {
+  //       deleteEvent(event.ItemTitle);
+  //     }
+  //   });
+  // }, [events]);
 
 
   return (
