@@ -56,7 +56,6 @@ export default function MySchedule(){
   // }
 
   const [activePage, setActivePage] = useState<string>("home");
-  console.log(pathname);
   useEffect(() => {
     let paths = pathname.split("/");
 
