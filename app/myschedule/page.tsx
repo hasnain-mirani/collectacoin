@@ -13,20 +13,20 @@ import Items from "@/app/components/Items";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-export default function RootLayout(){
+export default function mySchedule(){
   const { searchVal, setSearchVal } = useContext(ContextValues);
   const pathname = usePathname();
   const router = useRouter();
-  interface Event {
-    ItemTitle: string;
-    ItemSubject: string;
-    ItemDescription: string;
-    Hallno: string;
-    Date: string;
-    Time: string;
-    count: number;
-    state: number;
-    Pic: string;
+  type Event =  {
+    ItemTitle: string,
+    ItemSubject: string,
+    ItemDescription: string,
+    Hallno: string,
+    Date: string,
+    Time: string,
+    count: number,
+    state: number,
+    Pic: string,
   }
 
 
@@ -35,7 +35,7 @@ export default function RootLayout(){
   const getEvents = async () => {
     try {
       const response = await axios.get("/api/trackEvents");
-      const { trackEvents } = await response.data;
+      const { trackEvents } = response.data;
       setEvents(trackEvents);
     } catch (error: any) {
       console.log(error.message);
