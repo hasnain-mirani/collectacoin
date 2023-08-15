@@ -32,7 +32,7 @@ export default function RootLayout(){
 
   const [events, setEvents] = useState<Event[]>([]);
 
-  async function getEvent() {
+  const getEvents = async () => {
     try {
       const response = await axios.get("/api/trackEvents");
       const { trackEvents } = await response.data;
@@ -62,7 +62,7 @@ export default function RootLayout(){
     setActivePage(paths[2]);
   }, [pathname]);
   useEffect(() => {
-    getEvent();
+    getEvents();
     
   }, []);
 
