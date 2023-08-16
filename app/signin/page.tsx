@@ -188,8 +188,9 @@ try {
             Sign Up
           </Button>
         </Box>
-        <Box   sx={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+        <Box sx={{display: "flex", flexDirection: "column", justifyContent: "center" , alignItems: "center"}}>
           <Typography >or use your <Typography component="span" sx={{color:'#3b5998', fontWeight: "bold"}}>Social profile </Typography> </Typography>
+          <Typography >Are you an <Typography onClick={() => {router.push("/adminLogin")}} component="span" sx={{color:'#3b5998', fontWeight: "bold"}}>Admin ? </Typography> </Typography>
         </Box>
         <Box sx={{ display: "flex", gap: 2, flexDirection: "column", justifyContent:'center' }}>
           <Box sx={{display:'flex', gap:2, justifyContent:'space-between', marginX: 2}}>

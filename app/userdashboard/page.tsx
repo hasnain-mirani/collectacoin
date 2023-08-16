@@ -387,7 +387,7 @@ export default function Dashboard() {
               <Typography
                 sx={{ color: "#000", fontSize: "20px", fontWeight: 600 }}
               >
-                {numberIntoMonth(Number(eve.Date.slice(5, 7)))}
+                {numberIntoMonth(Number(eve.Date.slice(5, 7))).slice(0,3)}
               </Typography>
             </Box>
             <Box onClick={() => router.push(`/dashboard/eventsAscUser/${index}`)}>

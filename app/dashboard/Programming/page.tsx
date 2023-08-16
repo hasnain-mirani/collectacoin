@@ -81,6 +81,7 @@ const AutographPage = () => {
                   sx={{
                     height: "7rem",
                     width: "100%",
+                    marginY: 2,
                     backgroundColor: "#EEECF9",
                     borderRadius: "20px",
                     display: "flex",
