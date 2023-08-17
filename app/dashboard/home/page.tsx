@@ -96,7 +96,7 @@ const HomePage = () => {
             key={index}
             sx={{
               minHeight: "14rem",
-              minWidth: "16rem",
+              minWidth: "10rem",
               position: "relative",
               borderRadius: "25px",
               overflow: "hidden",

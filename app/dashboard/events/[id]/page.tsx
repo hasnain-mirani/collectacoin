@@ -101,18 +101,6 @@ const EventData = () => {
             marginY: 1,
           }}
         >
-          {!loading && (
-            <Mybutton1
-              id={id}
-              ItemTitle={Title}
-              Date={Date}
-              Time={Time}
-              Pic={Pic}
-              Hallno={Hallno}
-              ItemSubject={subject}
-              ItemDescription={Desc}
-            />
-          )}
         </Box>
       </Box>
     </>

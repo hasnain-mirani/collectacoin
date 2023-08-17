@@ -3,7 +3,7 @@ import { Box, Typography, Button } from "@mui/material";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Mybutton1 from "@/app/components/Mybutton1";
+import Mybutton2 from "@/app/components/Mybutton2";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/navigation";
 
@@ -102,7 +102,7 @@ const EventData = () => {
           }}
         >
           {!loading && (
-            <Mybutton1
+            <Mybutton2
               id={id}
               ItemTitle={Title}
               Date={Date}

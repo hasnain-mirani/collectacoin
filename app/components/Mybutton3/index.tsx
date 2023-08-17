@@ -69,7 +69,7 @@ const Index = ({
 
   const getButtonStates = async () => {
     try {
-      const response = await axios.get("/api/fetchButtonState");
+      const response = await axios.get("/api/fetchProgramButton");
       const { buttonStates } = await response.data;
       setBtnState(buttonStates[Number(id)].state);
     } catch (error: any) {
@@ -91,7 +91,7 @@ const Index = ({
 
   const buttonState = async () => {
     try {
-      await axios.post("/api/buttonState", buttonNumber);
+      await axios.post("/api/buttonStateProgram", buttonNumber);
       console.log("Saved State");
     } catch (error: any) {
       console.error("State not saved");

@@ -159,16 +159,6 @@ const EventsPage = () => {
                       marginY: 1,
                     }}
                   >
-                    <Mybutton
-                      index={index}
-                      ItemTitle={event.ItemTitle}
-                      Date={event.Date}
-                      Time={event.Time}
-                      Pic={event.Pic}
-                      Hallno={event.Hallno}
-                      ItemSubject={event.ItemSubject}
-                      ItemDescription={event.ItemDescription}
-                    />
                   </Box>
                 </Box>
               </Box>

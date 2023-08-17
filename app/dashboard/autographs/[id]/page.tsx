@@ -57,7 +57,6 @@ const EventData = () => {
           <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
             {Title}
           </Typography>
-          A
         </Box>
         <Box sx={{ height: "14rem" }}>
           <Image
