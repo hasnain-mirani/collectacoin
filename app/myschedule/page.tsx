@@ -74,8 +74,6 @@ export default function MySchedule(): JSX.Element {
     return <div>Failed to fetch events.</div>;
   }
 
-  
-
   // async function deleteEvent(eventName : String) {
   //   try {
   //     getEvent();
