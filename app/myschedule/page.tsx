@@ -56,8 +56,7 @@ export default function MySchedule(): JSX.Element {
 
 
   const { data, error} = useSWR<Event[]>('/api/trackEvents', fetcher, {
-    refreshInterval: 10000,
-    revalidateOnFocus: false
+    revalidateOnFocus: true
   });
   if (error) {
     return <div>Error fetching events</div>;
@@ -73,29 +72,6 @@ export default function MySchedule(): JSX.Element {
     // Return appropriate JSX for error handling e.g., error message
     return <div>Failed to fetch events.</div>;
   }
-
-  // async function deleteEvent(eventName : String) {
-  //   try {
-  //     getEvent();
-  //     await axios.delete(`/api/deleteEvent?name=${eventName}`);
-  //     setEvents((prevEvents) =>
-  //       prevEvents.filter((event) => event.ItemTitle !== event.ItemTitle)
-  //     );
-  //   } catch (error: any) {
-  //     toast.error("Error Deleting Event");
-  //   }
-  // }
-
-  // const [activePage, setActivePage] = useState<string>("home");
-  // useEffect(() => {
-  //   let paths = pathname.split("/");
-
-  //   setActivePage(paths[2]);
-  // }, [pathname]);
-  // useEffect(() => {
-  //   getEvents();
-    
-  // },);
 
   // useEffect(() => {
   //   // Filter out expired events and automatically delete them

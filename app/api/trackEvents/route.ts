@@ -4,16 +4,30 @@ import event from "@/modals/eventModal";
 
 connect();
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     const trackEvents = await event.find();
-    console.log(trackEvents);
-    return NextResponse.json({ trackEvents });
-  }
-  catch(error : any){
-    return NextResponse.json({
-      message: "No Events Exist!",
-      status: 500,
+    // Set Cache-Control headers to disable caching
+    const cacheControl = "no-store";
+    const responseHeaders = {
+      "Cache-Control": cacheControl,
+    };
+
+    return new NextResponse(JSON.stringify({ trackEvents }), {
+      status: 200,
+      headers: responseHeaders,
     });
-}
+  } catch (error: any) {
+    console.error(error);
+
+    return new NextResponse(
+      JSON.stringify({
+        message: "Failed to fetch events.",
+        status: 500,
+      }),
+      {
+        status: 500,
+      }
+    );
+  }
 }
