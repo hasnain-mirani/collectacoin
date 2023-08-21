@@ -56,7 +56,6 @@ export default function MySchedule(): JSX.Element {
 
 
   const { data, error} = useSWR<Event[]>('/api/trackEvents', fetcher, {
-    refreshInterval: 3000,
     revalidateOnFocus: true
   });
   if (error) {
