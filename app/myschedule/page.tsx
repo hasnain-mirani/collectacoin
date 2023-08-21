@@ -13,37 +13,67 @@ import Items from "@/app/components/Items";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Image from "next/image";
+import useSWR, { SWRResponse } from "swr";
 
-export default function MySchedule(){
+type Event =  {
+  _id: string;
+  ItemTitle: string;
+  ItemSubject: string;
+  ItemDescription: string;
+  Hallno: string;
+  Date: string;
+  Time: string;
+  count: number;
+  state: number;
+  Pic: string;
+  __v: number;
+}
+
+const fetcher = async (url: string): Promise<Event[]> => {
+  const response = await fetch(url);
+  const data = await response.json();
+  return data.trackEvents; // Return the trackEvents array from the response
+};
+
+export default function MySchedule(): JSX.Element {
   const { searchVal, setSearchVal } = useContext(ContextValues);
   const pathname = usePathname();
   const router = useRouter();
-  type Event =  {
-    ItemTitle: string,
-    ItemSubject: string,
-    ItemDescription: string,
-    Hallno: string,
-    Date: string,
-    Time: string,
-    count: number,
-    state: number,
-    Pic: string,
+  
+
+
+ 
+
+  // const getEvents = async () => {
+  //   try {
+  //     const response = await axios.get("/api/trackEvents");
+  //     const { trackEvents } = response.data;
+  //     setEvents(trackEvents);
+  //   } catch (error: any) {
+  //     console.log(error.message);
+  //   }
+  // }
+
+
+  const { data, error} = useSWR<Event[]>('/api/trackEvents', fetcher, {
+    refreshInterval: 10000,
+    revalidateOnFocus: false
+  });
+  if (error) {
+    return <div>Error fetching events</div>;
   }
 
-
-  const [events, setEvents] = useState<Event[]>([]);
-
-  const getEvents = async () => {
-    try {
-      const response = await fetch("/api/trackEvents" , {
-        next: {revalidate: 10}
-      });
-      const { trackEvents } = await response.json();
-      setEvents(trackEvents);
-    } catch (error: any) {
-      console.log(error.message);
-    }
+  if (!data) {
+    return <div>Loading...</div>;
   }
+
+  if (error) {
+    // Handle error
+    console.log(error);
+    // Return appropriate JSX for error handling e.g., error message
+    return <div>Failed to fetch events.</div>;
+  }
+  
 
   // async function deleteEvent(eventName : String) {
   //   try {
@@ -57,16 +87,16 @@ export default function MySchedule(){
   //   }
   // }
 
-  const [activePage, setActivePage] = useState<string>("home");
-  useEffect(() => {
-    let paths = pathname.split("/");
+  // const [activePage, setActivePage] = useState<string>("home");
+  // useEffect(() => {
+  //   let paths = pathname.split("/");
 
-    setActivePage(paths[2]);
-  }, [pathname]);
-  useEffect(() => {
-    getEvents();
+  //   setActivePage(paths[2]);
+  // }, [pathname]);
+  // useEffect(() => {
+  //   getEvents();
     
-  },);
+  // },);
 
   // useEffect(() => {
   //   // Filter out expired events and automatically delete them
@@ -147,7 +177,7 @@ export default function MySchedule(){
       </Box>
 
       <Box>
-        {events.map((event, index) => (
+        {data.map((event, index) => (
           <Box
             key={index}
             sx={{
