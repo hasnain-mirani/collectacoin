@@ -7,6 +7,7 @@ connect();
 export async function GET() {
   try {
     const trackEvents = await event.find();
+    console.log(trackEvents);
     return NextResponse.json({ trackEvents });
   }
   catch(error : any){

@@ -20,8 +20,10 @@ const EventData = () => {
   const router = useRouter();
   const getEvents = async (ID: number) => {
     try {
-      const response = await axios.get("/api/fetchPhotoOPS");
-      const { allPhotos } = response.data;
+      const response = await fetch("/api/fetchPhotoOPS" , {
+        next: {revalidate: 10}
+      });
+      const { allPhotos } = await response.json();
 
       // Fetch the event data based on the ID and set the state
       setDesc(allPhotos[Number(ID)].ItemDescription || "");

@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 export async function connect() {
   try {
     await mongoose.connect(
-      "mongodb+srv://doadmin:346eoR1k27Ttu58d@db-mongodb-nyc1-08654-eea55fda.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=db-mongodb-nyc1-08654",
+      "mongodb://127.0.0.1:27017",
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,

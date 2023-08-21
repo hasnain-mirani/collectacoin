@@ -20,8 +20,10 @@ const EventData = () => {
   const router = useRouter();
   const getEvents = async (ID: number) => {
     try {
-      const response = await axios.get("/api/fetchEvents");
-      const { allEvents } = response.data;
+      const response = await fetch("/api/fetchEvents" , {
+        next: {revalidate: 10}
+      });
+      const { allEvents } = await response.json();
 
       // Fetch the event data based on the ID and set the state
       setDesc(allEvents[Number(ID)].ItemDescription || "");
