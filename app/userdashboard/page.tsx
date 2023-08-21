@@ -402,10 +402,12 @@ export default function Dashboard() {
             </Box>
             <Box>
               <GoingButton
+                index = {index}
                 ItemTitle={eve.ItemTitle}
                 Date={eve.Date}
                 Time={eve.Time}
                 Pic={eve.Pic}
+                eventType={eve.eventType}
                 Hallno={eve.Hallno}
                 ItemSubject={eve.ItemSubject}
                 ItemDescription={eve.ItemDescription}

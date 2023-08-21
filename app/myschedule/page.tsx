@@ -35,8 +35,10 @@ export default function MySchedule(){
 
   const getEvents = async () => {
     try {
-      const response = await axios.get("/api/trackEvents");
-      const { trackEvents } = response.data;
+      const response = await fetch("/api/trackEvents" , {
+        next: {revalidate: 10}
+      });
+      const { trackEvents } = await response.json();
       setEvents(trackEvents);
     } catch (error: any) {
       console.log(error.message);

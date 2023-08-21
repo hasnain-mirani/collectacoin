@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+//mongodb+srv://doadmin:346eoR1k27Ttu58d@db-mongodb-nyc1-08654-eea55fda.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=db-mongodb-nyc1-08654
+
 export async function connect() {
   try {
     await mongoose.connect(

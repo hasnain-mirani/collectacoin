@@ -50,8 +50,10 @@ const AutographPage = () => {
   const [autograph, setAutograph] = useState<AUTOGRAPH[]>([]);
   const getAutographs = async () => {
     try {
-      const response = await axios.get("/api/fetchAutograph");
-      const { allAutographs } = await response.data;
+      const response = await fetch("/api/fetchAutograph" , {
+        next: {revalidate: 10}
+      });
+      const { allAutographs } = await response.json();
       setAutograph(allAutographs);
       console.log("Autographs has been fetched successfully!");
     } catch (error: any) {
