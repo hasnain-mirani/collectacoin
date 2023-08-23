@@ -3,7 +3,7 @@ import plan from "@/modals/floorPlanModal";
 import { NextResponse } from "next/server";
 
 connect();
-
+export const revalidate = 0;
 export async function GET() {
   try {
     const allPlans = await plan.find();
