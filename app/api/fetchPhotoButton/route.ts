@@ -3,7 +3,7 @@ import {connect} from "@/dbconfig/dbconfig";
 import buttonEventPhoto from "@/modals/buttonModalPhoto";
 
 connect();
-
+export const revalidate = 0;
 export async function GET(){
     try {
         const buttonStates = await buttonEventPhoto.find().sort({buttonNumber: 1});
