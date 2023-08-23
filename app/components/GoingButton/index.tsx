@@ -8,7 +8,8 @@ import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Box, Typography, Button } from "@mui/material";
-
+import CheckSharpIcon from '@mui/icons-material/CheckSharp';
+import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 type props = {
   index: number;
   ItemTitle: string;
@@ -142,13 +143,14 @@ const Index = ({
         <Typography
           sx={{ color: "#523FAD", fontSize: "20px", fontWeight: 600 }}
         >
-          Going
+          Going  <CheckSharpIcon/>
         </Typography>
+       
       ) : (
         <Typography
           sx={{ color: "#523FAD", fontSize: "20px", fontWeight: 600 }}
         >
-          Not Going
+          Going <CloseSharpIcon />
         </Typography>
       )}
     </Button>

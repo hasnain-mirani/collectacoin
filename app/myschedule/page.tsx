@@ -14,6 +14,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import useSWR, { SWRResponse } from "swr";
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 
 type Event =  {
   _id: string;
@@ -29,15 +30,6 @@ type Event =  {
   __v: number;
 }
 
-const fetcher = async (url: string): Promise<Event[]> => {
-  const response = await axios.get(url, {
-    headers: {
-      'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=59',
-    },
-  });
-  return response.data.trackEvents;
-};
-
 export default function MySchedule(): JSX.Element {
   const { searchVal, setSearchVal } = useContext(ContextValues);
   const pathname = usePathname();
@@ -46,24 +38,41 @@ export default function MySchedule(): JSX.Element {
 
 
 
-const { data, error } = useSWR<Event[]>('/api/trackEvents', fetcher, {
-  refreshInterval: 100,
-  revalidateOnFocus: true,
-});
-  if (error) {
-    return <div>Error fetching events</div>;
+  const [events, setEvents] = useState<Event[]>([]);
+
+  async function getEvent() {
+    try {
+      const response = await axios.get("/api/trackEvents");
+      const { trackEvents } = await response.data;
+      setEvents(trackEvents);
+    } catch (error: any) {
+      console.log(error.message);
+    }
   }
 
-  if (!data) {
-    return <div>Loading...</div>;
-  }
+  // async function deleteEvent(eventName : String) {
+  //   try {
+  //     getEvent();
+  //     await axios.delete(`/api/deleteEvent?name=${eventName}`);
+  //     setEvents((prevEvents) =>
+  //       prevEvents.filter((event) => event.ItemTitle !== event.ItemTitle)
+  //     );
+  //   } catch (error: any) {
+  //     toast.error("Error Deleting Event");
+  //   }
+  // }
 
-  if (error) {
-    // Handle error
-    console.log(error);
-    // Return appropriate JSX for error handling e.g., error message
-    return <div>Failed to fetch events.</div>;
-  }
+  const [activePage, setActivePage] = useState<string>("home");
+  console.log(pathname);
+  useEffect(() => {
+    let paths = pathname.split("/");
+
+    setActivePage(paths[2]);
+  }, [pathname]);
+  useEffect(() => {
+    getEvent();
+    
+  }, []);
 
   // useEffect(() => {
   //   // Filter out expired events and automatically delete them
@@ -88,10 +97,9 @@ const { data, error } = useSWR<Event[]>('/api/trackEvents', fetcher, {
   //   });
   // }, [events]);
 
-
   return (
     <Box
-      sx={{ display: "flex", flexDirection: "column", backgroundColor: "#fff" }}
+      sx={{ display: "flex", flexDirection: "column", backgroundColor: "#fff", height: 900 }}
     >
       <Box
         sx={{
@@ -144,7 +152,7 @@ const { data, error } = useSWR<Event[]>('/api/trackEvents', fetcher, {
       </Box>
 
       <Box>
-        {data.map((event, index) => (
+        {events.length > 0 ? events.map((event, index) => (
           <Box
             key={index}
             sx={{
@@ -235,7 +243,13 @@ const { data, error } = useSWR<Event[]>('/api/trackEvents', fetcher, {
               </Box>
             </Box>
           </Box>
-        ))}
+        )) : <Typography  sx={{
+              color: "#523FAD",
+              fontSize: "26px",
+              fontWeight: 600,
+              marginX: 10,
+              marginY: 20
+            }}><SentimentVeryDissatisfiedIcon sx={{marginX: 8 , fontSize: 100}}/></Typography>}
       </Box>
       <Box
         sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
