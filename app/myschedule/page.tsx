@@ -30,9 +30,12 @@ type Event =  {
 }
 
 const fetcher = async (url: string): Promise<Event[]> => {
-  const response = await fetch(url);
-  const data = await response.json();
-  return data.trackEvents; // Return the trackEvents array from the response
+  const response = await axios.get(url, {
+    headers: {
+      'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=59',
+    },
+  });
+  return response.data.trackEvents;
 };
 
 export default function MySchedule(): JSX.Element {
@@ -42,22 +45,11 @@ export default function MySchedule(): JSX.Element {
   
 
 
- 
 
-  // const getEvents = async () => {
-  //   try {
-  //     const response = await axios.get("/api/trackEvents");
-  //     const { trackEvents } = response.data;
-  //     setEvents(trackEvents);
-  //   } catch (error: any) {
-  //     console.log(error.message);
-  //   }
-  // }
-
-
-  const { data, error} = useSWR<Event[]>('/api/trackEvents', fetcher, {
-    revalidateOnFocus: true
-  });
+const { data, error } = useSWR<Event[]>('/api/trackEvents', fetcher, {
+  refreshInterval: 100,
+  revalidateOnFocus: true,
+});
   if (error) {
     return <div>Error fetching events</div>;
   }
