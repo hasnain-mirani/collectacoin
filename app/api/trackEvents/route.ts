@@ -3,7 +3,7 @@ import { connect } from "@/dbconfig/dbconfig";
 import event from "@/modals/eventModal";
 
 connect();
-
+export const revalidate = 0;
 export async function GET(req: NextRequest) {
   try {
     const trackEvents = await event.find();
