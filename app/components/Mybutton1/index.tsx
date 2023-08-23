@@ -113,6 +113,7 @@ const Index = ({
     >
       {btnState === 1  ? (
         <Button
+          onClick={()=>{toast.success("Removed from Schedule!")}}
           sx={{
             backgroundColor: "#523FAD !important",
             color: "#fff",
@@ -122,9 +123,9 @@ const Index = ({
           Added
           <DoneOutlineIcon  />
         </Button>
-       
       ) : (
         <Button
+          onClick={()=>{toast.success("Added to Schedule!")}}
           sx={{
             backgroundColor: "#523FAD !important",
             color: "#fff",
