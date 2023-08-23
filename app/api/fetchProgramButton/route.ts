@@ -3,7 +3,7 @@ import {connect} from "@/dbconfig/dbconfig";
 import buttonEventProgram from "@/modals/buttonModalProgram";
 
 connect();
-
+export const revalidate = 0;
 export async function GET(){
     try {
         const buttonStates = await buttonEventProgram.find().sort({buttonNumber: 1});
