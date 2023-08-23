@@ -3,7 +3,7 @@ import addVendor from "@/modals/vendorModal";
 import { NextResponse } from "next/server";
 
 connect();
-
+export const revalidate = 0;
 export async function GET() {
   try {
     const allVendors = await addVendor.find();
