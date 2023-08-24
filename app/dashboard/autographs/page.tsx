@@ -51,8 +51,8 @@ const AutographPage = () => {
   const [autograph, setAutograph] = useState<AUTOGRAPH[]>([]);
   const getAutographs = async () => {
     try {
-      const response = await fetch("/api/fetchAutograph" , {
-        next: {revalidate: 10}
+      const response = await fetch("/api/fetchAutograph", {
+        next: { revalidate: 10 },
       });
       const { allAutographs } = await response.json();
       setAutograph(allAutographs);
@@ -69,7 +69,7 @@ const AutographPage = () => {
   return (
     <>
       <ArrowBackIcon
-        sx={{marginLeft: "15px"}}
+        sx={{ marginLeft: "15px" }}
         onClick={() => {
           router.push("/userdashboard");
         }}
@@ -77,94 +77,104 @@ const AutographPage = () => {
       <Box sx={{ padding: 1.5, backgroundColor: "#fff", height: 705 }}>
         <Box>
           <Box sx={{ margin: 0.5 }}>
-            {autograph.length > 0 ? autograph.map((auto, index) => (
-              <Box key={index}>
-                {/* mapped elements */}
-                <Box
-                  sx={{
-                    height: "7rem",
-                    width: "100%",
-                    marginY: 2,
-                    backgroundColor: "#EEECF9",
-                    borderRadius: "20px",
-                    display: "flex",
-                    flexDirection: "row",
-                  }}
-                >
-                  <Image
-                    src={"/" + auto.Pic}
-                    alt="image"
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    style={{
-                      width: "37%",
-                      height: "100%",
-                      borderRadius: "20px",
-                    }}
-                    onClick={() =>
-                      router.push(`/dashboard/autographs/${index}`)
-                    }
-                  />
+            {autograph.length > 0 ? (
+              autograph.map((auto, index) => (
+                <Box key={index}>
+                  {/* mapped elements */}
                   <Box
                     sx={{
-                      width: "63%",
+                      height: "7rem",
+                      width: "100%",
+                      marginY: 2,
+                      backgroundColor: "#EEECF9",
+                      borderRadius: "20px",
                       display: "flex",
                       flexDirection: "row",
-                      justifyContent: "space-between",
                     }}
                   >
+                    <Image
+                      src={"/" + auto.Pic}
+                      alt="image"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      style={{
+                        width: "37%",
+                        height: "100%",
+                        borderRadius: "20px",
+                      }}
+                      onClick={() =>
+                        router.push(`/dashboard/autographs/${index}`)
+                      }
+                    />
                     <Box
                       sx={{
-                        marginLeft: 2,
+                        width: "63%",
                         display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "flex-start",
-                        paddingTop: 2,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
                       }}
                     >
-                      <Typography
-                        sx={{ fontWeight: "bold" }}
-                        onClick={() =>
-                          router.push(`/dashboard/autographs/${index}`)
-                        }
+                      <Box
+                        sx={{
+                          marginLeft: 2,
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "flex-start",
+                          paddingTop: 2,
+                        }}
                       >
-                        {auto.ItemTitle}
-                      </Typography>
-                      <Typography sx={{ color: "#595959" }}>
-                        {auto.ItemSubject}
-                      </Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "flex-end",
-                        marginX: 1,
-                        marginY: 1,
-                      }}
-                    >
-                      <Typography sx={{ color: "#595959" }}>Time</Typography>
-                      <Typography sx={{ color: "#523FAD", fontSize: 12 }}>
-                        {auto.Time}
-                      </Typography>
+                        <Typography
+                          sx={{ fontWeight: "bold" }}
+                          onClick={() =>
+                            router.push(`/dashboard/autographs/${index}`)
+                          }
+                        >
+                          {auto.ItemTitle}
+                        </Typography>
+                        <Typography sx={{ color: "#595959" }}>
+                          {auto.ItemSubject}
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "flex-end",
+                          marginX: 1,
+                          marginY: 1,
+                        }}
+                      >
+                        <Typography sx={{ color: "#595959" }}>Time</Typography>
+                        <Typography sx={{ color: "#523FAD", fontSize: 12 }}>
+                          {auto.Time}
+                        </Typography>
+                      </Box>
                     </Box>
                   </Box>
                 </Box>
+              ))
+            ) : (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "50vh",
+                }}
+              >
+                <Box
+                  sx={{
+                    width: "50px",
+                    height: "50px",
+                    borderRadius: "50%",
+                    border: "8px solid",
+                    borderColor: "#766DF4 #0000",
+                    animation: "s1 1s infinite",
+                  }}
+                ></Box>
               </Box>
-            )) : <Box
-            sx={{
-              marginX: 20,
-              marginY: 10,
-              width: "50px",
-              height: "50px",
-              borderRadius: "50%",
-              border: "8px solid",
-              borderColor: "#766DF4 #0000",
-              animation: "s1 1s infinite",
-             
-            }}
-          ></Box>}
+            )}
             {/* advertisement */}
             <Box
               sx={{

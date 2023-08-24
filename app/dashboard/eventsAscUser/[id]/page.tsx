@@ -3,9 +3,9 @@ import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Mybutton1 from "@/app/components/Mybutton1";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/navigation";
+import "@/app/styles/style.css";
 const EventData = () => {
   const [Desc, setDesc] = useState<string>("");
   const [subject, setSubject] = useState<string>("");
@@ -52,17 +52,39 @@ const EventData = () => {
           router.push("/userdashboard");
         }}
       />
-      <Box sx={{ margin: 2, height: 674 }}>
-        <Box sx={{ height: "14rem" }}>
-          <Image
-            src={Pic && "/" + Pic}
-            alt="image"
-            width={200}
-            height={200}
-            sizes="100vw"
-            style={{ width: "100%", height: "100%", borderRadius: "15px" }}
-          />
-        </Box>
+      <Box sx={{ margin: 2, height: 650 }}>
+        {Pic ? (
+          <Box sx={{ height: "14rem" }}>
+            <Image
+              src={Pic && "/" + Pic}
+              alt="image"
+              width={200}
+              height={200}
+              sizes="100vw"
+              style={{ width: "100%", height: "100%", borderRadius: "15px" }}
+            />
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "20vh",
+            }}
+          >
+            <Box
+              sx={{
+                width: "50px",
+                height: "50px",
+                borderRadius: "50%",
+                border: "8px solid",
+                borderColor: "#766DF4 #0000",
+                animation: "s1 1s infinite",
+              }}
+            ></Box>
+          </Box>
+        )}
         <Box
           sx={{
             backgroundColor: "#EEECF9",
@@ -91,27 +113,6 @@ const EventData = () => {
           <Box sx={{ marginTop: 1 }}>
             <Typography>{Desc}</Typography>
           </Box>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            marginY: 1,
-          }}
-        >
-          {!loading && (
-            <Mybutton1
-              id={id}
-              ItemTitle={Title}
-              Date={Date}
-              Time={Time}
-              Pic={Pic}
-              Hallno={Hallno}
-              ItemSubject={subject}
-              ItemDescription={Desc}
-            />
-          )}
         </Box>
       </Box>
     </>

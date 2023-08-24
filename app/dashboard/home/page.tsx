@@ -92,75 +92,78 @@ const HomePage = () => {
           marginY: 2,
         }}
       >
-        {events.length > 0 ? events.map((event, index) => (
-          <Box
-            key={index}
-            sx={{
-              minHeight: "14rem",
-              minWidth: "10rem",
-              position: "relative",
-              borderRadius: "25px",
-              overflow: "hidden",
-            }}
-          >
-            <Image
-              src={"/" + event.Pic}
-              alt="image"
-              width={0}
-              height={0}
-              sizes="100vw"
-              style={{ width: "100%", height: "70%" }}
-              onClick={() => router.push(`/dashboard/eventsAsc/${index}`)}
-            />
+        {events.length > 0 ? (
+          events.map((event, index) => (
             <Box
+              key={index}
               sx={{
-                backgroundColor: "#EEECF9",
-                paddingX: 2,
-                paddingY: 1,
-                height: "30%",
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
+                minHeight: "14rem",
+                minWidth: "10rem",
+                position: "relative",
+                borderRadius: "25px",
+                overflow: "hidden",
               }}
             >
-              <Box onClick={() => router.push("dashboard/events/1")}>
-                <Box>
-                  <Typography sx={{ fontWeight: "bold", fontSize: 16 }}>
-                    {event.ItemTitle}
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography sx={{ color: "#595959" }}>
-                    {event.ItemSubject}
-                  </Typography>
-                </Box>
-              </Box>
+              <Image
+                src={"/" + event.Pic}
+                alt="image"
+                width={0}
+                height={0}
+                sizes="100vw"
+                style={{ width: "100%", height: "70%" }}
+                onClick={() => router.push(`/dashboard/eventsAsc/${index}`)}
+              />
               <Box
                 sx={{
+                  backgroundColor: "#EEECF9",
+                  paddingX: 2,
+                  paddingY: 1,
+                  height: "30%",
                   display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
                 }}
               >
-                {/* <IconButton>
+                <Box onClick={() => router.push("dashboard/events/1")}>
+                  <Box>
+                    <Typography sx={{ fontWeight: "bold", fontSize: 16 }}>
+                      {event.ItemTitle}
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography sx={{ color: "#595959" }}>
+                      {event.ItemSubject}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                  }}
+                >
+                  {/* <IconButton>
                   <BsBookmark />
                 </IconButton> */}
+                </Box>
               </Box>
             </Box>
-          </Box>
-        )): <Box
-        sx={{
-          marginX: 20,
-          marginY: 10,
-          width: "50px",
-          height: "50px",
-          borderRadius: "50%",
-          border: "8px solid",
-          borderColor: "#766DF4 #0000",
-          animation: "s1 1s infinite",
-         
-        }}
-      ></Box>}
+          ))
+        ) : (
+          <Box
+            sx={{
+              marginX: 20,
+              marginY: 10,
+              width: "50px",
+              height: "50px",
+              borderRadius: "50%",
+              border: "8px solid",
+              borderColor: "#766DF4 #0000",
+              animation: "s1 1s infinite",
+            }}
+          ></Box>
+        )}
       </Box>
       <Box sx={{ marginX: 2, marginY: 1 }}>
         <Box
@@ -227,79 +230,89 @@ const HomePage = () => {
           </Box>
         </Box>
         <Box>
-          {events.length > 0 ? events.map((event, index) => (
-            <Box key={index}
-              sx={{
-                minHeight: "7rem",
-                width: "100%",
-                marginY: 2,
-                backgroundColor: "#EEECF9",
-                borderRadius: "20px",
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <Image
-                src={"/" + event.Pic}
-                alt="image"
-                width={0}
-                height={0}
-                sizes="100vw"
-                style={{ width: "37%", borderRadius: "20px" }}
-                onClick={() => router.push(`/dashboard/eventsAsc/${index}`)}
-              />
+          {events.length > 0 ? (
+            events.map((event, index) => (
               <Box
+                key={index}
                 sx={{
-                  width: "63%",
+                  minHeight: "7rem",
+                  width: "100%",
+                  marginY: 2,
+                  backgroundColor: "#EEECF9",
+                  borderRadius: "20px",
                   display: "flex",
                   flexDirection: "row",
-                  justifyContent: "space-between",
-                  paddingY: 1,
                 }}
               >
-                <Box
+                <Image
+                  src={"/" + event.Pic}
+                  alt="image"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{ width: "37%", borderRadius: "20px" }}
                   onClick={() => router.push(`/dashboard/eventsAsc/${index}`)}
+                />
+                <Box
                   sx={{
-                    marginX: 2,
+                    width: "63%",
                     display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    paddingY: 1,
                   }}
                 >
-                  <Typography sx={{ color: "#523FAD", fontWeight: "semibold" }}>
-                    {event.Date.slice(8,10) + ", " + numberIntoMonth(Number(event.Date.slice(5,7))) + " " + event.Date.slice(0,4)}
-                  </Typography>
-                  <Typography sx={{ fontWeight: "bold" }}>
-                    {event.ItemTitle}
-                  </Typography>
-                  <Typography sx={{ color: "#595959" }}>
-                    {event.ItemSubject}
-                  </Typography>
+                  <Box
+                    onClick={() => router.push(`/dashboard/eventsAsc/${index}`)}
+                    sx={{
+                      marginX: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{ color: "#523FAD", fontWeight: "semibold" }}
+                    >
+                      {event.Date.slice(8, 10) +
+                        ", " +
+                        numberIntoMonth(Number(event.Date.slice(5, 7))) +
+                        " " +
+                        event.Date.slice(0, 4)}
+                    </Typography>
+                    <Typography sx={{ fontWeight: "bold" }}>
+                      {event.ItemTitle}
+                    </Typography>
+                    <Typography sx={{ color: "#595959" }}>
+                      {event.ItemSubject}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "flex-end",
+                      marginX: 2,
+                      marginY: 1,
+                    }}
+                  ></Box>
                 </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "flex-end",
-                    marginX: 2,
-                    marginY: 1,
-                  }}
-                ></Box>
               </Box>
-            </Box>
-          )) : <Box
-          sx={{
-            marginX: 20,
-            marginY: 10,
-            width: "50px",
-            height: "50px",
-            borderRadius: "50%",
-            border: "8px solid",
-            borderColor: "#766DF4 #0000",
-            animation: "s1 1s infinite",
-           
-          }}
-        ></Box>}
+            ))
+          ) : (
+            <Box
+              sx={{
+                marginX: 20,
+                marginY: 10,
+                width: "50px",
+                height: "50px",
+                borderRadius: "50%",
+                border: "8px solid",
+                borderColor: "#766DF4 #0000",
+                animation: "s1 1s infinite",
+              }}
+            ></Box>
+          )}
         </Box>
       </Box>
     </>

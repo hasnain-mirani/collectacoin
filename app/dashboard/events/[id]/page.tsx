@@ -21,8 +21,8 @@ const EventData = () => {
   const router = useRouter();
   const getEvents = async (ID: number) => {
     try {
-      const response = await fetch("/api/fetchEvents" , {
-        next: {revalidate: 10}
+      const response = await fetch("/api/fetchEvents", {
+        next: { revalidate: 10 },
       });
       const { allEvents } = await response.json();
 
@@ -51,34 +51,44 @@ const EventData = () => {
   return (
     <>
       <ArrowBackIcon
-        sx={{marginLeft: "15px"}}
+        sx={{ marginLeft: "15px" }}
         onClick={() => {
           router.push("/dashboard/events");
         }}
       />
-      <Box sx={{ margin: 2, height: 674 }}>
-        {Pic ? <Box sx={{ height: "14rem" }}>
-          <Image
-            src={Pic && "/" + Pic}
-            alt="image"
-            width={200}
-            height={200}
-            sizes="100vw"
-            style={{ width: "100%", height: "100%", borderRadius: "15px" }}
-          />
-        </Box> : <Box
-          sx={{
-            marginX: 20,
-            marginY: 10,
-            width: "50px",
-            height: "50px",
-            borderRadius: "50%",
-            border: "8px solid",
-            borderColor: "#766DF4 #0000",
-            animation: "s1 1s infinite",
-           
-          }}
-        ></Box>}
+      <Box sx={{ margin: 2, height: 650 }}>
+        {Pic ? (
+          <Box sx={{ height: "14rem" }}>
+            <Image
+              src={Pic && "/" + Pic}
+              alt="image"
+              width={200}
+              height={200}
+              sizes="100vw"
+              style={{ width: "100%", height: "100%", borderRadius: "15px" }}
+            />
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "20vh",
+            }}
+          >
+            <Box
+              sx={{
+                width: "50px",
+                height: "50px",
+                borderRadius: "50%",
+                border: "8px solid",
+                borderColor: "#766DF4 #0000",
+                animation: "s1 1s infinite",
+              }}
+            ></Box>
+          </Box>
+        )}
         <Box
           sx={{
             backgroundColor: "#EEECF9",
@@ -115,8 +125,7 @@ const EventData = () => {
             justifyContent: "flex-end",
             marginY: 1,
           }}
-        >
-        </Box>
+        ></Box>
       </Box>
     </>
   );

@@ -155,16 +155,23 @@ const AutographPage = () => {
             ) : (
               <Box
                 sx={{
-                  marginX: 20,
-                  marginY: 10,
-                  width: "50px",
-                  height: "50px",
-                  borderRadius: "50%",
-                  border: "8px solid",
-                  borderColor: "#766DF4 #0000",
-                  animation: "s1 1s infinite",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "50vh",
                 }}
-              ></Box>
+              >
+                <Box
+                  sx={{
+                    width: "50px",
+                    height: "50px",
+                    borderRadius: "50%",
+                    border: "8px solid",
+                    borderColor: "#766DF4 #0000",
+                    animation: "s1 1s infinite",
+                  }}
+                ></Box>
+              </Box>
             )}
             {/* advertisement */}
             <Box

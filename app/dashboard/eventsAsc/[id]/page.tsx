@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Mybutton1 from "@/app/components/Mybutton1";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/navigation";
-
+import "@/app/styles/style.css";
 const EventData = () => {
   const [Desc, setDesc] = useState<string>("");
   const [subject, setSubject] = useState<string>("");
@@ -51,17 +51,39 @@ const EventData = () => {
           router.push("/dashboard/home");
         }}
       />
-      <Box sx={{ margin: 2, height: 674 }}>
-        <Box sx={{ height: "14rem" }}>
-          <Image
-            src={Pic && "/" + Pic}
-            alt="image"
-            width={200}
-            height={200}
-            sizes="100vw"
-            style={{ width: "100%", height: "100%", borderRadius: "15px" }}
-          />
-        </Box>
+      <Box sx={{ margin: 2, height: 650 }}>
+        {Pic ? (
+          <Box sx={{ height: "14rem" }}>
+            <Image
+              src={Pic && "/" + Pic}
+              alt="image"
+              width={200}
+              height={200}
+              sizes="100vw"
+              style={{ width: "100%", height: "100%", borderRadius: "15px" }}
+            />
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "20vh",
+            }}
+          >
+            <Box
+              sx={{
+                width: "50px",
+                height: "50px",
+                borderRadius: "50%",
+                border: "8px solid",
+                borderColor: "#766DF4 #0000",
+                animation: "s1 1s infinite",
+              }}
+            ></Box>
+          </Box>
+        )}
         <Box
           sx={{
             backgroundColor: "#EEECF9",

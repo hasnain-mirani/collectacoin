@@ -75,107 +75,122 @@ const EventsPage = () => {
       <Box>
         <Box sx={{ marginX: 2, marginY: 1 }}>
           <Box>
-            {adminEvent.length > 0 ? adminEvent.map((event, index) => (
-              <Box
-                key={index}
-                sx={{
-                  height: "7rem",
-                  width: "100%",
-                  marginY: 2,
-                  backgroundColor: "#EEECF9",
-                  borderRadius: "20px",
-                  display: "flex",
-                  flexDirection: "row",
-                }}
-              >
-                <Image
-                  src={"/" + event.Pic}
-                  alt="image"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  style={{ width: "37%", height: "100%", borderRadius: "20px" }}
-                  onClick={() => router.push(`/dashboard/events/${index}`)}
-                />
+            {adminEvent.length > 0 ? (
+              adminEvent.map((event, index) => (
                 <Box
+                  key={index}
                   sx={{
-                    width: "63%",
+                    height: "7rem",
+                    width: "100%",
+                    marginY: 2,
+                    backgroundColor: "#EEECF9",
+                    borderRadius: "20px",
                     display: "flex",
                     flexDirection: "row",
-                    justifyContent: "space-between",
                   }}
                 >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      marginLeft: 2,
-                      paddingY: 2,
+                  <Image
+                    src={"/" + event.Pic}
+                    alt="image"
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    style={{
+                      width: "37%",
+                      height: "100%",
+                      borderRadius: "20px",
                     }}
                     onClick={() => router.push(`/dashboard/events/${index}`)}
-                  >
-                    <Typography sx={{ fontWeight: "bold" }}>
-                      {event.ItemTitle}
-                    </Typography>
-                    <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "flex-start",
-                          gap: 0.5,
-                        }}
-                      >
-                        <Typography sx={{ color: "#595959", fontSize: 14 }}>
-                          Date
-                        </Typography>
-                        <Typography sx={{ color: "#523FAD", fontSize: 12 }}>
-                          {event.Date}
-                        </Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "flex-start",
-                          gap: 0.5,
-                        }}
-                      >
-                        <Typography sx={{ color: "#595959", fontSize: 14 }}>
-                          Time
-                        </Typography>
-                        <Typography sx={{ color: "#523FAD", fontSize: 12 }}>
-                          {event.Time}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Box>
-
+                  />
                   <Box
                     sx={{
+                      width: "63%",
                       display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      marginX: 1,
-                      marginY: 1,
+                      flexDirection: "row",
+                      justifyContent: "space-between",
                     }}
                   >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        marginLeft: 2,
+                        paddingY: 2,
+                      }}
+                      onClick={() => router.push(`/dashboard/events/${index}`)}
+                    >
+                      <Typography sx={{ fontWeight: "bold" }}>
+                        {event.ItemTitle}
+                      </Typography>
+                      <Box
+                        sx={{ display: "flex", flexDirection: "row", gap: 2 }}
+                      >
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "flex-start",
+                            gap: 0.5,
+                          }}
+                        >
+                          <Typography sx={{ color: "#595959", fontSize: 14 }}>
+                            Date
+                          </Typography>
+                          <Typography sx={{ color: "#523FAD", fontSize: 12 }}>
+                            {event.Date}
+                          </Typography>
+                        </Box>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "flex-start",
+                            gap: 0.5,
+                          }}
+                        >
+                          <Typography sx={{ color: "#595959", fontSize: 14 }}>
+                            Time
+                          </Typography>
+                          <Typography sx={{ color: "#523FAD", fontSize: 12 }}>
+                            {event.Time}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Box>
+
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        marginX: 1,
+                        marginY: 1,
+                      }}
+                    ></Box>
                   </Box>
                 </Box>
+              ))
+            ) : (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "50vh",
+                }}
+              >
+                <Box
+                  sx={{
+                    width: "50px",
+                    height: "50px",
+                    borderRadius: "50%",
+                    border: "8px solid",
+                    borderColor: "#766DF4 #0000",
+                    animation: "s1 1s infinite",
+                  }}
+                ></Box>
               </Box>
-            )) : <Box
-            sx={{
-              marginX: 20,
-              marginY: 10,
-              width: "50px",
-              height: "50px",
-              borderRadius: "50%",
-              border: "8px solid",
-              borderColor: "#766DF4 #0000",
-              animation: "s1 1s infinite",
-             
-            }}
-          ></Box>}
+            )}
           </Box>
 
           {/* advertisement */}
