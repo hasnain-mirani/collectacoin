@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Mybutton1 from "@/app/components/Mybutton1";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/navigation";
+import "@/app/styles/style.css";
 
 const EventData = () => {
   const [id, setId] = useState<any>();
@@ -56,7 +57,7 @@ const EventData = () => {
         }}
       />
       <Box sx={{ margin: 2, height: 674 }}>
-        <Box sx={{ height: "14rem" }}>
+        {Pic ? <Box sx={{ height: "14rem" }}>
           <Image
             src={Pic && "/" + Pic}
             alt="image"
@@ -65,7 +66,19 @@ const EventData = () => {
             sizes="100vw"
             style={{ width: "100%", height: "100%", borderRadius: "15px" }}
           />
-        </Box>
+        </Box> : <Box
+          sx={{
+            marginX: 20,
+            marginY: 10,
+            width: "50px",
+            height: "50px",
+            borderRadius: "50%",
+            border: "8px solid",
+            borderColor: "#766DF4 #0000",
+            animation: "s1 1s infinite",
+           
+          }}
+        ></Box>}
         <Box
           sx={{
             backgroundColor: "#EEECF9",

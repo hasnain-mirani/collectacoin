@@ -131,7 +131,7 @@ function Index() {
                   },
                 }}
               >
-                <IconButton onClick={() => router.push("/dashboard")}>
+                <IconButton onClick={() => router.push("/dashboard/home")}>
                   <Home />
                   <Typography sx={{ cursor: "pointer" }}>Home</Typography>
                 </IconButton>
@@ -166,20 +166,6 @@ function Index() {
                 <IconButton onClick={() => router.push("/myticket")}>
                   <BsPersonSquare />
                   <Typography sx={{ cursor: "pointer" }}>My Ticket</Typography>
-                </IconButton>
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  ":hover": {
-                    backgroundColor: "#F9F9F9",
-                  },
-                }}
-              >
-                <IconButton>
-                  <BsFillBucketFill />
-                  <Typography sx={{ cursor: "pointer" }}>Panels</Typography>
                 </IconButton>
               </Box>
               <Box

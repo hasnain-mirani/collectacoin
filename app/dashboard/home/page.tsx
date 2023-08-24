@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { ContextValues } from "@/app/Context/context";
+import "@/app/styles/style.css";
 
 type AutoGraphScheduleType = {
   time: String;
@@ -91,7 +92,7 @@ const HomePage = () => {
           marginY: 2,
         }}
       >
-        {events.map((event, index) => (
+        {events.length > 0 ? events.map((event, index) => (
           <Box
             key={index}
             sx={{
@@ -147,7 +148,19 @@ const HomePage = () => {
               </Box>
             </Box>
           </Box>
-        ))}
+        )): <Box
+        sx={{
+          marginX: 20,
+          marginY: 10,
+          width: "50px",
+          height: "50px",
+          borderRadius: "50%",
+          border: "8px solid",
+          borderColor: "#766DF4 #0000",
+          animation: "s1 1s infinite",
+         
+        }}
+      ></Box>}
       </Box>
       <Box sx={{ marginX: 2, marginY: 1 }}>
         <Box
@@ -214,7 +227,7 @@ const HomePage = () => {
           </Box>
         </Box>
         <Box>
-          {events.map((event, index) => (
+          {events.length > 0 ? events.map((event, index) => (
             <Box key={index}
               sx={{
                 minHeight: "7rem",
@@ -274,7 +287,19 @@ const HomePage = () => {
                 ></Box>
               </Box>
             </Box>
-          ))}
+          )) : <Box
+          sx={{
+            marginX: 20,
+            marginY: 10,
+            width: "50px",
+            height: "50px",
+            borderRadius: "50%",
+            border: "8px solid",
+            borderColor: "#766DF4 #0000",
+            animation: "s1 1s infinite",
+           
+          }}
+        ></Box>}
         </Box>
       </Box>
     </>

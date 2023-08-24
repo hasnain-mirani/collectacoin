@@ -10,6 +10,7 @@ import { ContextValues } from "@/app/Context/context";
 import Mybutton from "../../components/Mybutton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import toast from "react-hot-toast";
+import "@/app/styles/style.css";
 const EventsPage = () => {
   const [isClicked, setIsClicked] = useState(false);
   const handleClick = () => {
@@ -74,7 +75,7 @@ const EventsPage = () => {
       <Box>
         <Box sx={{ marginX: 2, marginY: 1 }}>
           <Box>
-            {adminEvent.map((event, index) => (
+            {adminEvent.length > 0 ? adminEvent.map((event, index) => (
               <Box
                 key={index}
                 sx={{
@@ -162,7 +163,19 @@ const EventsPage = () => {
                   </Box>
                 </Box>
               </Box>
-            ))}
+            )) : <Box
+            sx={{
+              marginX: 20,
+              marginY: 10,
+              width: "50px",
+              height: "50px",
+              borderRadius: "50%",
+              border: "8px solid",
+              borderColor: "#766DF4 #0000",
+              animation: "s1 1s infinite",
+             
+            }}
+          ></Box>}
           </Box>
 
           {/* advertisement */}

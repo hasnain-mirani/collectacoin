@@ -9,6 +9,7 @@ import axios from "axios";
 import { ContextValues } from "@/app/Context/context";
 import event from "@/modals/eventModal";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import "@/app/styles/style.css";
 
 type AutoGraphScheduleType = {
   time: String;
@@ -66,7 +67,7 @@ const AutographPage = () => {
   return (
     <>
       <ArrowBackIcon
-        sx={{marginLeft : "15px"}}
+        sx={{ marginLeft: "15px" }}
         onClick={() => {
           router.push("/userdashboard");
         }}
@@ -74,82 +75,97 @@ const AutographPage = () => {
       <Box sx={{ padding: 1.5, backgroundColor: "#fff", height: 705 }}>
         <Box>
           <Box sx={{ margin: 0.5 }}>
-            {programs.map((program, index) => (
-              <Box key={index}>
-                {/* mapped elements */}
-                <Box
-                  sx={{
-                    height: "7rem",
-                    width: "100%",
-                    marginY: 2,
-                    backgroundColor: "#EEECF9",
-                    borderRadius: "20px",
-                    display: "flex",
-                    flexDirection: "row",
-                  }}
-                >
-                  <Image
-                    src={"/" + program.Pic}
-                    alt="image"
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    style={{
-                      width: "37%",
-                      height: "100%",
-                      borderRadius: "20px",
-                    }}
-                    onClick={() =>
-                      router.push(`/dashboard/Programming/${index}`)
-                    }
-                  />
+            {programs.length > 0 ? (
+              programs.map((program, index) => (
+                <Box key={index}>
+                  {/* mapped elements */}
                   <Box
                     sx={{
-                      width: "63%",
+                      height: "7rem",
+                      width: "100%",
+                      marginY: 2,
+                      backgroundColor: "#EEECF9",
+                      borderRadius: "20px",
                       display: "flex",
                       flexDirection: "row",
-                      justifyContent: "space-between",
                     }}
                   >
+                    <Image
+                      src={"/" + program.Pic}
+                      alt="image"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      style={{
+                        width: "37%",
+                        height: "100%",
+                        borderRadius: "20px",
+                      }}
+                      onClick={() =>
+                        router.push(`/dashboard/Programming/${index}`)
+                      }
+                    />
                     <Box
                       sx={{
-                        marginLeft: 2,
+                        width: "63%",
                         display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "flex-start",
-                        paddingTop: 2,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
                       }}
                     >
-                      <Typography
-                        sx={{ fontWeight: "bold" }}
-                        onClick={() =>
-                          router.push(`/dashboard/Programming/${index}`)
-                        }
+                      <Box
+                        sx={{
+                          marginLeft: 2,
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "flex-start",
+                          paddingTop: 2,
+                        }}
                       >
-                        {program.ItemTitle}
-                      </Typography>
-                      <Typography sx={{ color: "#595959" }}>
-                        {program.ItemSubject}
-                      </Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "flex-end",
-                        marginX: 1,
-                        marginY: 1,
-                      }}
-                    >
-                      <Typography sx={{ color: "#595959" }}>Time</Typography>
-                      <Typography sx={{ color: "#523FAD", fontSize: 12 }}>
-                        {program.Time}
-                      </Typography>
+                        <Typography
+                          sx={{ fontWeight: "bold" }}
+                          onClick={() =>
+                            router.push(`/dashboard/Programming/${index}`)
+                          }
+                        >
+                          {program.ItemTitle}
+                        </Typography>
+                        <Typography sx={{ color: "#595959" }}>
+                          {program.ItemSubject}
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "flex-end",
+                          marginX: 1,
+                          marginY: 1,
+                        }}
+                      >
+                        <Typography sx={{ color: "#595959" }}>Time</Typography>
+                        <Typography sx={{ color: "#523FAD", fontSize: 12 }}>
+                          {program.Time}
+                        </Typography>
+                      </Box>
                     </Box>
                   </Box>
                 </Box>
-              </Box>
-            ))}
+              ))
+            ) : (
+              <Box
+                sx={{
+                  marginX: 20,
+                  marginY: 10,
+                  width: "50px",
+                  height: "50px",
+                  borderRadius: "50%",
+                  border: "8px solid",
+                  borderColor: "#766DF4 #0000",
+                  animation: "s1 1s infinite",
+                }}
+              ></Box>
+            )}
             {/* advertisement */}
             <Box
               sx={{

@@ -36,10 +36,10 @@ const page = () => {
       >
         <Box sx={{ padding: 2 }}>
           <Box sx={{ display: "flex" }}>
-            <Avatar sx={{ width: 56, height: 56 }}>H</Avatar>
+            <Avatar sx={{ width: 56, height: 56 }}>A</Avatar>
             <Box sx={{ marginX: 1 }}>
-              <Typography variant="h6">NAME</Typography>
-              <Typography>abcdefg@email.com</Typography>
+              <Typography variant="h6">ADMIN</Typography>
+              <Typography>admin123@gmail.com</Typography>
             </Box>
           </Box>
           <Box

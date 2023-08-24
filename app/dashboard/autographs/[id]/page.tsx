@@ -6,6 +6,7 @@ import axios from "axios";
 import Mybutton1 from "@/app/components/Mybutton1";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/navigation";
+import "@/app/styles/style.css";
 
 const EventData = () => {
   const [id, setId] = useState<any>();
@@ -47,27 +48,42 @@ const EventData = () => {
   return (
     <>
       <ArrowBackIcon
-        sx={{marginLeft: "15px"}}
+        sx={{ marginLeft: "15px" }}
         onClick={() => {
           router.push("/dashboard/autographs");
         }}
       />
-      <Box sx={{ padding: 2, backgroundColor: "#fff", height: 705 }}>
+      <Box sx={{ padding: 2, backgroundColor: "#fff", height: 680 }}>
         <Box sx={{ padding: 1 }}>
           <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
             {Title}
           </Typography>
         </Box>
-        <Box sx={{ height: "14rem" }}>
-          <Image
-            src={"/" + Pic}
-            alt="image"
-            width={0}
-            height={0}
-            sizes="100vw"
-            style={{ width: "100%", height: "100%", borderRadius: "15px" }}
-          />
-        </Box>
+        {Pic ? (
+          <Box sx={{ height: "14rem" }}>
+            <Image
+              src={"/" + Pic}
+              alt="image"
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: "100%", height: "100%", borderRadius: "15px" }}
+            />
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              marginX: 20,
+              marginY: 10,
+              width: "50px",
+              height: "50px",
+              borderRadius: "50%",
+              border: "8px solid",
+              borderColor: "#766DF4 #0000",
+              animation: "s1 1s infinite",
+            }}
+          ></Box>
+        )}
         <Box
           sx={{
             backgroundColor: "#EEECF9",
@@ -78,16 +94,20 @@ const EventData = () => {
           }}
         >
           <Box>
-            <Typography
-              sx={{
-                color: "#523FAD",
-                textDecoration: "underline",
-                fontWeight: "bold",
-                fontSize: 20,
-              }}
-            >
-              {subject}
-            </Typography>
+            {loading ? (
+              <Typography>Loading...</Typography>
+            ) : (
+              <Typography
+                sx={{
+                  color: "#523FAD",
+                  textDecoration: "underline",
+                  fontWeight: "bold",
+                  fontSize: 20,
+                }}
+              >
+                {subject}
+              </Typography>
+            )}
           </Box>
           <Box sx={{ marginTop: 1 }}>
             <Typography>{Desc}</Typography>
@@ -101,18 +121,16 @@ const EventData = () => {
             marginY: 1,
           }}
         >
-          {!loading && (
-            <Mybutton1
-              id={id}
-              ItemTitle={Title}
-              Date={Date}
-              Time={Time}
-              Pic={Pic}
-              Hallno={Hallno}
-              ItemSubject={subject}
-              ItemDescription={Desc}
-            />
-          )}
+          <Mybutton1
+            id={id}
+            ItemTitle={Title}
+            Date={Date}
+            Time={Time}
+            Pic={Pic}
+            Hallno={Hallno}
+            ItemSubject={subject}
+            ItemDescription={Desc}
+          />
         </Box>
       </Box>
     </>

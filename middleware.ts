@@ -6,15 +6,10 @@ export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
 
   const isPublicPath = path === '/signin' || path === '/' || path === '/verifyemail'
-  const isPublicPath2 = path === '/adminLogin'
   const token = request.cookies.get('token')?.value || ''
 
   if(isPublicPath && token) {
     return NextResponse.redirect(new URL('/userdashboard', request.nextUrl))
-  }
-  if(isPublicPath2)
-  {
-    return NextResponse.redirect(new URL('/adminpanel', request.nextUrl))
   }
   if (!isPublicPath && !token) {
     return NextResponse.redirect(new URL('/signin', request.nextUrl))
@@ -30,7 +25,6 @@ export const config = {
     '/signin',
     '/signup',
     '/verifyemail',
-    '/adminpanel',
     '/myschedule',
     '/vendors',
     '/floorplan',

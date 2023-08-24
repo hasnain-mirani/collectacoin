@@ -47,17 +47,6 @@ const Page = () => {
     let value = e.target.value;
     setFormValues((pre) => ({ ...pre, [name]: value }));
   }
-//   async function handleCredentialSignIn() {
-//     await signIn("credentials", { ...formValues, redirect: false }).then(
-//       ({ ok, error }: any) => {
-//         if (error) {
-//           setError(error);
-//         } else {
-//           router.push("/");
-//         }
-//       }
-//     );
-//   }
 
   return (
     <Box
@@ -137,7 +126,7 @@ const Page = () => {
                 marginTop: 1,
               }}
               required
-              placeholder="example@emai.com"
+              placeholder="example@email.com"
             />
           </Box>
           <Box>

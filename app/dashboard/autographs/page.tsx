@@ -9,6 +9,7 @@ import axios from "axios";
 import { ContextValues } from "@/app/Context/context";
 import event from "@/modals/eventModal";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import "@/app/styles/style.css";
 
 type AutoGraphScheduleType = {
   time: String;
@@ -76,7 +77,7 @@ const AutographPage = () => {
       <Box sx={{ padding: 1.5, backgroundColor: "#fff", height: 705 }}>
         <Box>
           <Box sx={{ margin: 0.5 }}>
-            {autograph.map((auto, index) => (
+            {autograph.length > 0 ? autograph.map((auto, index) => (
               <Box key={index}>
                 {/* mapped elements */}
                 <Box
@@ -151,7 +152,19 @@ const AutographPage = () => {
                   </Box>
                 </Box>
               </Box>
-            ))}
+            )) : <Box
+            sx={{
+              marginX: 20,
+              marginY: 10,
+              width: "50px",
+              height: "50px",
+              borderRadius: "50%",
+              border: "8px solid",
+              borderColor: "#766DF4 #0000",
+              animation: "s1 1s infinite",
+             
+            }}
+          ></Box>}
             {/* advertisement */}
             <Box
               sx={{

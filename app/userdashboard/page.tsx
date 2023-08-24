@@ -13,6 +13,7 @@ import { CalendarMonth } from "@mui/icons-material";
 import Image from "next/image";
 import axios from "axios";
 import GoingButton from "@/app/components/GoingButton";
+import "@/app/styles/style.css";
 
 export default function Dashboard() {
   const [activePage, setActivePage] = useState<string>("home");
@@ -310,7 +311,7 @@ export default function Dashboard() {
           </Typography>
         </Box>
 
-        <Box
+        {p1 ? <Box
           sx={{
             width: "350px",
             height: "250px",
@@ -343,6 +344,19 @@ export default function Dashboard() {
             </Box>
           </Box>
         </Box>
+        : <Box
+        sx={{
+          marginX: 20,
+          marginY: 10,
+          width: "50px",
+          height: "50px",
+          borderRadius: "50%",
+          border: "8px solid",
+          borderColor: "#766DF4 #0000",
+          animation: "s1 1s infinite",
+         
+        }}
+      ></Box>}
       </Box>
 
       <Box
@@ -360,65 +374,83 @@ export default function Dashboard() {
           sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}
         ></Typography>
       </Box>
-      {events.map((eve, index) => (
-        <Box sx={{ marginX: 1 }} key={index}>
-          <Box
-            
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              p: 1,
-              alignItems: "center",
-            }}
-          >
+      {events.length > 0 ? (
+        events.map((eve, index) => (
+          <Box sx={{ marginX: 1 }} key={index}>
             <Box
               sx={{
                 display: "flex",
+                justifyContent: "space-between",
+                p: 1,
                 alignItems: "center",
-                flexDirection: "column",
               }}
-              
             >
-              <Typography
-                sx={{ color: "#523FAD", fontSize: "20px", fontWeight: 600 }}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  flexDirection: "column",
+                }}
               >
-                {eve.Date.slice(8, 10)}
-              </Typography>
-              <Typography
-                sx={{ color: "#000", fontSize: "20px", fontWeight: 600 }}
+                <Typography
+                  sx={{ color: "#523FAD", fontSize: "20px", fontWeight: 600 }}
+                >
+                  {eve.Date.slice(8, 10)}
+                </Typography>
+                <Typography
+                  sx={{ color: "#000", fontSize: "20px", fontWeight: 600 }}
+                >
+                  {numberIntoMonth(Number(eve.Date.slice(5, 7))).slice(0, 3)}
+                </Typography>
+              </Box>
+              <Box
+                onClick={() => router.push(`/dashboard/eventsAscUser/${index}`)}
               >
-                {numberIntoMonth(Number(eve.Date.slice(5, 7))).slice(0,3)}
-              </Typography>
-            </Box>
-            <Box onClick={() => router.push(`/dashboard/eventsAscUser/${index}`)}>
-              <Typography sx={{ fontSize: "20px", fontWeight: 600 }}>
-                {eve.ItemTitle}
-              </Typography>
-              <Typography
-                sx={{ color: "#595959", fontSize: "14px", fontWeight: 500 }}
-              >
-                70 going 13 interested
-              </Typography>
-            </Box>
-            <Box>
-              <GoingButton
-                index = {index}
-                ItemTitle={eve.ItemTitle}
-                Date={eve.Date}
-                Time={eve.Time}
-                Pic={eve.Pic}
-                eventType={eve.eventType}
-                Hallno={eve.Hallno}
-                ItemSubject={eve.ItemSubject}
-                ItemDescription={eve.ItemDescription}
-              />
+                <Typography sx={{ fontSize: "20px", fontWeight: 600 }}>
+                  {eve.ItemTitle}
+                </Typography>
+                <Typography
+                  sx={{ color: "#595959", fontSize: "14px", fontWeight: 500 }}
+                >
+                  70 going 13 interested
+                </Typography>
+              </Box>
+              <Box>
+                <GoingButton
+                  index={index}
+                  ItemTitle={eve.ItemTitle}
+                  Date={eve.Date}
+                  Time={eve.Time}
+                  Pic={eve.Pic}
+                  eventType={eve.eventType}
+                  Hallno={eve.Hallno}
+                  ItemSubject={eve.ItemSubject}
+                  ItemDescription={eve.ItemDescription}
+                />
+              </Box>
             </Box>
           </Box>
-        </Box>
-      ))}
+        ))
+      ) : (
+        <Box
+          sx={{
+            marginX: 20,
+            marginY: 10,
+            width: "50px",
+            height: "50px",
+            borderRadius: "50%",
+            border: "8px solid",
+            borderColor: "#766DF4 #0000",
+            animation: "s1 1s infinite",
+            backdropFilter: "blur(10px)",
+           
+          }}
+        ></Box>
+      )}
       <Box
         sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
       ></Box>
     </Box>
   );
 }
+

@@ -135,7 +135,7 @@ try {
                   marginTop: 1,
                 }}
                 required
-                placeholder="example@emai.com"
+                placeholder="example@email.com"
               />
             </Box>
             <Box>

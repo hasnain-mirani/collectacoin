@@ -6,6 +6,7 @@ import axios from "axios";
 import Mybutton3 from "@/app/components/Mybutton3";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/navigation";
+import "@/app/styles/style.css";
 
 const EventData = () => {
   const [id, setId] = useState<any>();
@@ -20,8 +21,8 @@ const EventData = () => {
   const router = useRouter();
   const getEvents = async (ID: number) => {
     try {
-      const response = await fetch("/api/fetchProgram" , {
-        next: {revalidate: 10}
+      const response = await fetch("/api/fetchProgram", {
+        next: { revalidate: 10 },
       });
       const { allPrograms } = await response.json();
 
@@ -54,22 +55,37 @@ const EventData = () => {
           router.push("/dashboard/Programming");
         }}
       />
-      <Box sx={{ padding: 2, backgroundColor: "#fff", height: 705 }}>
+      <Box sx={{ padding: 2, backgroundColor: "#fff", height: 680 }}>
         <Box sx={{ padding: 1 }}>
           <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
             {Title}
           </Typography>
         </Box>
-        <Box sx={{ height: "14rem" }}>
-          <Image
-            src={"/" + Pic}
-            alt="image"
-            width={0}
-            height={0}
-            sizes="100vw"
-            style={{ width: "100%", height: "100%", borderRadius: "15px" }}
-          />
-        </Box>
+        {Pic ? (
+          <Box sx={{ height: "14rem" }}>
+            <Image
+              src={"/" + Pic}
+              alt="image"
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: "100%", height: "100%", borderRadius: "15px" }}
+            />
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              marginX: 20,
+              marginY: 10,
+              width: "50px",
+              height: "50px",
+              borderRadius: "50%",
+              border: "8px solid",
+              borderColor: "#766DF4 #0000",
+              animation: "s1 1s infinite",
+            }}
+          ></Box>
+        )}
         <Box
           sx={{
             backgroundColor: "#EEECF9",
@@ -80,16 +96,20 @@ const EventData = () => {
           }}
         >
           <Box>
-            <Typography
-              sx={{
-                color: "#523FAD",
-                textDecoration: "underline",
-                fontWeight: "bold",
-                fontSize: 20,
-              }}
-            >
-              {subject}
-            </Typography>
+            {loading ? (
+              <Typography>Loading..</Typography>
+            ) : (
+              <Typography
+                sx={{
+                  color: "#523FAD",
+                  textDecoration: "underline",
+                  fontWeight: "bold",
+                  fontSize: 20,
+                }}
+              >
+                {subject}
+              </Typography>
+            )}
           </Box>
           <Box sx={{ marginTop: 1 }}>
             <Typography>{Desc}</Typography>
