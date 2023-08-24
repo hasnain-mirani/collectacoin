@@ -69,10 +69,8 @@ const Index = ({
 
   const getButtonStates = async () => {
     try {
-      const response = await fetch("/api/fetchButtonState" , {
-        next: {revalidate: 10}
-      });
-      const { buttonStates } = await response.json();
+      const response = await axios.get("/api/fetchButtonState");
+      const { buttonStates } = await response.data;
       setBtnState(buttonStates[Number(id)].state);
     } catch (error: any) {
       console.log("Unable to fetch button state");

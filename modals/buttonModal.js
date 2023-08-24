@@ -6,5 +6,5 @@ const buttonSchema = new mongoose.Schema({
     state: Number,
 });
 
-const buttonEvent = mongoose.models.buttonTrack || mongoose.model("buttonTrack", buttonSchema);
+const buttonEvent = mongoose.models.buttonAuto || mongoose.model("buttonAuto", buttonSchema);
 export default buttonEvent;

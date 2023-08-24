@@ -21,8 +21,10 @@ const EventData = () => {
   const router = useRouter();
   const getEvents = async (ID: number) => {
     try {
-      const response = await axios.get("/api/fetchAutograph");
-      const { allAutographs } = response.data;
+      const response = await fetch("/api/fetchAutograph", {
+        next: { revalidate: 10 },
+      });
+      const { allAutographs } = await response.json();
 
       // Fetch the event data based on the ID and set the state
       setDesc(allAutographs[Number(ID)].ItemDescription || "");
@@ -121,16 +123,18 @@ const EventData = () => {
             marginY: 1,
           }}
         >
-          <Mybutton1
-            id={id}
-            ItemTitle={Title}
-            Date={Date}
-            Time={Time}
-            Pic={Pic}
-            Hallno={Hallno}
-            ItemSubject={subject}
-            ItemDescription={Desc}
-          />
+          {!loading && (
+            <Mybutton1
+              id={id}
+              ItemTitle={Title}
+              Date={Date}
+              Time={Time}
+              Pic={Pic}
+              Hallno={Hallno}
+              ItemSubject={subject}
+              ItemDescription={Desc}
+            />
+          )}
         </Box>
       </Box>
     </>
