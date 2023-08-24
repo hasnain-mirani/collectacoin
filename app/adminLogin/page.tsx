@@ -21,13 +21,13 @@ type FormValuesType = {
 const Page = () => {
   const onlogin = () => {
     try {
-      if(formValues.email === "admin123@gmail.com" && formValues.password === "Admin@12")
-      {
+      if (
+        formValues.email === "admin123@gmail.com" &&
+        formValues.password === "Admin@12"
+      ) {
         toast.success("Successfully Signed in");
         router.push("/adminpanel");
-      }
-      else
-      {
+      } else {
         toast.error("Email or password is incorrect ");
       }
     } catch (error: any) {
@@ -60,6 +60,7 @@ const Page = () => {
         padding: 2,
       }}
     >
+      <Image style={{marginTop: 10}} src="/logo.png" height={0} width={400} alt="" />
       <Box
         sx={{
           p: 1,
@@ -68,7 +69,7 @@ const Page = () => {
           justifyContent: "flex-start",
           alignItems: "",
           gap: 2,
-          paddingTop: 12,
+          paddingTop: 8,
         }}
       >
         <Box
@@ -190,8 +191,9 @@ const Page = () => {
               component="span"
               sx={{ color: "#3b5998", fontWeight: "bold" }}
             >
-              User ?{" "}
+              User{" "}
             </Typography>{" "}
+            ?
           </Typography>
         </Box>
         <Box

@@ -1,16 +1,16 @@
-"use client"
-import { useState } from 'react';
-import Image from 'next/image'
+"use client";
+import { useState } from "react";
+import Image from "next/image";
 import { RiFacebookFill } from "react-icons/ri";
-import {RiTwitterFill} from "react-icons/ri";
-import { signIn, useSession } from 'next-auth/react';
-import {BiHide, BiShow} from "react-icons/bi";
-import { useRouter } from 'next/navigation';
+import { RiTwitterFill } from "react-icons/ri";
+import { signIn, useSession } from "next-auth/react";
+import { BiHide, BiShow } from "react-icons/bi";
+import { useRouter } from "next/navigation";
 import { Box, Button, FormControl, InputBase, Typography } from "@mui/material";
 import React from "react";
 import { BsFacebook } from "react-icons/bs";
 import { AiFillGoogleCircle } from "react-icons/ai";
-import axios from 'axios';
+import axios from "axios";
 import toast from "react-hot-toast";
 
 type FormValuesType = {
@@ -20,59 +20,61 @@ type FormValuesType = {
 };
 
 const Page = () => {
-const onSignup=()=>{
-  router.push('/signup')
-}
-  
-  const onlogin= async()=>{
-try {
- const response= await axios.post("/api/user/signin", formValues);
- const { token, firstName, email } = response.data;
- localStorage.setItem('token', token);
- localStorage.setItem('name', firstName);
- localStorage.setItem('email', email);
-// console.log(response)
-//  console.log("signin successfull", response.data)
- toast.success("Successfully Signed in");
- router.push('/userdashboard')
-} catch (error:any) {
-//  console.log('login failed', error.message)
- toast.error('Email or password is incorrect ',error.message);
-}
-  }
-  const [formValues, setFormValues] = useState<FormValuesType>({ email: '', password: '', agreed: true });
-  const { data: session, status } = useSession()
+  const onSignup = () => {
+    router.push("/");
+  };
+
+  const onlogin = async () => {
+    try {
+      const response = await axios.post("/api/user/signin", formValues);
+      const { token, firstName, email } = response.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("name", firstName);
+      localStorage.setItem("email", email);
+      // console.log(response)
+      //  console.log("signin successfull", response.data)
+      toast.success("Successfully Signed in");
+      router.push("/userdashboard");
+    } catch (error: any) {
+      //  console.log('login failed', error.message)
+      toast.error("Email or password is incorrect ", error.message);
+    }
+  };
+  const [formValues, setFormValues] = useState<FormValuesType>({
+    email: "",
+    password: "",
+    agreed: true,
+  });
+  const { data: session, status } = useSession();
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [error, setError] = useState<string>('')
+  const [error, setError] = useState<string>("");
   const router = useRouter();
   async function handleValuesChange(e: React.ChangeEvent<HTMLInputElement>) {
     let name = e.target.name;
     let value = e.target.value;
-  
-    setFormValues(pre=> ({...pre, [name]: value}));
-  }
-  async function handleGoogleSignIn(){
-     signIn("google", {redirect: true, callbackUrl: "/userdashboard"});
 
+    setFormValues((pre) => ({ ...pre, [name]: value }));
   }
-  async function handleFacebookSignIn(){
-   signIn("facebook2", {redirect:  true, callbackUrl: "/userdashboard"});
-    
+  async function handleGoogleSignIn() {
+    signIn("google", { redirect: true, callbackUrl: "/userdashboard" });
   }
-  async function handleCredentialSignIn(){
-   await signIn('credentials', {...formValues, redirect: false}).then(({ok, error}:any)=> {
-    if(error){
-      setError(error);
-    }else{
-      router.push( "/dashboard")
-    }
-})
-  
+  async function handleFacebookSignIn() {
+    signIn("facebook2", { redirect: true, callbackUrl: "/userdashboard" });
   }
-  
+  async function handleCredentialSignIn() {
+    await signIn("credentials", { ...formValues, redirect: false }).then(
+      ({ ok, error }: any) => {
+        if (error) {
+          setError(error);
+        } else {
+          router.push("/dashboard");
+        }
+      }
+    );
+  }
+
   return (
-     
-      <Box
+    <Box
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -80,9 +82,10 @@ try {
         backgroundColor: "#fff",
         height: "100dvh",
         width: "100dwh",
-        padding: 2
+        padding: 2,
       }}
     >
+      <Image style={{marginTop: 10}} src="/logo.png" height={0} width={400} alt="" />
       <Box
         sx={{
           p: 1,
@@ -91,7 +94,7 @@ try {
           justifyContent: "flex-start",
           alignItems: "",
           gap: 2,
-          paddingTop: 12,
+          paddingTop: 8,
         }}
       >
         <Box
@@ -101,62 +104,86 @@ try {
             gap: 1,
           }}
         >
-          <Box  sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "start",
-            paddingX: 1
-          }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "start",
+              paddingX: 1,
+            }}
+          >
             <Typography variant="h5" sx={{ fontWeight: "bold" }}>
               Sign In
             </Typography>
           </Box>
-          <Box  sx={{
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "start",
+              paddingX: 1,
+            }}
+          >
+            <Typography sx={{ fontSize: 15, marginLeft: 0.5 }}>
+              Hi there! Nice to see you again.
+            </Typography>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            paddingX: 1,
+          }}
+        >
+          <Box>
+            <Typography sx={{ color: "#523FAD", p: 0.5 }}>Email</Typography>
+            <InputBase
+              onChange={handleValuesChange}
+              name="email"
+              value={formValues.email}
+              sx={{
+                backgroundColor: "#EEECF9",
+                borderRadius: "15px",
+                width: "20rem",
+                paddingLeft: 4,
+                paddingY: 0.5,
+                marginTop: 1,
+              }}
+              required
+              placeholder="example@email.com"
+            />
+          </Box>
+          <Box>
+            <Typography sx={{ color: "#523FAD", p: 0.5 }}>Password</Typography>
+            <InputBase
+              onChange={handleValuesChange}
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formValues.password}
+              sx={{
+                backgroundColor: "#EEECF9",
+                borderRadius: "15px",
+                width: "20rem",
+                paddingLeft: 4,
+                paddingY: 0.5,
+                marginTop: 1,
+              }}
+              required
+              placeholder="*******"
+            />
+          </Box>
+        </Box>
+
+        <Box
+          sx={{
             display: "flex",
             flexDirection: "row",
-            justifyContent: "start",
-            paddingX: 1
-          }}>
-             <Typography sx={{fontSize: 15, marginLeft: 0.5}}>Hi there! Nice to see you again.</Typography>
-          </Box>
-
-        </Box>
-        <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", paddingX: 1}}>
-            <Box>
-              <Typography sx={{ color: "#523FAD", p: 0.5 }}>Email</Typography>
-              <InputBase
-              onChange={handleValuesChange} name="email" value={formValues.email}
-                sx={{
-                  backgroundColor: "#EEECF9",
-                  borderRadius: "15px",
-                  width: "20rem",
-                  paddingLeft: 4,
-                  paddingY: 0.5,
-                  marginTop: 1,
-                }}
-                required
-                placeholder="example@email.com"
-              />
-            </Box>
-            <Box>
-              <Typography sx={{ color: "#523FAD", p: 0.5 }}>Password</Typography>
-              <InputBase
-              onChange={handleValuesChange} type={showPassword? "text": "password"} name="password" value={formValues.password}
-                sx={{
-                  backgroundColor: "#EEECF9",
-                  borderRadius: "15px",
-                  width: "20rem",
-                  paddingLeft: 4,
-                  paddingY: 0.5,
-                  marginTop: 1,
-                }}
-                required
-                placeholder="*******"
-              />
-            </Box>
-        </Box>
-        
-        <Box sx={{display: "flex", flexDirection: "row", justifyContent: "center", marginTop: 2}}>
+            justifyContent: "center",
+            marginTop: 2,
+          }}
+        >
           <Button
             sx={{
               backgroundColor: "#523FAD !important",
@@ -171,8 +198,15 @@ try {
           >
             Sign In
           </Button>
-        </Box> 
-        <Box sx={{display: "flex", flexDirection: "row", justifyContent: "center", marginTop: 2}}>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            marginTop: 2,
+          }}
+        >
           <Button
             sx={{
               backgroundColor: "#2B3856 !important",
@@ -188,25 +222,81 @@ try {
             Sign Up
           </Button>
         </Box>
-        <Box sx={{display: "flex", flexDirection: "column", justifyContent: "center" , alignItems: "center"}}>
-          <Typography >or use your <Typography component="span" sx={{color:'#3b5998', fontWeight: "bold"}}>Social profile </Typography> </Typography>
-          <Typography >Are you an <Typography onClick={() => {router.push("/adminLogin")}} component="span" sx={{color:'#3b5998', fontWeight: "bold"}}>Admin ? </Typography> </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography>
+            or use your{" "}
+            <Typography
+              component="span"
+              sx={{ color: "#3b5998", fontWeight: "bold" }}
+            >
+              Social profile{" "}
+            </Typography>{" "}
+          </Typography>
+          <Typography>
+            Are you an{" "}
+            <Typography
+              onClick={() => {
+                router.push("/adminLogin");
+              }}
+              component="span"
+              sx={{ color: "#3b5998", fontWeight: "bold" }}
+            >
+              Admin{" "}
+            </Typography>{" "}
+            ?
+          </Typography>
         </Box>
-        <Box sx={{ display: "flex", gap: 2, flexDirection: "column", justifyContent:'center' }}>
-          <Box sx={{display:'flex', gap:2, justifyContent:'space-between', marginX: 2}}>
-          <Box>
-            <Button onClick={()=> handleGoogleSignIn()} startIcon={ <AiFillGoogleCircle/> }   sx={{width:'9rem', borderRadius:'10px !important', backgroundColor:'#DB4437 !important',color:'white'}}>
-              Google
-            </Button>
-          </Box>
-          <Box>
-            <Button onClick={()=> handleFacebookSignIn()} startIcon={ <BsFacebook/>} sx={{width:'9rem', borderRadius:'10px !important', backgroundColor:'#3b5998 !important', color:'white' }}>
-              FaceBook
-            </Button>
-          </Box>
-
-
-             
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+              justifyContent: "space-between",
+              marginX: 2,
+            }}
+          >
+            <Box>
+              <Button
+                onClick={() => handleGoogleSignIn()}
+                startIcon={<AiFillGoogleCircle />}
+                sx={{
+                  width: "9rem",
+                  borderRadius: "10px !important",
+                  backgroundColor: "#DB4437 !important",
+                  color: "white",
+                }}
+              >
+                Google
+              </Button>
+            </Box>
+            <Box>
+              <Button
+                onClick={() => handleFacebookSignIn()}
+                startIcon={<BsFacebook />}
+                sx={{
+                  width: "9rem",
+                  borderRadius: "10px !important",
+                  backgroundColor: "#3b5998 !important",
+                  color: "white",
+                }}
+              >
+                FaceBook
+              </Button>
+            </Box>
           </Box>
         </Box>
       </Box>
