@@ -14,9 +14,20 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import useSWR, { SWRResponse } from "swr";
-import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 
-type Event =  {
+const keyframes = `
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+type Event = {
   _id: string;
   ItemTitle: string;
   ItemSubject: string;
@@ -28,15 +39,12 @@ type Event =  {
   state: number;
   Pic: string;
   __v: number;
-}
+};
 
 export default function MySchedule(): JSX.Element {
   const { searchVal, setSearchVal } = useContext(ContextValues);
   const pathname = usePathname();
   const router = useRouter();
-  
-
-
 
   const [events, setEvents] = useState<Event[]>([]);
 
@@ -71,11 +79,22 @@ export default function MySchedule(): JSX.Element {
   }, [pathname]);
   useEffect(() => {
     getEvent();
-    
+  }, []);
+
+  const [loading, setLoading] = useState(true); // Initial loading state
+
+  useEffect(() => {
+    // Simulate loading for 10 seconds
+    const loadingTimer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => {
+      clearTimeout(loadingTimer);
+    };
   }, []);
 
   // useEffect(() => {
-  //   // Filter out expired events and automatically delete them
   //   events.forEach((event) => {
   //     const day: String = event.Date.substring(0, 2);
   //     const month: String = event.Date.substring(3, 5);
@@ -99,7 +118,12 @@ export default function MySchedule(): JSX.Element {
 
   return (
     <Box
-      sx={{ display: "flex", flexDirection: "column", backgroundColor: "#fff", height: 900 }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "#fff",
+        height: 900,
+      }}
     >
       <Box
         sx={{
@@ -152,104 +176,135 @@ export default function MySchedule(): JSX.Element {
       </Box>
 
       <Box>
-        {events.length > 0 ? events.map((event, index) => (
+        <style>{keyframes}</style>
+        {loading ? (
           <Box
-            key={index}
             sx={{
-              minHeight: "6rem",
-              marginY: 2,
-              backgroundColor: "#EEECF9",
-              borderRadius: "20px",
               display: "flex",
-              flexDirection: "row",
-              margin: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              height: "50vh",
             }}
           >
-            <Image
-              src={"/" + event.Pic}
-              alt="image"
-              width={0}
-              height={0}
-              sizes="100vw"
-              style={{ width: "37%", height: "100%", borderRadius: "20px" }}
-            />
             <Box
               sx={{
-                width: "63%",
+                width: "50px",
+                height: "50px",
+                borderRadius: "50%",
+                border: "8px solid",
+                borderColor: "#766DF4 #0000",
+                animation: "spin 1.5s linear infinite",
+              }}
+            ></Box>
+          </Box>
+        ) : events.length > 0 ? (
+          events.map((event, index) => (
+            <Box
+              key={index}
+              sx={{
+                minHeight: "6rem",
+                marginY: 2,
+                backgroundColor: "#EEECF9",
+                borderRadius: "20px",
                 display: "flex",
                 flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
+                margin: 1,
               }}
             >
+              <Image
+                src={"/" + event.Pic}
+                alt="image"
+                width={0}
+                height={0}
+                sizes="100vw"
+                style={{ width: "37%", height: "100%", borderRadius: "20px" }}
+              />
               <Box
                 sx={{
+                  width: "63%",
                   display: "flex",
-                  flexDirection: "column",
-                  marginLeft: 2,
-                  paddingY: 2,
-                }}
-              >
-                <Typography sx={{ fontWeight: "bold" }}>
-                  {event.ItemTitle}
-                </Typography>
-                <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "flex-start",
-                      gap: 0.5,
-                    }}
-                  >
-                    <Typography sx={{ color: "#595959", fontSize: 14 }}>
-                      Date
-                    </Typography>
-                    <Typography sx={{ color: "#523FAD", fontSize: 12 }}>
-                      {event.Date}
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "flex-start",
-                      gap: 0.5,
-                    }}
-                  >
-                    <Typography sx={{ color: "#595959", fontSize: 14 }}>
-                      Time
-                    </Typography>
-                    <Typography sx={{ color: "#523FAD", fontSize: 12 }}>
-                      {event.Time}
-                    </Typography>
-                  </Box>
-                </Box>
-              </Box>
-
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  marginX: 1,
-                  marginY: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
                   alignItems: "flex-start",
                 }}
               >
-                <Button variant="contained" sx={{ borderRadius: "10px" }}>
-                  {event.count}
-                </Button>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    marginLeft: 2,
+                    paddingY: 2,
+                  }}
+                >
+                  <Typography sx={{ fontWeight: "bold" }}>
+                    {event.ItemTitle}
+                  </Typography>
+                  <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-start",
+                        gap: 0.5,
+                      }}
+                    >
+                      <Typography sx={{ color: "#595959", fontSize: 14 }}>
+                        Date
+                      </Typography>
+                      <Typography sx={{ color: "#523FAD", fontSize: 12 }}>
+                        {event.Date}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-start",
+                        gap: 0.5,
+                      }}
+                    >
+                      <Typography sx={{ color: "#595959", fontSize: 14 }}>
+                        Time
+                      </Typography>
+                      <Typography sx={{ color: "#523FAD", fontSize: 12 }}>
+                        {event.Time}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    marginX: 1,
+                    marginY: 1,
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <Button variant="contained" sx={{ borderRadius: "10px" }}>
+                    {event.count}
+                  </Button>
+                </Box>
               </Box>
             </Box>
-          </Box>
-        )) : <Typography  sx={{
+          ))
+        ) : (
+          <Typography
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
               color: "#523FAD",
               fontSize: "26px",
               fontWeight: 600,
-              marginX: 10,
-              marginY: 20
-            }}><SentimentVeryDissatisfiedIcon sx={{marginX: 8 , fontSize: 100}}/></Typography>}
+              marginY: 20,
+            }}
+          >
+            <SentimentVeryDissatisfiedIcon sx={{ marginX: 8, fontSize: 100 }} />
+          </Typography>
+        )}
       </Box>
       <Box
         sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}

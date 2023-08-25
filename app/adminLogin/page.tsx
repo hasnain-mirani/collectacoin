@@ -12,6 +12,7 @@ import { BsFacebook } from "react-icons/bs";
 import { AiFillGoogleCircle } from "react-icons/ai";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 type FormValuesType = {
   email: string;
@@ -60,16 +61,25 @@ const Page = () => {
         padding: 2,
       }}
     >
-      <Image style={{marginTop: 10}} src="/logo.png" height={0} width={400} alt="" />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+        <Image src="/logo.png" height={0} width={400} alt="" />
+      </Box>
       <Box
         sx={{
           p: 1,
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
-          alignItems: "",
           gap: 2,
-          paddingTop: 8,
+          paddingTop: 6,
         }}
       >
         <Box
@@ -83,7 +93,8 @@ const Page = () => {
             sx={{
               display: "flex",
               flexDirection: "row",
-              justifyContent: "start",
+              justifyContent: "center",
+              alignItems: "center",
               paddingX: 1,
             }}
           >
@@ -95,7 +106,7 @@ const Page = () => {
             sx={{
               display: "flex",
               flexDirection: "row",
-              justifyContent: "start",
+              justifyContent: "center",
               paddingX: 1,
             }}
           >
@@ -183,16 +194,10 @@ const Page = () => {
           }}
         >
           <Typography>
-            Are you a{" "}
-            <Typography
-              onClick={() => {
-                router.push("/");
-              }}
-              component="span"
-              sx={{ color: "#3b5998", fontWeight: "bold" }}
-            >
-              User{" "}
-            </Typography>{" "}
+            Are you a {" "}
+            <Link style={{ color: "#3b5998", fontWeight: "bold" }} href={"/signin"}>
+              User
+            </Link>
             ?
           </Typography>
         </Box>

@@ -49,13 +49,16 @@ const Page = ({ params }: any) => {
         padding: 2,
       }}
     >
-      <Image
-        style={{ marginTop: 10 }}
-        src="/logo.png"
-        height={0}
-        width={400}
-        alt=""
-      />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+        <Image src="/logo.png" height={0} width={400} alt="" />
+      </Box>
       <Formik
         initialValues={{
           firstName: "",
@@ -277,7 +280,7 @@ const Page = ({ params }: any) => {
               >
                 {" "}
                 <Typography>
-                  Have an account
+                  Have an account ? {" "}
                   <button
                     style={{ color: "#523FAD", marginLeft: 4 }}
                     onClick={() => router.push("/signin")}

@@ -12,6 +12,7 @@ import { BsFacebook } from "react-icons/bs";
 import { AiFillGoogleCircle } from "react-icons/ai";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 type FormValuesType = {
   email: string;
@@ -85,16 +86,25 @@ const Page = () => {
         padding: 2,
       }}
     >
-      <Image style={{marginTop: 10}} src="/logo.png" height={0} width={400} alt="" />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+        <Image src="/logo.png" height={0} width={400} alt="" />
+      </Box>
+
       <Box
         sx={{
           p: 1,
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
-          alignItems: "",
           gap: 2,
-          paddingTop: 8,
+          paddingTop: 6,
         }}
       >
         <Box
@@ -236,20 +246,17 @@ const Page = () => {
               component="span"
               sx={{ color: "#3b5998", fontWeight: "bold" }}
             >
-              Social profile{" "}
-            </Typography>{" "}
+              Social profile
+            </Typography>
           </Typography>
           <Typography>
-            Are you an{" "}
-            <Typography
-              onClick={() => {
-                router.push("/adminLogin");
-              }}
-              component="span"
-              sx={{ color: "#3b5998", fontWeight: "bold" }}
+            Are you an {" "}
+            <Link
+              href={"/adminLogin"}
+              style={{ color: "#3b5998", fontWeight: "bold" }}
             >
-              Admin{" "}
-            </Typography>{" "}
+              Admin
+            </Link>
             ?
           </Typography>
         </Box>

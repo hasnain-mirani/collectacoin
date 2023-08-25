@@ -14,6 +14,7 @@ import Image from "next/image";
 import axios from "axios";
 import GoingButton from "@/app/components/GoingButton";
 import "@/app/styles/style.css";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 
 export default function Dashboard() {
   const [activePage, setActivePage] = useState<string>("home");
@@ -88,11 +89,11 @@ export default function Dashboard() {
       const { allEvents } = await response.data;
 
       setEvents(allEvents);
-      setM1(allEvents[0].Date.slice(5, 7));
-      setD1(allEvents[0].Date.slice(8, 10));
-      setP1(allEvents[0].Pic);
+      setM1(allEvents[0].Date.slice(5, 7) || "");
+      setD1(allEvents[0].Date.slice(8, 10) || "");
+      setP1(allEvents[0].Pic || "");
       setT1(allEvents[0].ItemTitle || "");
-      setY1(allEvents[0].Date.slice(0, 4));
+      setY1(allEvents[0].Date.slice(0, 4) || "");
       setTitle1(allEvents[0].ItemTitle || "");
     } catch (error: any) {
       console.log("No Events Found!");
@@ -125,6 +126,30 @@ export default function Dashboard() {
   useEffect(() => {
     getAllEvents();
   }, []);
+
+  const [loading, setLoading] = useState(true); // Initial loading state
+
+  useEffect(() => {
+    // Simulate loading for 10 seconds
+    const loadingTimer = setTimeout(() => {
+      setLoading(false);
+    }, 3500);
+
+    return () => {
+      clearTimeout(loadingTimer);
+    };
+  }, []);
+
+  const keyframes = `
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
   return (
     <Box
       sx={{
@@ -286,78 +311,105 @@ export default function Dashboard() {
           </Box>
         </Box>
       </Box>
-
-      <Box
-        sx={{
-          paddingX: 1,
-          alignItems: "center",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <style>{keyframes}</style>
+      {loading ? (
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
-            width: "100vw",
-            p: 2,
-          }}
-        >
-          <Typography sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}>
-            Upcoming Events
-          </Typography>
-          <Typography sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}>
-            {m1 + "/" + d1}
-          </Typography>
-        </Box>
-
-        {p1 ? <Box
-          sx={{
-            width: "350px",
-            height: "250px",
-            backgroundImage: `url(${p1})`,
-            borderRadius: "30px",
-            backdropFilter: "blur(10px)",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "20vh",
           }}
         >
           <Box
             sx={{
-              marginY: 20,
-              marginX: 2,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "flex-start",
+              width: "50px",
+              height: "50px",
+              borderRadius: "50%",
+              border: "8px solid",
+              borderColor: "#766DF4 #0000",
+              animation: "spin 1.5s linear infinite",
             }}
-            onClick={handleClick}
+          ></Box>
+        </Box>
+      ) : m1 || d1 || p1 ? (
+        <Box
+          sx={{
+            paddingX: 1,
+            alignItems: "center",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100vw",
+              p: 2,
+            }}
           >
-            <Box sx={{ display: "flex" }}>
-              <CalendarMonth sx={{ color: "#fff" }} />
-              <Typography
-                sx={{ color: "#fff", fontSize: "16px", fontWeight: 500 }}
-              >
-                {numberIntoMonth(Number(m1)) + " " + d1 + ", " + y1}
-              </Typography>
-            </Box>
-            <Box sx={{ color: "#fff", fontSize: "22px", fontWeight: 500 }}>
-              {t1}
+            <Typography
+              sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}
+            >
+              Upcoming Events
+            </Typography>
+            <Typography
+              sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}
+            >
+              {m1 + "/" + d1}
+            </Typography>
+          </Box>
+
+          <Box
+            sx={{
+              width: "350px",
+              height: "250px",
+              backgroundImage: `url(${p1})`,
+              borderRadius: "30px",
+              backdropFilter: "blur(10px)",
+            }}
+          >
+            <Box
+              sx={{
+                marginY: 20,
+                marginX: 2,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "flex-start",
+              }}
+              onClick={handleClick}
+            >
+              <Box sx={{ display: "flex" }}>
+                <CalendarMonth sx={{ color: "#fff" }} />
+                <Typography
+                  sx={{ color: "#fff", fontSize: "16px", fontWeight: 500 }}
+                >
+                  {numberIntoMonth(Number(m1)) + " " + d1 + ", " + y1}
+                </Typography>
+              </Box>
+              <Box sx={{ color: "#fff", fontSize: "22px", fontWeight: 500 }}>
+                {t1}
+              </Box>
             </Box>
           </Box>
         </Box>
-        : <Box
-        sx={{
-          marginX: 20,
-          marginY: 10,
-          width: "50px",
-          height: "50px",
-          borderRadius: "50%",
-          border: "8px solid",
-          borderColor: "#766DF4 #0000",
-          animation: "s1 1s infinite",
-         
-        }}
-      ></Box>}
-      </Box>
+      ) : (
+        <Typography
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "#523FAD",
+            fontSize: "26px",
+            fontWeight: 600,
+            marginY: 20,
+          }}
+        >
+          <SentimentVeryDissatisfiedIcon sx={{ marginX: 8, fontSize: 100 }} />
+        </Typography>
+      )}
 
       <Box
         sx={{
@@ -374,7 +426,27 @@ export default function Dashboard() {
           sx={{ color: "#000", fontSize: "25px", fontWeight: 600 }}
         ></Typography>
       </Box>
-      {events.length > 0 ? (
+      {loading ? (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "20vh",
+          }}
+        >
+          <Box
+            sx={{
+              width: "50px",
+              height: "50px",
+              borderRadius: "50%",
+              border: "8px solid",
+              borderColor: "#766DF4 #0000",
+              animation: "spin 1.5s linear infinite",
+            }}
+          ></Box>
+        </Box>
+      ) : events.length > 0 ? (
         events.map((eve, index) => (
           <Box sx={{ marginX: 1 }} key={index}>
             <Box
@@ -432,20 +504,19 @@ export default function Dashboard() {
           </Box>
         ))
       ) : (
-        <Box
+        <Typography
           sx={{
-            marginX: 20,
-            marginY: 10,
-            width: "50px",
-            height: "50px",
-            borderRadius: "50%",
-            border: "8px solid",
-            borderColor: "#766DF4 #0000",
-            animation: "s1 1s infinite",
-            backdropFilter: "blur(10px)",
-           
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "#523FAD",
+            fontSize: "26px",
+            fontWeight: 600,
+            marginY: 20,
           }}
-        ></Box>
+        >
+          <SentimentVeryDissatisfiedIcon sx={{ marginX: 8, fontSize: 100 }} />
+        </Typography>
       )}
       <Box
         sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
@@ -453,4 +524,3 @@ export default function Dashboard() {
     </Box>
   );
 }
-

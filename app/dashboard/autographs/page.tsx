@@ -7,9 +7,8 @@ import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { ContextValues } from "@/app/Context/context";
-import event from "@/modals/eventModal";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import "@/app/styles/style.css";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 
 type AutoGraphScheduleType = {
   time: String;
@@ -66,6 +65,30 @@ const AutographPage = () => {
     getAutographs();
   }, []);
 
+  const [loading, setLoading] = useState(true); // Initial loading state
+
+  useEffect(() => {
+    // Simulate loading for 10 seconds
+    const loadingTimer = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+
+    return () => {
+      clearTimeout(loadingTimer);
+    };
+  }, []);
+
+  const keyframes = `
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
   return (
     <>
       <ArrowBackIcon
@@ -77,7 +100,28 @@ const AutographPage = () => {
       <Box sx={{ padding: 1.5, backgroundColor: "#fff", height: 705 }}>
         <Box>
           <Box sx={{ margin: 0.5 }}>
-            {autograph.length > 0 ? (
+          <style>{keyframes}</style>
+            {loading ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "50vh",
+                }}
+              >
+                <Box
+                  sx={{
+                    width: "50px",
+                    height: "50px",
+                    borderRadius: "50%",
+                    border: "8px solid",
+                    borderColor: "#766DF4 #0000",
+                    animation: "spin 1.5s linear infinite",
+                  }}
+                ></Box>
+              </Box>
+            ) : autograph.length > 0 ? (
               autograph.map((auto, index) => (
                 <Box key={index}>
                   {/* mapped elements */}
@@ -155,25 +199,21 @@ const AutographPage = () => {
                 </Box>
               ))
             ) : (
-              <Box
+              <Typography
                 sx={{
                   display: "flex",
-                  alignItems: "center",
                   justifyContent: "center",
-                  height: "50vh",
+                  alignItems: "center",
+                  color: "#523FAD",
+                  fontSize: "26px",
+                  fontWeight: 600,
+                  marginY: 20,
                 }}
               >
-                <Box
-                  sx={{
-                    width: "50px",
-                    height: "50px",
-                    borderRadius: "50%",
-                    border: "8px solid",
-                    borderColor: "#766DF4 #0000",
-                    animation: "s1 1s infinite",
-                  }}
-                ></Box>
-              </Box>
+                <SentimentVeryDissatisfiedIcon
+                  sx={{ marginX: 8, fontSize: 100 }}
+                />
+              </Typography>
             )}
             {/* advertisement */}
             <Box

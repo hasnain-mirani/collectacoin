@@ -64,7 +64,7 @@ const page = () => {
       >
         <Box sx={{ padding: 4 }}>
           <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-            DashBoard
+            Dashboard
           </Typography>
           <Box
             sx={{

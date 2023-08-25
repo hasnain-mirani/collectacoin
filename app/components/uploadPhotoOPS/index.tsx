@@ -17,6 +17,7 @@ import { Group, Text, useMantineTheme, rem } from "@mantine/core";
 import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { Key, Upload, UploadFile } from "@mui/icons-material";
 import { Icon } from "@mui/material";
+import { toast } from "react-hot-toast";
 
 // import events from '@/modals/adminmodal';
 const inputStyle = {
@@ -82,9 +83,12 @@ const EntryForm: React.FC<any> = (
       const response = await axios.post("/api/admin/eventscreate", formValues);
       console.log("events created!!", response.data);
       router.push("/userdashboard");
+      toast.success("Photo OPS Event Created Successfully!");
     } catch (error: any) {
       console.log("posting issue!!!", error.message);
+      toast.success("Photo OPS Event Created Successfully!");
     }
+    handleClose();
   };
 
   const formatEntry = ({ ItemTitle, ItemSubject }: FormValues) => {

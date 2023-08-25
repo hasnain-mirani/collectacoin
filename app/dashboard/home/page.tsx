@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { ContextValues } from "@/app/Context/context";
-import "@/app/styles/style.css";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 
 type AutoGraphScheduleType = {
   time: String;
@@ -80,20 +80,65 @@ const HomePage = () => {
     getEvents();
   }, []);
 
+  const [loading, setLoading] = useState(true); // Initial loading state
+
+  useEffect(() => {
+    // Simulate loading for 10 seconds
+    const loadingTimer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => {
+      clearTimeout(loadingTimer);
+    };
+  }, []);
+
+  const keyframes = `
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          overflowX: "scroll",
-          gap: 2,
-          marginLeft: 2,
-          marginY: 2,
-        }}
-      >
-        {events.length > 0 ? (
-          events.map((event, index) => (
+      <style>{keyframes}</style>
+      {loading ? (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "20vh",
+          }}
+        >
+          <Box
+            sx={{
+              width: "50px",
+              height: "50px",
+              borderRadius: "50%",
+              border: "8px solid",
+              borderColor: "#766DF4 #0000",
+              animation: "spin 1.5s linear infinite",
+            }}
+          ></Box>
+        </Box>
+      ) : events.length > 0 ? (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            overflowX: "scroll",
+            gap: 2,
+            marginLeft: 2,
+            marginY: 2,
+          }}
+        >
+          {events.map((event, index) => (
             <Box
               key={index}
               sx={{
@@ -149,22 +194,24 @@ const HomePage = () => {
                 </Box>
               </Box>
             </Box>
-          ))
-        ) : (
-          <Box
-            sx={{
-              marginX: 20,
-              marginY: 10,
-              width: "50px",
-              height: "50px",
-              borderRadius: "50%",
-              border: "8px solid",
-              borderColor: "#766DF4 #0000",
-              animation: "s1 1s infinite",
-            }}
-          ></Box>
-        )}
-      </Box>
+          ))}
+        </Box>
+      ) : (
+        <Typography
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "#523FAD",
+            fontSize: "26px",
+            fontWeight: 600,
+            marginY: 20,
+          }}
+        >
+          <SentimentVeryDissatisfiedIcon sx={{ marginX: 8, fontSize: 100 }} />
+        </Typography>
+      )}
+
       <Box sx={{ marginX: 2, marginY: 1 }}>
         <Box
           sx={{
@@ -230,7 +277,27 @@ const HomePage = () => {
           </Box>
         </Box>
         <Box>
-          {events.length > 0 ? (
+          {loading ? (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "20vh",
+              }}
+            >
+              <Box
+                sx={{
+                  width: "50px",
+                  height: "50px",
+                  borderRadius: "50%",
+                  border: "8px solid",
+                  borderColor: "#766DF4 #0000",
+                  animation: "spin 1.5s linear infinite",
+                }}
+              ></Box>
+            </Box>
+          ) : events.length > 0 ? (
             events.map((event, index) => (
               <Box
                 key={index}
@@ -300,18 +367,21 @@ const HomePage = () => {
               </Box>
             ))
           ) : (
-            <Box
+            <Typography
               sx={{
-                marginX: 20,
-                marginY: 10,
-                width: "50px",
-                height: "50px",
-                borderRadius: "50%",
-                border: "8px solid",
-                borderColor: "#766DF4 #0000",
-                animation: "s1 1s infinite",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                color: "#523FAD",
+                fontSize: "26px",
+                fontWeight: 600,
+                marginY: 20,
               }}
-            ></Box>
+            >
+              <SentimentVeryDissatisfiedIcon
+                sx={{ marginX: 8, fontSize: 100 }}
+              />
+            </Typography>
           )}
         </Box>
       </Box>
