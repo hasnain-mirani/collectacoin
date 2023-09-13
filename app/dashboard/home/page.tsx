@@ -25,7 +25,7 @@ const HomePage = () => {
   }, [searchVal]);
 
   async function getData(search: string, page: number, limit: number) {
-    let res = await axios.get("http://localhost:8000/api/autographs", {
+    let res = await axios.get("http://localhost:3000/api/autographs", {
       params: {
         search,
         page,

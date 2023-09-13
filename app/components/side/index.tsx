@@ -1,6 +1,7 @@
 "use client";
 import { Box, IconButton, Typography } from "@mui/material";
 import axios from "axios";
+import { signOut, useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import jwtDecode from "jwt-decode";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -19,6 +20,7 @@ import { IoMdStats } from "react-icons/io";
 // import router from "next/router";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "../../../store/index";
+
 const StyledBadge = styled(Badge)<BadgeProps>(() => ({
   "& .MuiBadge-badge": {
     right: -3,
@@ -28,6 +30,7 @@ const StyledBadge = styled(Badge)<BadgeProps>(() => ({
   },
 }));
 function Index() {
+  const { data: session, status } = useSession();
   const [data, setData] = useState({
     _id: "",
     firstName: "",
@@ -53,6 +56,7 @@ function Index() {
   const newval = useAppSelector((state) => state.userReducer.value);
   const logout = async () => {
     try {
+      signOut();
       const response = await axios.get("/api/user/logout");
       router.push("/signin");
       toast.success("Successfully logout");
@@ -94,10 +98,20 @@ function Index() {
               }}
             >
               <Box>
-                <Avatar
-                  variant="circular"
-                  sx={{ width: "4rem", height: "4rem" }}
+                {/* {session.user.image && (
+                <span
+                  style={{ backgroundImage: `url('${session.user.image}')` }}
+                  className={styles.avatar}
                 />
+              )} */}
+                <Avatar
+                  sx={{
+                    width: 56,
+                    height: 56,
+                    backgroundImage: `url(${session?.user?.image})`,
+                  }}
+                />
+              
               </Box>
               <Box
                 sx={{
@@ -107,9 +121,9 @@ function Index() {
                 }}
               >
                 <Typography variant="h6">
-                  {data.firstName} {data.lastName}
+                  {session?.user?.name} {data.lastName}
                 </Typography>
-                <Typography variant="body1">{data.email}</Typography>
+                <Typography variant="body1">{session?.user?.email}</Typography>
               </Box>
             </Box>
 

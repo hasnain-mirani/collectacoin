@@ -15,14 +15,16 @@ import axios from "axios";
 import GoingButton from "@/app/components/GoingButton";
 import "@/app/styles/style.css";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import { useSession } from "next-auth/react";
 
 export default function Dashboard() {
+  const { data: session, status } = useSession();
   const [activePage, setActivePage] = useState<string>("home");
   const { searchVal, setSearchVal } = useContext(ContextValues);
 
   const pathname = usePathname();
   const router = useRouter();
-  console.log(pathname);
+  // console.log(pathname);
   useEffect(() => {
     let paths = pathname.split("/");
 
@@ -192,7 +194,7 @@ export default function Dashboard() {
       </Box>
       <Box sx={{ p: 1, marginLeft: 1 }}>
         <Typography sx={{ color: "#000", fontSize: " 30px", fontWeight: 600 }}>
-          Hey, {data.firstName}
+          Hey, {data.firstName}{session?.user?.name}
         </Typography>
         <Typography sx={{ color: "#595959", fontSize: "18px", width: "80vw" }}>
           Don’t forget to visit your nearest events that you have subscribe at

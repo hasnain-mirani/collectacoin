@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { RiFacebookFill } from "react-icons/ri";
 import { RiTwitterFill } from "react-icons/ri";
@@ -21,35 +21,51 @@ type FormValuesType = {
 };
 
 const Page = () => {
+  
+  const router = useRouter();
   const onSignup = () => {
     router.push("/");
   };
 
   const onlogin = async () => {
-    try {
-      const response = await axios.post("/api/user/signin", formValues);
-      const { token, firstName, email } = response.data;
-      localStorage.setItem("token", token);
-      localStorage.setItem("name", firstName);
-      localStorage.setItem("email", email);
-      // console.log(response)
-      //  console.log("signin successfull", response.data)
-      toast.success("Successfully Signed in");
-      router.push("/userdashboard");
-    } catch (error: any) {
-      //  console.log('login failed', error.message)
-      toast.error("Email or password is incorrect ", error.message);
-    }
-  };
+    {
+      try {
+        const response = await axios.post("/api/user/signin", formValues);
+        const { token, firstName, email } = response.data;
+       
+        localStorage.setItem("token", token);
+        localStorage.setItem("name", firstName);
+        localStorage.setItem("email", email);
+        // console.log(response)
+        //  console.log("signin successfull", response.data)
+        toast.success("Successfully Signed in");
+        router.push("/userdashboard");
+      } catch (error: any) {
+        //  console.log('login failed', error.message)
+        toast.error("Email or password is incorrect ", error.message);
+      }
+      }
+      
+    
+    
+  }
+  const { data: session, status } = useSession()
+  console.log(status)
+  if (status==='authenticated') {
+   
+  }
   const [formValues, setFormValues] = useState<FormValuesType>({
     email: "",
     password: "",
     agreed: true,
   });
-  const { data: session, status } = useSession();
+ 
+  
+
+ 
+
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const router = useRouter();
   async function handleValuesChange(e: React.ChangeEvent<HTMLInputElement>) {
     let name = e.target.name;
     let value = e.target.value;
@@ -57,7 +73,10 @@ const Page = () => {
     setFormValues((pre) => ({ ...pre, [name]: value }));
   }
   async function handleGoogleSignIn() {
-    signIn("google", { redirect: true, callbackUrl: "/userdashboard" });
+  
+      signIn("google", { redirect: true, callbackUrl: "/userdashboard" });
+ 
+    
   }
   async function handleFacebookSignIn() {
     signIn("facebook2", { redirect: true, callbackUrl: "/userdashboard" });
@@ -278,7 +297,10 @@ const Page = () => {
           >
             <Box>
               <Button
-                onClick={() => handleGoogleSignIn()}
+                 onClick={(e) => {
+                  e.preventDefault()
+                  handleGoogleSignIn()
+                }}
                 startIcon={<AiFillGoogleCircle />}
                 sx={{
                   width: "9rem",

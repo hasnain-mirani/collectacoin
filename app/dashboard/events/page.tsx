@@ -52,6 +52,7 @@ const EventsPage = () => {
   const getAdminEvents = async () => {
     try {
       const response = await axios.get("/api/fetchEvents");
+      console.log(response.data)
       const { allEvents } = await response.data;
       setAdminEvent(allEvents);
       toast.success("Events Found!");

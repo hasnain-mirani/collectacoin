@@ -6,6 +6,7 @@ import { SERVER_BASE_URL } from "@/constants";
 import axios from "axios";
 import { Account, Awaitable, Profile, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
+import { signIn } from "next-auth/react";
 
 
 const handler = NextAuth({
@@ -23,7 +24,7 @@ const handler = NextAuth({
       },
       async authorize(credentials, req) {
         try{
-          const res = await axios.post(SERVER_BASE_URL+"/user/signin", {      
+          const res = await axios.post(SERVER_BASE_URL+"/auth/login", {      
             email: credentials?.email,
             password: credentials?.password
       })
@@ -41,26 +42,20 @@ const handler = NextAuth({
       },
     }),
     FacebookProvider({
-      clientId: process.env.FACEBOOK_ID || "",
-      clientSecret: process.env.FACEBOOK_SECRET || "",
+      clientId: process.env.FACEBOOK_ID!,
+      clientSecret: process.env.FACEBOOK_SECRET!,
     }),
     // GithubProvider({
     //   clientId: process.env.GITHUB_ID,
     //   clientSecret: process.env.GITHUB_SECRET,
     // }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID || "",
-      clientSecret: process.env.GOOGLE_SECRET || "",
+      clientId: process.env.GOOGLE_ID!,
+      clientSecret: process.env.GOOGLE_SECRET!,
     }),
   ],
   callbacks: {
-
-    // async jwt({ token, user, trigger, session }) {
-    //   if (trigger === "update") {
-    //     return { ...token, ...session.user };
-    //   }
-    //   return { ...token, ...user };
-    // },
+    
     async  jwt({
       token,
       user,
@@ -73,31 +68,42 @@ const handler = NextAuth({
       console.log(token);
       console.log(user);
       console.log(account);
+   /*
       if (account && (account.provider === "google" || account.provider === "facebook")) {
+       try {
         let res;
+        console.log(res)
         switch(account.provider){
           case "facebook":
             res = await axios.post(SERVER_BASE_URL+"/auth/token", {facebookId: token.sub});
-
+console.log(res)
             if (res.data) return { ...res.data, ...token };
             break;
             case "google": 
            res = await axios.post(SERVER_BASE_URL+"/auth/token", {googleId: token.sub});
             if (res.data) return { ...res.data, ...token };
+            console.log(res)
             break;
+        }}
+        catch (error) {
+          console.error("Error fetching additional data:", error);
         }
-      }
+      } */
        return {...token, ...user};
+       
     },
     async session({ session, token }) {
       session.user = token as any;
+      console.log(session)
       return session;
     },
   },
+
 });
 
 export { handler as GET, handler as POST };
 
+ 
 async function refreshAccessToken(tokenObject:any) {
   try {
       // Get a new set of tokens with a refreshToken
@@ -119,3 +125,4 @@ async function refreshAccessToken(tokenObject:any) {
   }
 }
 
+  

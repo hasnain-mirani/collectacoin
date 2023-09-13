@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addFormEntry, deleteFormEntry, updateFormEntry } from '@/state/addSlice';
+// import { addFormEntry, deleteFormEntry, updateFormEntry } from '@/state/addSlice';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -38,7 +38,7 @@ type FormValues = {
 };
 
 export default function BasicModal() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const formEntries = useSelector((state: RootState) => state.form);
 
   const [details, setDetails] = useState<FormValues>({
@@ -54,7 +54,7 @@ export default function BasicModal() {
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
 
   const handleDelete = (index: number) => {
-    dispatch(deleteFormEntry(index));
+    // dispatch(deleteFormEntry(index));
   };
 
   const handleOpen = (index: number) => {
@@ -76,7 +76,7 @@ export default function BasicModal() {
   };
 
   const handleUpdate = () => {
-    dispatch(updateFormEntry({ index: currentIndex, updatedEntry: details }));
+    // dispatch(updateFormEntry({ index: currentIndex, updatedEntry: details }));
     handleClose();
   };
 

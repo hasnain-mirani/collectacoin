@@ -17,6 +17,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "provide your Password"],
   },
+  image:{
+    type: String,
+  },
   agreed:{
     type:Boolean,
     required: [true, "please check the box"],

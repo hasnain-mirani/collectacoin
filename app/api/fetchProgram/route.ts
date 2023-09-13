@@ -10,7 +10,20 @@ export async function GET() {
     return NextResponse.json({ allPrograms });
   } catch (error: any) {
     return NextResponse.json({
-      message: "No PhotoOPS exist!",
+      message: "No Progarming  exist!",
+      status: 500,
+    });
+  }
+}
+export async function DELETE(req:any) {
+  try {
+    const id = req.nextUrl.searchParams.get("id");
+    const deletePrograms = await createEvent.findByIdAndDelete(id);
+    // console.log(deletePrograms)
+    return NextResponse.json({deletePrograms });
+  } catch (error: any) {
+    return NextResponse.json({
+      message: "No Progarming  exist!",
       status: 500,
     });
   }
