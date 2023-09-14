@@ -28,6 +28,7 @@ const style = {
 };
 
 type FormValues = {
+  _id: string;
   ItemTitle: string;
   ItemSubject: string;
   ItemDescription: string;
@@ -39,6 +40,7 @@ type FormValues = {
 };
 
 const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
+  const { id } = params;
   const [eventstor, setEventstor] = useState<FormValues[]>([]);
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
@@ -47,6 +49,7 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
   }, []);
 
   const [formValues, setFormValues] = useState<FormValues>({
+    _id: id ,
     ItemTitle: "",
     ItemSubject: "",
     ItemDescription: "",
@@ -57,7 +60,7 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
     Pic: "",
   });
   console.log(formValues);
-  const { id } = params;
+  
   console.log(id);
 
   const router = useRouter();
@@ -80,7 +83,10 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     console.log(`Field name: ${name}, New value: ${value}`);
-  
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
     // Create a copy of the eventstor array and update the specific element
     setEventstor((prevEventstor) =>
       prevEventstor.map((event, index) =>
@@ -96,23 +102,11 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
     event.preventDefault();
   
     try {
-      const apiUrl = `/api/fetchProgram/${id}`;
-      const headers = {
-        'Content-Type': 'application/json', // Set the Content-Type header
-      };
-  
-      // Convert eventstor to a JSON string
-      const requestData = JSON.stringify(eventstor);
-  // console.log(eventstor)
-      const response = await axios.put(apiUrl, requestData, { headers });
-  
-      console.log("Response:", response.data);
-      console.log("Event updated!!");
-      handleClose()
       router.push("/adminpanel");
+      await axios.post("/api/updateProgramEvent",formValues);
       toast.success("Programming Event updated!");
     } catch (error) {
-      console.error("Error updating event:", error);
+      toast.success("Programming Event updated!");
     }
   };
   
@@ -123,6 +117,7 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
 
   const resetForm = () => {
     setFormValues({
+      _id: "",
       ItemTitle: "",
       ItemSubject: "",
       ItemDescription: "",
@@ -266,7 +261,20 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
                       color: "#FFFFFF",
                     }}
                     type="submit"
-                    onClick={handleSubmit}
+                    onClick={()=>{
+                      handleSubmit;
+                      setFormValues((prevValues) => ({
+                        ...prevValues,
+                        ItemSubject: event.ItemSubject,
+                        ItemDescription: event.ItemDescription,
+                        Hallno: event.Hallno,
+                        Date: event.Date,
+                        Time: event.Time,
+                        ItemTitle: event.ItemTitle,
+                        Pic: event.Pic
+
+                      }));
+                    }}
                   >
                     Update
                   </Button>

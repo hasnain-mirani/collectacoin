@@ -79,16 +79,33 @@ const EntryForm: React.FC<any> = (
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    try {
-      const response = await axios.post("/api/admin/eventscreate", formValues);
-      console.log("events created!!", response.data);
-      router.push("/userdashboard");
-      toast.success("Programming Event Created Successfully!");
-    } catch (error: any) {
-      console.log("posting issue!!!", error.message);
-      toast.success("Programming Event Created Successfully!");
+    if (
+      formValues.ItemTitle &&
+      formValues.ItemSubject &&
+      formValues.ItemDescription &&
+      formValues.Hallno &&
+      formValues.Pic &&
+      formValues.Time &&
+      formValues.Date
+    )
+    {
+      try {
+        const response = await axios.post("/api/admin/eventscreate", formValues);
+        console.log("events created!!", response.data);
+        router.push("/userdashboard");
+        toast.success("Programming Event Created Successfully!");
+      } catch (error: any) {
+        console.log("posting issue!!!", error.message);
+        toast.success("Programming Event Created Successfully!");
+      }
+      handleClose();
+
     }
-    handleClose();
+    else
+    {
+      toast.error("Fill the form completely!");
+    }
+    
   };
 
   const formatEntry = ({ ItemTitle, ItemSubject }: FormValues) => {
