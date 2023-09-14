@@ -48,7 +48,7 @@ type FormValues = {
   Pic: string;
 };
 
-const editData: React.FC<any> = (
+const EditData: React.FC<any> = (
   props: Partial<DropzoneProps>,
   { section }
 ) => {
@@ -240,4 +240,4 @@ const editData: React.FC<any> = (
   );
 };
 
-export default editData;
+export default EditData;
