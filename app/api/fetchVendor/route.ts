@@ -15,3 +15,16 @@ export async function GET() {
     });
   }
 }
+
+export async function DELETE(req: any) {
+  try {
+    const id = req.nextUrl.searchParams.get("id");
+    const deleteVendors = await addVendor.findByIdAndDelete(id);
+    return NextResponse.json({ deleteVendors });
+  } catch (error: any) {
+    return NextResponse.json({
+      message: "No Plans exist!",
+      status: 500,
+    });
+  }
+}

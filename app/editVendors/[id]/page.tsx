@@ -29,13 +29,12 @@ const style = {
 
 type FormValues = {
   _id: string;
-  ItemTitle: string;
-  ItemSubject: string;
-  ItemDescription: string;
+  Name: string;
+  Profile: string;
+  Description: string;
   Hallno: string;
-  eventType: string;
-  Date: string;
-  Time: string;
+  Social: string;
+  Website: string;
   Pic: string;
 };
 
@@ -50,18 +49,18 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
 
   const [formValues, setFormValues] = useState<FormValues>({
     _id: id ,
-    ItemTitle: "",
-    ItemSubject: "",
-    ItemDescription: "",
+    Name: "",
+    Profile: "",
+    Description: "",
     Hallno: "",
-    eventType: "Programming",
-    Date: "",
-    Time: "",
+    Social: "",
+    Website: "",
     Pic: "",
   });
-  console.log(formValues);
+
   
-  console.log(id);
+  
+
 
   const router = useRouter();
 
@@ -71,18 +70,16 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
    */
   const getEventById = async (id: any) => {
     try {
-      const res = await axios.get(`/api/fetchProgram/${id}`);
-      console.log(res)
-      setEventstor([res.data.allPrograms]);
-      console.log(eventstor);
-    } catch (error) {
-      // Handle error
+      const res = await axios.get(`/api/fetchVendor/${id}`);
+      setEventstor([res.data.allVendors]);
+    } catch (error: any) {
+        console.log("No data exists!");
+     
     }
   };
   const handleCancle = {};
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(`Field name: ${name}, New value: ${value}`);
     setFormValues((prevValues) => ({
       ...prevValues,
       [name]: value,
@@ -103,28 +100,26 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
   
     try {
       router.push("/adminpanel");
-      await axios.post("/api/updateProgramEvent",formValues);
-      toast.success("Programming Event updated!");
+      await axios.post("/api/updateVendor",formValues);
+      toast.success("Vendor Updated Successfully!");
     } catch (error) {
-      toast.success("Programming Event updated!");
+      toast.success("Vendor Updated Successfully!");
     }
   };
   
-
-  const formatEntry = ({ ItemTitle, ItemSubject }: FormValues) => {
-    return `${ItemTitle} ${ItemSubject}`;
+  const formatEntry = ({ Name, Profile }: FormValues) => {
+    return `${Name} ${Profile}`;
   };
 
   const resetForm = () => {
     setFormValues({
       _id: "",
-      ItemTitle: "",
-      ItemSubject: "",
-      ItemDescription: "",
+      Name: "",
+      Profile: "",
+      Description: "",
       Hallno: "",
-      eventType: "Programming",
-      Date: "",
-      Time: "",
+      Social: "",
+      Website: "",
       Pic: "",
     });
   };
@@ -145,48 +140,48 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
                   sx={{ display: "flex", marginTop: 2, gap: 2 }}
                 >
                   <Box className="left">
-                    <Typography>Item Title</Typography>
+                    <Typography>Name</Typography>
 
                     <InputBase
                       required
-                      name="ItemTitle"
-                      value={event.ItemTitle}
+                      name="Name"
+                      value={event.Name}
                       onChange={handleChange}
                       sx={inputStyle}
                       type="text"
-                      placeholder="Enter Item Title"
+                      placeholder="Enter Vendor's Name"
                     />
-                    <Typography>Item Description</Typography>
+                    <Typography>Description</Typography>
                     <InputBase
-                      name="ItemDescription"
-                      value={event.ItemDescription}
+                      name="Description"
+                      value={event.Description}
                       onChange={handleChange }
                       sx={inputStyle}
                       type="text"
-                      placeholder="Enter Item Description"
+                      placeholder="Enter Description"
                     />
-                    <Typography>Date</Typography>
+                    <Typography>Social</Typography>
                     <InputBase
                       required
-                      name="Date"
-                      value={event.Date}
+                      name="Social"
+                      value={event.Social}
                       onChange={handleChange }
                       sx={inputStyle}
-                      type="date"
-                      placeholder="Enter Your Date"
+                      type="text"
+                      placeholder="Enter Social"
                     />
                   </Box>
 
                   <Box className="right">
-                    <Typography>Item Subject</Typography>
+                    <Typography>Profile</Typography>
                     <InputBase
                       required
-                      name="ItemSubject"
-                      value={event.ItemSubject}
+                      name="Profile"
+                      value={event.Profile}
                       onChange={handleChange}
                       sx={inputStyle}
                       type="text"
-                      placeholder="Enter Item Subject"
+                      placeholder="Enter Profile"
                     />
                     <Typography>Hall No.</Typography>
                     <InputBase
@@ -198,14 +193,14 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
                       type="text"
                       placeholder="Enter Your Hall Number"
                     />
-                    <Typography>Time</Typography>
+                    <Typography>Website</Typography>
                     <InputBase
-                      name="Time"
-                      value={event.Time}
+                      name="Website"
+                      value={event.Website}
                       onChange={handleChange}
                       sx={inputStyle}
-                      type="time"
-                      placeholder="Enter Your Time"
+                      type="text"
+                      placeholder="Enter Website"
                     />
                   </Box>
                 </Box>
@@ -265,12 +260,12 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
                       handleSubmit;
                       setFormValues((prevValues) => ({
                         ...prevValues,
-                        ItemSubject: event.ItemSubject,
-                        ItemDescription: event.ItemDescription,
+                        Name: event.Name,
+                        Profile: event.Profile,
+                        Description: event.Description,
                         Hallno: event.Hallno,
-                        Date: event.Date,
-                        Time: event.Time,
-                        ItemTitle: event.ItemTitle,
+                        Social: event.Social,
+                        Website: event.Website,
                         Pic: event.Pic
 
                       }));

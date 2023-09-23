@@ -1,6 +1,8 @@
 "use client";
 import { Box, Button, Typography } from "@mui/material";
-import RemvoveBtn from '@/app/components/RemoveBtn'
+import RemoveBtn from "@/app/components/RemoveBtn";
+import RemovePlan from "@/app/components/RemovePlan";
+import RemoveVendor from "@/app/components/RemoveVendor";
 import { signOut, useSession } from "next-auth/react";
 import Avatar from "@mui/material/Avatar";
 import UpoloadData from "../components/uploddata";
@@ -18,7 +20,7 @@ import { BsEye } from "react-icons/bs";
 import editData from "../components/editData";
 import Link from "next/link";
 type AdminEvent = {
-  _id:number;
+  _id: number;
   ItemTitle: string;
   ItemSubject: string;
   ItemDescription: string;
@@ -27,21 +29,48 @@ type AdminEvent = {
   Time: string;
   Pic: string;
 };
+
+type VENDOR = {
+  _id: number;
+  Name: string;
+  Profile: string;
+  Description: string;
+  Hallno: string;
+  Social: string;
+  Website: string;
+  Pic: string;
+};
+
+type PLAN = {
+  _id: number;
+  Title: string;
+  EventName: string;
+  Venue: string;
+  File: string;
+};
 const Page = () => {
-  const [loading, setLoading] = useState(false);
+  const [programmingLoading , setProgrammingLoading] = useState(false);
+  const [autographLoading , setAutographLoading] = useState(false);
+  const [photoOPSLoading , setPhotoOPSLoading] = useState(false);
+  const [vendorLoading , setVendorLoading] = useState(false);
+  const [planLoading, setPlanLoading] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [editMode, setEditMode] = useState(false);
-  const [showList, setShowList] = useState(false);
+  const [showProgrammingList, setProgrammingList] = useState(false);
+  const [showAutographList, setAutographList] = useState(false);
+  const [showPhotoOPSList , setPhotosOPSList] = useState(false);
+  const [showVendorsList , setVendorsList] = useState(false);
+  const [showPlanList , setPlanList] = useState(false);
   const [adminEvent, setAdminEvent] = useState<AdminEvent[]>([]);
+  const [autographs, setAutographs] = useState<AdminEvent[]>([]);
+  const [photos , setPhotos] = useState<AdminEvent[]>([]);
+  const [vendors , setVendors] = useState<VENDOR[]>([]);
+  const [plans , setPlans] = useState<PLAN[]>([]);
   const { data: session, status } = useSession();
-  // useEffect(() => {
-  //   getAdminEvents();
-  // }, []);
-  // console.log(session)
+
   interface Details {
     name: string;
     email: string;
-    // Add more details fields as needed
   }
 
   async function handlesSignOut() {
@@ -49,17 +78,70 @@ const Page = () => {
   }
   const getAdminEvents = async () => {
     try {
-      setLoading(true);
+      setProgrammingLoading(true);
       const response = await axios.get("/api/fetchProgram");
       const programs = response.data.allPrograms;
-      console.log(programs)
+      console.log(programs);
       setAdminEvent(programs);
-      setShowList(!showList);
-      setLoading(false);
+      setProgrammingList(!showProgrammingList);
+      setProgrammingLoading(false);
     } catch (error: any) {
       toast.error("No Events Found!");
     }
   };
+
+  const getAutographEvents = async () => {
+    try {
+      setAutographLoading(true);
+      const response = await axios.get("/api/fetchAutograph");
+      const { allAutographs } = response.data;
+      setAutographs(allAutographs);
+      setAutographList(!showAutographList);
+      setAutographLoading(false);
+    } catch (error: any) {
+      console.log("No Autograph Events Found!");
+    }
+  };
+
+  const getPhotoOPSEvents = async () => {
+    try {
+      setPhotoOPSLoading(true);
+      const response = await axios.get("/api/fetchPhotoOPS");
+      const { allPhotos } = response.data;
+      setPhotos(allPhotos);
+      setPhotosOPSList(!showPhotoOPSList);
+      setPhotoOPSLoading(false);
+    } catch (error: any) {
+      console.log("No PhotoOPS Events Found!");
+    }
+  };
+
+  const getVendors = async () => {
+    try {
+      setVendorLoading(true);
+      const response = await axios.get("/api/fetchVendor");
+      const {allVendors} = response.data;
+      setVendors(allVendors);
+      setVendorsList(!showVendorsList);
+      setVendorLoading(false);
+    } catch (error: any) {
+      console.log("No Vendors Found!");
+      
+    }
+  };
+
+  const getPlans = async () => {
+    try {
+      setPlanLoading(true);
+      const response = await axios.get("/api/fetchPlan");
+      const {allPlans} = response.data;
+      setPlans(allPlans);
+      setPlanList(!showPlanList);
+      setPlanLoading(false);
+    } catch (error: any) {
+      console.log("No plans found!");
+    }
+  }
   const handleEditItem = (item: any) => {
     setSelectedItem(item);
     setEditMode(true);
@@ -69,26 +151,13 @@ const Page = () => {
     setSelectedItem(null);
     setEditMode(false);
   };
-  const handleDeleteItem = (item: any) => {
-    // Implement the logic to delete an item here.
-    // Once the item is deleted, update the state accordingly.
-  };
-  // const [programingData, setProgramingData] = useState<any>(null);
-  // const [autographData, setAutographData] = useState<any>(null);
-
-  // const [details, setDetails] = useState<Details>({
-  //   name: "",
-  //   email: "",
-  // });
-  // const [isEditing, setIsEditing] = useState(false);
 
   return (
     <Box className="container" sx={{ display: "flex", flexDirection: "row" }}>
-   <Box
+      <Box
         className="left"
-        sx={{ backgroundColor: "#EEECF9", flex: 0.7, height: "100vh" }}
+        sx={{ backgroundColor: "#EEECF9", flex: 0.7, minHeight: "100vh" }}
       >
-       
         <Box sx={{ padding: 2 }}>
           <Box sx={{ display: "flex" }}>
             <Avatar sx={{ width: 56, height: 56 }}>
@@ -126,7 +195,7 @@ const Page = () => {
       </Box>
       <Box
         className="right"
-        sx={{ backgroundColor: "#FFF", flex: 3, height: "100vh" }}
+        sx={{ backgroundColor: "#FFF", flex: 3, minHeight: "100vh" }}
       >
         <Box sx={{ padding: 4 }}>
           <Typography variant="h4" sx={{ fontWeight: "bold" }}>
@@ -152,9 +221,9 @@ const Page = () => {
             >
               <UpoloadData />
               <Button onClick={() => getAdminEvents()}>
-                {loading ? (
+                {programmingLoading ? (
                   <p>Loading...</p>
-                ) : showList ? (
+                ) : showProgrammingList ? (
                   "Hide List"
                 ) : (
                   "Show List"
@@ -162,31 +231,34 @@ const Page = () => {
               </Button>
             </Box>
           </Box>
-          {showList && (
+          {showProgrammingList && (
             <Box>
               {adminEvent &&
                 adminEvent.map((event) => (
-                    <Box
-                    key={event._id} 
-                      sx={{
-                        display: "flex",
-                        gap: 3,
-                       justifyContent:'space-between'
-                      }}
-                    >
-                      <Box sx={{ display: "flex", gap: 2 }}>
-                        <Typography variant="body1" color="initial">
-                          {event.ItemTitle}({event.Date})
-                        </Typography>
-                      </Box>
-                      {/* <button  >Edit</button> */}
-                     <Box sx={{display:'flex', gap:2}}>
-                      <Button>
-                     <Link href={`/editevent/${event._id}`}>Edit</Link>
-                      </Button>
-                    <Button> <RemvoveBtn id={event._id}/></Button>
-                     </Box>
+                  <Box
+                    key={event._id}
+                    sx={{
+                      display: "flex",
+                      gap: 3,
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Box sx={{ display: "flex", gap: 2 }}>
+                      <Typography variant="body1" color="initial">
+                        {event.ItemTitle}({event.Date})
+                      </Typography>
                     </Box>
+                    {/* <button  >Edit</button> */}
+                    <Box sx={{ display: "flex", gap: 2 }}>
+                      <Button>
+                        <Link href={`/editevent/${event._id}`}>Edit</Link>
+                      </Button>
+                      <Button>
+                        {" "}
+                        <RemoveBtn id={event._id} />
+                      </Button>
+                    </Box>
+                  </Box>
                 ))}
             </Box>
           )}
@@ -195,23 +267,72 @@ const Page = () => {
             <Editdetail />
           </Box>
 
-          <Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: 2,
+            }}
+          >
+            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+              Autograph Schedule
+            </Typography>
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
-                marginTop: 2,
+                alignItems: "center",
+                gap: 2,
               }}
             >
-              <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                Autograph Schedule
-              </Typography>
               <UploadAutograph />
-            </Box>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-              <Editdetail />
+              <Button onClick={() => getAutographEvents()}>
+                {autographLoading ? (
+                  <p>Loading...</p>
+                ) : showAutographList ? (
+                  "Hide List"
+                ) : (
+                  "Show List"
+                )}
+              </Button>
             </Box>
           </Box>
+          {showAutographList && (
+            <Box>
+              {autographs &&
+                autographs.map((event) => (
+                  <Box
+                    key={event._id}
+                    sx={{
+                      display: "flex",
+                      gap: 3,
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Box sx={{ display: "flex", gap: 2 }}>
+                      <Typography variant="body1" color="initial">
+                        {event.ItemTitle}({event.Date})
+                      </Typography>
+                    </Box>
+                    {/* <button  >Edit</button> */}
+                    <Box sx={{ display: "flex", gap: 2 }}>
+                      <Button>
+                        <Link href={`/editSchedule/${event._id}`}>Edit</Link>
+                      </Button>
+                      <Button>
+                        {" "}
+                        <RemoveBtn id={event._id} />
+                      </Button>
+                    </Box>
+                  </Box>
+                ))}
+            </Box>
+          )}
+
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+            <Editdetail />
+          </Box>
+
           <Box
             sx={{
               display: "flex",
@@ -222,11 +343,61 @@ const Page = () => {
             <Typography variant="h5" sx={{ fontWeight: "bold" }}>
               Photo Ops Schedule
             </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: 2,
+              }}
+            >
             <UploadPhotoOPS />
+            <Button onClick={() => getPhotoOPSEvents()}>
+                {photoOPSLoading ? (
+                  <p>Loading...</p>
+                ) : showPhotoOPSList ? (
+                  "Hide List"
+                ) : (
+                  "Show List"
+                )}
+              </Button>
+            </Box>
           </Box>
+          {showPhotoOPSList && (
+            <Box>
+              {photos &&
+                photos.map((event) => (
+                  <Box
+                    key={event._id}
+                    sx={{
+                      display: "flex",
+                      gap: 3,
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Box sx={{ display: "flex", gap: 2 }}>
+                      <Typography variant="body1" color="initial">
+                        {event.ItemTitle}({event.Date})
+                      </Typography>
+                    </Box>
+                    {/* <button  >Edit</button> */}
+                    <Box sx={{ display: "flex", gap: 2 }}>
+                      <Button>
+                        <Link href={`/editPhotoOPS/${event._id}`}>Edit</Link>
+                      </Button>
+                      <Button>
+                        <RemoveBtn id={event._id} />
+                      </Button>
+                    </Box>
+                  </Box>
+                ))}
+            </Box>
+          )}
+
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
             <Editdetail />
           </Box>
+
           <Box
             sx={{
               display: "flex",
@@ -237,11 +408,62 @@ const Page = () => {
             <Typography variant="h5" sx={{ fontWeight: "bold" }}>
               Add Vendor
             </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: 2,
+              }}
+            >
             <UploadVendor />
+            <Button onClick={() => getVendors()}>
+                {vendorLoading ? (
+                  <p>Loading...</p>
+                ) : showVendorsList ? (
+                  "Hide List"
+                ) : (
+                  "Show List"
+                )}
+              </Button>
+            </Box>
           </Box>
+          {showVendorsList && (
+            <Box>
+              {vendors &&
+                vendors.map((event) => (
+                  <Box
+                    key={event._id}
+                    sx={{
+                      display: "flex",
+                      gap: 3,
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Box sx={{ display: "flex", gap: 2 }}>
+                      <Typography variant="body1" color="initial">
+                        {event.Name}({event.Profile})
+                      </Typography>
+                    </Box>
+                    {/* <button  >Edit</button> */}
+                    <Box sx={{ display: "flex", gap: 2 }}>
+                      <Button>
+                        <Link href={`/editVendors/${event._id}`}>Edit</Link>
+                      </Button>
+                      <Button>
+                        {" "}
+                        <RemoveVendor id={event._id} />
+                      </Button>
+                    </Box>
+                  </Box>
+                ))}
+            </Box>
+          )}
+
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
             <Editdetail />
           </Box>
+       
           <Box
             sx={{
               display: "flex",
@@ -252,8 +474,58 @@ const Page = () => {
             <Typography variant="h5" sx={{ fontWeight: "bold" }}>
               Create Floorplan
             </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: 2,
+              }}
+            >
             <UploadPlan />
+            <Button onClick={() => getPlans()}>
+                {planLoading ? (
+                  <p>Loading...</p>
+                ) : showPlanList ? (
+                  "Hide List"
+                ) : (
+                  "Show List"
+                )}
+              </Button>
+            </Box>
           </Box>
+          {showPlanList && (
+            <Box>
+              {plans &&
+                plans.map((event) => (
+                  <Box
+                    key={event._id}
+                    sx={{
+                      display: "flex",
+                      gap: 3,
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Box sx={{ display: "flex", gap: 2 }}>
+                      <Typography variant="body1" color="initial">
+                        {event.Title}({event.Venue})
+                      </Typography>
+                    </Box>
+                    {/* <button  >Edit</button> */}
+                    <Box sx={{ display: "flex", gap: 2 }}>
+                      <Button>
+                        <Link href={`/editPlan/${event._id}`}>Edit</Link>
+                      </Button>
+                      <Button>
+                        {" "}
+                        <RemovePlan id={event._id} />
+                      </Button>
+                    </Box>
+                  </Box>
+                ))}
+            </Box>
+          )}
+
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
             <Editdetail />
           </Box>

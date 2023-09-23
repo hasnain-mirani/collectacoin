@@ -15,3 +15,16 @@ export async function GET() {
     })
   }
 }
+
+export async function DELETE(req:any) {
+  try {
+    const id = req.nextUrl.searchParams.get("id");
+    const deletePlans = await plan.findByIdAndDelete(id);
+    return NextResponse.json({deletePlans });
+  } catch (error: any) {
+    return NextResponse.json({
+      message: "No Plans exist!",
+      status: 500,
+    });
+  }
+}

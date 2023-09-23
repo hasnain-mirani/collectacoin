@@ -28,15 +28,11 @@ const style = {
 };
 
 type FormValues = {
-  _id: string;
-  ItemTitle: string;
-  ItemSubject: string;
-  ItemDescription: string;
-  Hallno: string;
-  eventType: string;
-  Date: string;
-  Time: string;
-  Pic: string;
+    _id: string;
+    Title: string,
+    EventName: string
+    Venue: string
+    File: string
 };
 
 const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
@@ -50,14 +46,10 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
 
   const [formValues, setFormValues] = useState<FormValues>({
     _id: id ,
-    ItemTitle: "",
-    ItemSubject: "",
-    ItemDescription: "",
-    Hallno: "",
-    eventType: "Programming",
-    Date: "",
-    Time: "",
-    Pic: "",
+    Title: "",
+    EventName: "",
+    Venue: "",
+    File: "",
   });
   console.log(formValues);
   
@@ -71,18 +63,15 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
    */
   const getEventById = async (id: any) => {
     try {
-      const res = await axios.get(`/api/fetchProgram/${id}`);
-      console.log(res)
-      setEventstor([res.data.allPrograms]);
-      console.log(eventstor);
-    } catch (error) {
-      // Handle error
+      const res = await axios.get(`/api/fetchPlan/${id}`);
+      setEventstor([res.data.allPlans]);
+    } catch (error: any) {
+        console.log("No data found!");
     }
   };
   const handleCancle = {};
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(`Field name: ${name}, New value: ${value}`);
     setFormValues((prevValues) => ({
       ...prevValues,
       [name]: value,
@@ -103,29 +92,25 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
   
     try {
       router.push("/adminpanel");
-      await axios.post("/api/updateProgramEvent",formValues);
-      toast.success("Programming Event updated!");
+      await axios.post("/api/updatePlan",formValues);
+      toast.success("Plan Updated Successfully!");
     } catch (error) {
-      toast.success("Programming Event updated!");
+      toast.success("Plan Updated Successfully!");
     }
   };
   
 
-  const formatEntry = ({ ItemTitle, ItemSubject }: FormValues) => {
-    return `${ItemTitle} ${ItemSubject}`;
+  const formatEntry = ({ Title, EventName }: FormValues) => {
+    return `${Title} ${EventName}`;
   };
 
   const resetForm = () => {
     setFormValues({
       _id: "",
-      ItemTitle: "",
-      ItemSubject: "",
-      ItemDescription: "",
-      Hallno: "",
-      eventType: "Programming",
-      Date: "",
-      Time: "",
-      Pic: "",
+      Title: "",
+      EventName: "",
+      Venue: "",
+      File: "",
     });
   };
 
@@ -145,74 +130,45 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
                   sx={{ display: "flex", marginTop: 2, gap: 2 }}
                 >
                   <Box className="left">
-                    <Typography>Item Title</Typography>
+                    <Typography>Title</Typography>
 
                     <InputBase
                       required
-                      name="ItemTitle"
-                      value={event.ItemTitle}
+                      name="Title"
+                      value={event.Title}
                       onChange={handleChange}
                       sx={inputStyle}
                       type="text"
-                      placeholder="Enter Item Title"
+                      placeholder="Enter Title"
                     />
-                    <Typography>Item Description</Typography>
+                    <Typography>Venue</Typography>
                     <InputBase
-                      name="ItemDescription"
-                      value={event.ItemDescription}
+                      name="Venue"
+                      value={event.Venue}
                       onChange={handleChange }
                       sx={inputStyle}
                       type="text"
-                      placeholder="Enter Item Description"
-                    />
-                    <Typography>Date</Typography>
-                    <InputBase
-                      required
-                      name="Date"
-                      value={event.Date}
-                      onChange={handleChange }
-                      sx={inputStyle}
-                      type="date"
-                      placeholder="Enter Your Date"
+                      placeholder="Enter Venue"
                     />
                   </Box>
 
                   <Box className="right">
-                    <Typography>Item Subject</Typography>
+                    <Typography>Event Name</Typography>
                     <InputBase
                       required
-                      name="ItemSubject"
-                      value={event.ItemSubject}
+                      name="EventName"
+                      value={event.EventName}
                       onChange={handleChange}
                       sx={inputStyle}
                       type="text"
-                      placeholder="Enter Item Subject"
-                    />
-                    <Typography>Hall No.</Typography>
-                    <InputBase
-                      required
-                      name="Hallno"
-                      value={event.Hallno}
-                      onChange={handleChange}
-                      sx={inputStyle}
-                      type="text"
-                      placeholder="Enter Your Hall Number"
-                    />
-                    <Typography>Time</Typography>
-                    <InputBase
-                      name="Time"
-                      value={event.Time}
-                      onChange={handleChange}
-                      sx={inputStyle}
-                      type="time"
-                      placeholder="Enter Your Time"
+                      placeholder="Enter Event Name"
                     />
                   </Box>
                 </Box>
                 <Box
                   sx={{ marginTop: 1, border: "1px solid #E6E6E9", padding: 2 }}
                 >
-                  <Typography sx={{ margin: 1 }}>Upload Image</Typography>
+                  <Typography sx={{ margin: 1 }}>Upload PDF File</Typography>
                   {/* <Upload /> */}
                   <Box>
                     <Dropzone
@@ -220,13 +176,13 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
                         if (files.length > 0) {
                           setFormValues((prevValues) => ({
                             ...prevValues,
-                            Pic: files[0].name,
+                            File: files[0].name,
                           }));
                         }
                       }}
                       onReject={(files) => console.log("rejected files", files)}
                       maxSize={1 * 1024 ** 2}
-                      accept={["image/jpeg", "image/png", "image/gif"]}
+                      accept={["application/pdf"]}
                       {...props}
                     >
                       <Group
@@ -246,7 +202,7 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
 
                         <div>
                           <Text size="xl" inline>
-                            Drag images here or click to select files
+                            Drag PDF File here or click to select file
                           </Text>
                         </div>
                       </Group>
@@ -265,13 +221,10 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
                       handleSubmit;
                       setFormValues((prevValues) => ({
                         ...prevValues,
-                        ItemSubject: event.ItemSubject,
-                        ItemDescription: event.ItemDescription,
-                        Hallno: event.Hallno,
-                        Date: event.Date,
-                        Time: event.Time,
-                        ItemTitle: event.ItemTitle,
-                        Pic: event.Pic
+                        Title: event.Title,
+                        EventName: event.EventName,
+                        Venue: event.Venue,
+                        File: event.File
 
                       }));
                     }}

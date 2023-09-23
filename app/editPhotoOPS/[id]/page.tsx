@@ -54,7 +54,7 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
     ItemSubject: "",
     ItemDescription: "",
     Hallno: "",
-    eventType: "Programming",
+    eventType: "PhotoOPS",
     Date: "",
     Time: "",
     Pic: "",
@@ -71,9 +71,9 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
    */
   const getEventById = async (id: any) => {
     try {
-      const res = await axios.get(`/api/fetchProgram/${id}`);
+      const res = await axios.get(`/api/fetchPhotoOPS/${id}`);
       console.log(res)
-      setEventstor([res.data.allPrograms]);
+      setEventstor([res.data.allPhotos]);
       console.log(eventstor);
     } catch (error) {
       // Handle error
@@ -104,9 +104,9 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
     try {
       router.push("/adminpanel");
       await axios.post("/api/updateProgramEvent",formValues);
-      toast.success("Programming Event updated!");
+      toast.success("PhotoOPS Event updated!");
     } catch (error) {
-      toast.success("Programming Event updated!");
+      toast.success("PhotoOPS Event updated!");
     }
   };
   
@@ -122,7 +122,7 @@ const EntryForm = ({ params }: any, props: Partial<DropzoneProps>) => {
       ItemSubject: "",
       ItemDescription: "",
       Hallno: "",
-      eventType: "Programming",
+      eventType: "PhotoOPS",
       Date: "",
       Time: "",
       Pic: "",
